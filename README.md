@@ -1,5 +1,5 @@
 # scf-bms
-git init	初始化
+git init	初始化<br/>
 git add .	添加文件夹
 git add xxx 添加文件
 git commit -m "xxx" 提交
