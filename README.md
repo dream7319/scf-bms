@@ -17,6 +17,25 @@ git reset --hard HEAD^^	回退到上上一个版本<br/>
 git rm xxx 删除文件<br/>
 git clone git@github.com:dream7319/scf-bms.git克隆<br/>
 Git支持多种协议，包括https，但通过ssh支持的原生git协议速度最快<br/>
-git checkout -b xxx 创建一个xxx分支(git checkout命令加上-b参数表示创建并切换)<br/>
+git checkout -b xxx 创建+切换xxx分支(git checkout命令加上-b参数表示创建并切换)<br/>
 git branch 查看当前分支<br/>
+git checkout master 切换到master 分支<br/>
+git merge xxx 合并xxx分支到master分支<br/>
+git merge命令用于合并指定分支到当前分支<br/>
+git branch -d xxx 删除xxx分支<br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
