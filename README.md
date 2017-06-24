@@ -41,11 +41,11 @@ git tag xxx commit id 根据commit id 创建标签( git log --pretty=oneline --a
 git show <tagname>查看标签信息<br/>
 git tag -a v0.1 -m "xxx" commit id 创建带有说明的标签，用-a指定标签名，-m指定说明文字<br/>
 git tag -s v0.2 -m "xxx" commit id-s用私钥签名一个标签<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+git tag -d xxx 删除标签<br/>
+git push origin <tagname>把标签push到远程库<br/>
+git push origin --tags 一次性推送全部尚未推送到远程的本地标签<br/>
+git push origin :refs/tags/xxx 删除远程标签<br/>
+git config --global alias.st status 创建别名 st代表 status<br/>
 <br/>
 <br/>
 <br/>
