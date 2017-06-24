@@ -23,6 +23,7 @@ git checkout master 切换到master 分支<br/>
 git merge xxx 合并xxx分支到master分支<br/>
 git merge命令用于合并指定分支到当前分支<br/>
 git branch -d xxx 删除xxx分支<br/>
+git log --graph --pretty=oneline --abbrev-commit查看分支合并图<br/>
 
 
 
@@ -38,8 +39,4 @@ git branch -d xxx 删除xxx分支<br/>
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
 
