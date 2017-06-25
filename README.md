@@ -57,3 +57,33 @@ git config --global alias.st status 创建别名 st代表 status<br/>
 [user]<br/>
     name = Your Name<br/>
     email = your@email.com<br/>
+    
+elasticsearch 
+1、修改Elasticsearch配置文件
+编辑elasticsearch-5.1.1/config/elasticsearch.yml,加入以下内容：
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+2、修改Gruntfile.js
+打开elasticsearch-head-master/Gruntfile.js，找到下面connect属性，新增hostname: ‘0.0.0.0’:
+connect: {
+        server: {
+            options: {
+                hostname: '0.0.0.0',
+                port: 9100,
+                base: '.',
+                keepalive: true
+            }
+        }
+    }   
+3、启动elasticsearch-head
+在elasticsearch-head-master/目录下，运行启动命令：
+grunt server
+http://localhost:9100
+
+4、后台启动elasticsearch-head
+  后台启动grunt server命令；
+  nohup grunt server &exit
+  如果想关闭head插件，使用Linux查找进程命令：
+  ps aux|grep head
+  结束进程：
+  kill 进程号
