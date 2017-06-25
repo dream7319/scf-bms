@@ -5,6 +5,7 @@ import com.lierl.repository.ArticleRepository;
 import com.lierl.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +36,11 @@ public class ArticleController {
         articleRepository.save(article);
 
         return article;
+    }
+
+    @GetMapping("/{id}")
+    public Article selectOne(@PathVariable Long id){
+        articleRepository.search()
+        return articleRepository.findOne(id);
     }
 }
