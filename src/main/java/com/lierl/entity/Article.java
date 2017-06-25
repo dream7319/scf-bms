@@ -50,6 +50,18 @@ public class Article implements Serializable{
 
     private Long clickCount;//点击率
 
+    public Article() {
+    }
+
+    public Article(Long id, String title, String abstracts, String content, Date postTime, Long clickCount) {
+        this.id = id;
+        this.title = title;
+        this.abstracts = abstracts;
+        this.content = content;
+        this.postTime = postTime;
+        this.clickCount = clickCount;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

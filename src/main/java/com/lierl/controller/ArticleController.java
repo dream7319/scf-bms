@@ -1,6 +1,7 @@
 package com.lierl.controller;
 
 import com.lierl.entity.Article;
+import com.lierl.repository.ArticleRepository;
 import com.lierl.service.IArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,20 @@ public class ArticleController {
     @Autowired
     private IArticleService articleService;
 
+    @Autowired
+    private ArticleRepository articleRepository;
+
     @GetMapping("/lists")
     public List<Article> getAllArticle(){
         return articleService.getAllArticles();
+    }
+
+    @GetMapping("/add")
+    public Article addArticle(){
+        Article article = articleService.selectById(1);
+
+        articleRepository.save(article);
+
+        return article;
     }
 }
