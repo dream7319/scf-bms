@@ -25,6 +25,7 @@ git merge命令用于合并指定分支到当前分支<br/>
 git branch -d xxx 删除xxx分支<br/>
 git log --graph --pretty=oneline --abbrev-commit查看分支合并图<br/>
 git push origin xxx (xxx为分支名称，把分支xxx push到git库)<br/>
+git push origin :xxx 在github远程端删除一个分支<br/>
 git branch -D <name> 丢弃一个没有被合并过的分支<br/>
 git remote 查看远程库的信息<br/>
 git remote -v显示更详细的信息<br/>
@@ -35,6 +36,7 @@ git remote -v显示更详细的信息<br/>
 没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！<br/>
 如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，<br/>
 用命令git branch --set-upstream branch-name origin/branch-name。<br/>
+git config --global push.default matching <br/>
 git tag xxx创建标签xxx<br/>
 git tag 查看标签<br/>
 git tag xxx commit id 根据commit id 创建标签( git log --pretty=oneline --abbrev-commit查看commit id)<br/>
@@ -46,6 +48,12 @@ git push origin <tagname>把标签push到远程库<br/>
 git push origin --tags 一次性推送全部尚未推送到远程的本地标签<br/>
 git push origin :refs/tags/xxx 删除远程标签<br/>
 git config --global alias.st status 创建别名 st代表 status<br/>
-<br/>
-<br/>
-<br/>
+每个仓库的Git配置文件都放在.git/config文件中<br/>
+[alias]<br/>
+    co = checkout<br/>
+    ci = commit<br/>
+    br = branch<br/>
+    st = status<br/>
+[user]<br/>
+    name = Your Name<br/>
+    email = your@email.com<br/>
