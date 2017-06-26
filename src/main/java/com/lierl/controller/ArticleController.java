@@ -3,7 +3,14 @@ package com.lierl.controller;
 import com.lierl.entity.Article;
 import com.lierl.repository.ArticleRepository;
 import com.lierl.service.IArticleService;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.highlight.HighlightBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 /**
  * Created by lierl on 2017/6/25.
@@ -49,4 +58,33 @@ public class ArticleController {
 //        articleRepository.search()
         return articleRepository.findOne(id);
     }
+
+    @GetMapping("/builder")
+    public void queryBuilder(){
+        QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("elasticsearch");
+        articleRepository.search(queryBuilder);
+    }
+
+    @GetMapping("/search")
+    public void searchQuery(){
+//        SearchQuery query = queryFactory.createQuery(queryName, params, factoryServices, entityClass);
+        SearchQuery query = new NativeSearchQueryBuilder()
+                .withQuery(termQuery("message", "elasticsearch"))
+                .build();
+
+
+        Page<Article> search = articleRepository.search(query);
+    }
+
+    public void hightlight(){
+        QueryBuilder queryBuilder = QueryBuilders.queryStringQuery("??");
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(queryBuilder)
+                .withHighlightFields(new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>").fragmentSize(250))
+                .withHighlightFields(new HighlightBuilder.Field("desc").preTags("<em>").postTags("</em>").fragmentSize(250))
+                .withPageable(new PageRequest(0, 20))
+                .build();
+        Page<Article> search = articleRepository.search(searchQuery);
+    }
+
 }

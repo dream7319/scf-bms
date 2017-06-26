@@ -45,7 +45,7 @@ public class Article implements Serializable{
      *这些默认值指的是我们没有在我们没有在属性上添加@Filed注解的默认处理。一旦添加了@Filed注解，
      * 所有的默认值都不再生效。此外，如果添加了@Filed注解，那么type字段必须指定
      */
-    @Field(format = DateFormat.date_time,index = FieldIndex.no,store = true,type = FieldType.Object)
+    @Field(format = DateFormat.date_time,index = FieldIndex.no,store = true,type = FieldType.Date)
     private Date postTime;//发表时间
 
     private Long clickCount;//点击率
