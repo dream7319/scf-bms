@@ -84,6 +84,7 @@ public class ArticleController {
                 .withHighlightFields(new HighlightBuilder.Field("desc").preTags("<em>").postTags("</em>").fragmentSize(250))
                 .withPageable(new PageRequest(0, 20))
                 .build();
+
         Page<Article> search = articleRepository.search(searchQuery);
     }
 
