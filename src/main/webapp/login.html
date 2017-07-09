@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Login Page - Ace Admin</title>
+
+		<meta name="description" content="User login page" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+		<link rel="stylesheet" href="/static/css/font-awesome.min.css" />
+
+		<link rel="stylesheet" href="/static/css/cyrillic-ext.css" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="/static/css/ace.min.css" />
+		<link rel="stylesheet" href="/static/css/ace-rtl.min.css" />
+	</head>
+
+	<body class="login-layout" ng-app="login">
+		<div class="main-container">
+			<div class="main-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="center">
+								<h1>
+									<i class="icon-leaf green"></i>
+									<span class="red">供应链</span>
+									<span class="white">金融</span>
+								</h1>
+								<h4 class="blue">&copy; 北京微星优财信息技术公司</h4>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="position-relative" ng-view>
+							</div><!-- /position-relative -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+		<script src="/static/js/jquery-2.0.3.min.js"></script>
+		<script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+		<script src="/static/js/angular.min.js"></script>
+		<script src="/static/js/angular-route.js"></script>
+		<script src="/static/js/angular-cookies.min.js"></script>
+		<script src="/js/login.js"></script>
+
+	</body>
+</html>

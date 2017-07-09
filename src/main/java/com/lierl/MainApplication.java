@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by lierl on 2017/6/24.
  */
 @SpringBootApplication
+//@EnableWebMvc
 public class MainApplication {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(MainApplication.class);

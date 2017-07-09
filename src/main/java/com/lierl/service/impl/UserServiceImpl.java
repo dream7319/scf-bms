@@ -14,10 +14,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUserService{
 
-    @Override
-    public boolean deleteAll() {
-        return retBool(baseMapper.deleteAll());
-    }
 
     @Override
     public List<User> getAllUsers() {

@@ -1,0 +1,80 @@
+<div id="login-box" class="login-box visible widget-box no-border">
+    <div class="widget-body">
+        <div class="widget-main">
+            <h4 class="header blue lighter bigger">
+                <i class="icon-coffee green"></i>
+                请输入您的信息
+            </h4>
+
+            <div class="space-6"></div>
+
+            <form ng-controller="loginController" ng-submit="login(user);">
+                <fieldset>
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            <input type="text" class="form-control" ng-model="user.username" placeholder="用户名" id="loginusername"/>
+                            <i class="icon-user"></i>
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            <input type="password" class="form-control" ng-model="user.password" ng-change="hide();" placeholder="密码" id="loginpassword"/>
+                            <i class="icon-lock"></i>
+                        </span>
+                    </label>
+
+                    <div class="space"></div>
+
+                    <div class="clearfix">
+                        <label class="inline">
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl">&nbsp;&nbsp;记住我</span>
+                        </label>
+
+                        <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                            <i class="icon-key"></i>
+                            登录
+                        </button>
+                    </div>
+
+                    <div class="space-4"></div>
+                </fieldset>
+            </form>
+
+            <!--<div class="social-or-login center">
+                <span class="bigger-110">Or Login Using</span>
+            </div>
+
+            <div class="social-login center">
+                <a class="btn btn-primary">
+                    <i class="icon-facebook"></i>
+                </a>
+
+                <a class="btn btn-info">
+                    <i class="icon-twitter"></i>
+                </a>
+
+                <a class="btn btn-danger">
+                    <i class="icon-google-plus"></i>
+                </a>
+            </div>-->
+        </div><!-- /widget-main -->
+
+        <div class="toolbar clearfix">
+            <div>
+                <a href="#!/login/forget" class="forgot-password-link">
+                    <i class="icon-arrow-left"></i>
+                    忘记密码
+                </a>
+            </div>
+
+            <div>
+                <a href="#!/login/register" class="user-signup-link">
+                    注册
+                    <i class="icon-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div><!-- /widget-body -->
+</div><!-- /login-box -->

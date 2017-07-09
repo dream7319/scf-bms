@@ -5,9 +5,6 @@
   <artifactId>mybatis</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
-  <modules>
-    <module>elasticsearch</module>
-  </modules>
   <name>mybatis Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
@@ -28,7 +25,12 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
-
+    <!-- servlet依赖. -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -37,6 +39,14 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <!--<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>-->
     <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
     <!--<dependency>
       <groupId>org.mybatis.spring.boot</groupId>
@@ -109,12 +119,6 @@
       <artifactId>okhttp</artifactId>
       <version>3.8.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus</artifactId>
-      <version>2.0.8</version>
-    </dependency>
     <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
     <dependency>
       <groupId>com.alibaba</groupId>
@@ -127,11 +131,6 @@
       <artifactId>gson</artifactId>
       <version>2.8.1</version>
     </dependency>
-      <dependency>
-          <groupId>org.elasticsearch.client</groupId>
-          <artifactId>transport</artifactId>
-          <version>RELEASE</version>
-      </dependency>
 
   </dependencies>
   <build>
@@ -146,6 +145,13 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
       </plugin>
     </plugins>
   </build>
