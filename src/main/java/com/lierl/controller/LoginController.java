@@ -46,8 +46,15 @@ public class LoginController {
             return result;
         }
 
-        if(u == null){
+        Boolean deleteFlag = u.getDeleteFlag();
+        if(!deleteFlag){
             result.setStatus(203);
+            result.setMessage("此用户已被删除");
+            return result;
+        }
+
+        if(u == null){
+            result.setStatus(204);
             result.setMessage("用户名或密码错误");
             return result;
         }
