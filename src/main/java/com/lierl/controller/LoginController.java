@@ -61,7 +61,7 @@ public class LoginController {
         session.setAttribute(Constants.CURRENT_USER,u);
 
 //        session.setAttribute(Constants.TOKEN,Utils.hashHmac(u.getPassword(),Utils.SECRET));
-        
+
         result.setStatus(200);
         result.setData(u);
         return result;

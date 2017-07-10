@@ -113,4 +113,5 @@ public class Article implements Serializable{
     public void setClickCount(Long clickCount) {
         this.clickCount = clickCount;
     }
+
 }

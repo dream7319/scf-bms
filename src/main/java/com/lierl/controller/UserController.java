@@ -23,7 +23,11 @@ public class UserController {
 
     @GetMapping("/lists")
     public List<User> showUsers(){
-        return userService.getAllUsers();
+        List<User> users = userService.getAllUsers();
+        users.forEach(user->{
+            System.out.println(user);
+        });
+        return users;
     }
 
     @GetMapping("/selectPage")
