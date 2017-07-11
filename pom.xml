@@ -201,6 +201,55 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>com.github.kongchen</groupId>
+        <artifactId>swagger-maven-plugin</artifactId>
+        <configuration>
+          <apiSources>
+            <apiSource>
+              <springmvc>false</springmvc> <!--是否spring mvc项目 -->
+              <locations>com.lierl.controller</locations><!--Controller所在包  -->
+              <schemes>http,https</schemes><!--协议  -->
+              <host></host><!-- 服务器地址，空值表示跟文档是同一台机器（域名） -->
+              <basePath>/api</basePath><!-- api url 前缀  -->
+              <info>
+                <title>Swagger Maven Plugin Sample</title><!-- Api 标题啊 -->
+                <version>v1</version><!-- Api版本 -->
+                <description>This is a sample for swagger-maven-plugin</description><!-- Api的详细描述 -->
+                <termsOfService>https://github.com/dream7319</termsOfService>
+                <contact>
+                  <email>lierlei0515@163.com</email><!-- 联系人邮件  -->
+                  <name>lierl</name><!-- 联系人姓名 -->
+                  <url>http://lierl.com</url><!-- 联系人url -->
+                </contact>
+                <license>
+                  <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+                  <name>Apache 2.0</name>
+                </license>
+              </info>
+              <!--
+              Support classpath or file absolute path here.
+              1) classpath e.g: "classpath:/markdown.hbs","classpath:/templates/hello.html"
+              2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                  "${basedir}/src/main/resources/template/hello.html"
+
+               <templatePath>${basedir}/templates/strapdown.html.hbs</templatePath>&lt;!&ndash; 文档模板 &ndash;&gt;
+                <outputPath>${basedir}/generated/document.html</outputPath>&lt;!&ndash; 文档输出路径,设置在和SwaggerUI同一目录 &ndash;&gt;
+                <swaggerDirectory>generated/swagger-ui</swaggerDirectory>&lt;!&ndash; Swagger.json输出路径，设置在和SwaggerUI同一目录 &ndash;&gt;
+              -->
+            </apiSource>
+          </apiSources>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
