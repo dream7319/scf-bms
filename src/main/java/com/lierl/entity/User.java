@@ -1,5 +1,7 @@
 package com.lierl.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.Date;
 /**
  * Created by lierl on 2017/6/25.
  */
-//@TableName("user")
+@TableName("scf_user")
 @Data
 public class User {
     private Integer id;
@@ -19,10 +21,15 @@ public class User {
 	private String email;//邮箱
     private String telphone;//电话
     private String photo;//头像
+    @TableField("user_status")
     private Boolean userStatus;//用户状态 0:禁用，1:可用
-    private Boolean userType;//用户类型 0:普通用户,1:管理员,2:超级管理员
+    @TableField("user_type")
+    private String userType;//用户类型 0:普通用户,1:管理员,2:超级管理员
     private Date birthday;//出生日期
+    @TableField("create_time")
     private Date createTime;//创建日期
+    @TableField("update_time")
     private Date updateTime;//更新日期
+    @TableField("delete_flag")
     private Boolean deleteFlag;//删除标识：0：删除,1：未删除
 }

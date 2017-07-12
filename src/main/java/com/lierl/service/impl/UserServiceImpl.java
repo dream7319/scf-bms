@@ -5,6 +5,8 @@ import com.lierl.entity.User;
 import com.lierl.mapper.UserMapper;
 import com.lierl.service.IUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,8 +16,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUserService{
 
-
-    @Override
+    @Transactional(propagation=Propagation.NOT_SUPPORTED,readOnly = true)
     public List<User> getAllUsers() {
         return baseMapper.getAllUsers();
     }

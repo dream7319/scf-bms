@@ -37,7 +37,17 @@ public class UserController {
 
     @GetMapping("/add")
     public User addUser(){
-        User user = userService.selectById(1);
+        User user = new User();
+        try {
+            user.setName("lierl1111");
+            user.setAge(28);
+            user.setUserType("1");
+            userService.insert(user);
+            throw new RuntimeException("保存异常");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return user;
     }
 
