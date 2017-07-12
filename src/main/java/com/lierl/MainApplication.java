@@ -3,6 +3,7 @@ package com.lierl;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
  * Created by lierl on 2017/6/24.
