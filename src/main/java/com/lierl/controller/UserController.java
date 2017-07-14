@@ -1,7 +1,5 @@
 package com.lierl.controller;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import com.lierl.entity.User;
 import com.lierl.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +28,10 @@ public class UserController {
         return users;
     }
 
-    @GetMapping("/selectPage")
-    public Page<User> selectPage(){
-        return userService.selectPage(new Page<User>(0,1));
-    }
+//    @GetMapping("/selectPage")
+//    public Page<User> selectPage(){
+//        return userService.selectPage(new Page<User>(0,1));
+//    }
 
     @GetMapping("/add")
     public User addUser(){
@@ -43,7 +41,6 @@ public class UserController {
             user.setAge(28);
             user.setUserType("1");
             userService.insert(user);
-            throw new RuntimeException("保存异常");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -51,11 +48,11 @@ public class UserController {
         return user;
     }
 
-    public User test(){
-        System.err.println("删除一条数据：" + userService.deleteById(1));
-
-        Page<User> userListPage = userService.selectPage(new Page<User>(1,5), new EntityWrapper<User>(new User()));
-        System.err.println("total="+userListPage.getTotal()+", current list size="+userListPage.getRecords().size());
-        return userService.selectById(1L);
-    }
+//    public User test(){
+//        System.err.println("删除一条数据：" + userService.deleteById(1));
+//
+//        Page<User> userListPage = userService.selectPage(new Page<User>(1,5), new EntityWrapper<User>(new User()));
+//        System.err.println("total="+userListPage.getTotal()+", current list size="+userListPage.getRecords().size());
+//        return userService.selectById(1L);
+//    }
 }
