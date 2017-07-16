@@ -6,6 +6,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -32,7 +33,7 @@ public class SwaggerConfig {
                 .title("供应链金融 RESTful APIs")
                 .description("供应链金融")
                 .termsOfServiceUrl("https://github.com/dream7319")
-                .contact("lierlei0515@163.com")
+                .contact( new Contact("lierl", "", "lierlei0515@163.com"))
                 .version("1.0")
                 .build();
     }

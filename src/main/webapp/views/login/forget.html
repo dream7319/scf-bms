@@ -11,17 +11,22 @@
                 请输入您的电子邮件
             </p>
 
-            <form>
+            <form ng-controller="forgetController" name="forgetForm" novalidate>
                 <fieldset>
                     <label class="block clearfix">
                         <span class="block input-icon input-icon-right">
-                            <input type="email" class="form-control" placeholder="Email" />
+                            <input type="email" class="form-control" ng-model="user.email" required placeholder="Email" />
                             <i class="icon-envelope"></i>
+                        </span>
+                        <span style="color: red" ng-show="forgetForm.email.$invalid && forgetForm.email.$dirty">
+                            <span ng-show="forgetForm.email.$error.required">*请输入邮箱</span>
+                            <span ng-show="forgetForm.email.$error.email">*请输入正确的email地址</span>
                         </span>
                     </label>
 
                     <div class="clearfix">
-                        <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+                        <button class="width-35 pull-right btn btn-sm" ng-class="{'btn-danger':!forgetForm.$invalid}"
+                            ng-click="forgetPwd(user.email)" ng-disabled="forgetForm.$invalid">
                             <i class="icon-lightbulb"></i>
                             发送
                         </button>

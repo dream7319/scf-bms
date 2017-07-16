@@ -8,38 +8,54 @@
 
             <div class="space-6"></div>
 
-            <form>
+            <form ng-controller="registerController" name="registerForm" novalidate>
                 <fieldset>
                     <label class="block clearfix">
                         <span class="block input-icon input-icon-right">
-                            <input type="email" class="form-control" placeholder="邮箱" />
+                            <input type="email" ng-model="user.email" name="email"class="form-control" placeholder="邮箱" required/>
                             <i class="icon-envelope"></i>
                         </span>
+                        <span style="color: red" ng-show="registerForm.email.$invalid && registerForm.email.$dirty">
+                            <span ng-show="registerForm.email.$error.required">*请输入邮箱</span>
+                            <span ng-show="registerForm.email.$error.email">*请输入正确的email地址</span>
+                        </span>
                     </label>
 
                     <label class="block clearfix">
                         <span class="block input-icon input-icon-right">
-                            <input type="text" class="form-control" placeholder="用户名"/>
+                            <input type="text" ng-model="user.username" name="username" class="form-control" placeholder="用户名" required/>
                             <i class="icon-user"></i>
                         </span>
-                    </label>
-
-                    <label class="block clearfix">
-                        <span class="block input-icon input-icon-right">
-                            <input type="password" class="form-control" placeholder="密码" />
-                            <i class="icon-lock"></i>
+                        <span style="color: red" ng-show="registerForm.username.$invalid && registerForm.username.$dirty">
+                            <span ng-show="registerForm.username.$error.required">*请输入用户名</span>
                         </span>
                     </label>
 
                     <label class="block clearfix">
                         <span class="block input-icon input-icon-right">
-                            <input type="password" class="form-control" placeholder="重复密码" />
+                            <input type="password" ng-model="user.password" name="password" id="password" class="form-control" required placeholder="密码" />
+                            <i class="icon-lock"></i>
+                        </span>
+                        <span style="color: red" ng-show="registerForm.password.$invalid && registerForm.password.$dirty">
+                            <span ng-show="registerForm.password.$error.required">*请输入密码</span>
+                            <!--<span ng-show="registerForm.password.$error.minlength">*密码长度不小于6</span>
+                            <span ng-show="registerForm.password.$error.maxlength">*密码长度不超过20</span>   -->
+                        </span>
+                    </label>
+
+                    <label class="block clearfix">
+                        <span class="block input-icon input-icon-right">
+                            <input type="password" class="form-control" ng-model="user.repassword" pwd-equals="user.password" name="repassword" id="repassword" required placeholder="重复密码" />
                             <i class="icon-retweet"></i>
+                        </span>
+                        <span style="color: red" ng-show="registerForm.repassword.$invalid && registerForm.repassword.$dirty">
+                            <span ng-show="registerForm.repassword.$error.required">*请再次输入密码</span>
+                            <span ng-show="user.password!=user.repassword">*两次输入密码不一致</span>
                         </span>
                     </label>
 
                     <label class="block">
-                        <input type="checkbox" class="ace" />
+                        <input type="checkbox" ng-model="user.userProtocol" class="ace"/>
                         <span class="lbl">
                             我接受
                             <a href="#">用户协议</a>
@@ -54,7 +70,8 @@
                             重置
                         </button>
 
-                        <button type="button" class="width-65 pull-right btn btn-sm btn-success">
+                        <button class="width-65 pull-right btn btn-sm btn-success"
+                            ng-click="register(user)" ng-disabled="registerForm.$invalid">
                             注册
                             <i class="icon-arrow-right icon-on-right"></i>
                         </button>

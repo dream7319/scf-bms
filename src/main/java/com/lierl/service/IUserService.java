@@ -8,9 +8,7 @@ import java.util.List;
 /**
  * Created by lierl on 2017/6/25.
  */
-public interface IUserService{
+public interface IUserService extends IService<User>{
     public List<User> getAllUsers();
-
-    public void insert(User entity) throws Exception;
-
+    public void insertUser(User entity) throws Exception;
 }

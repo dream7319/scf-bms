@@ -308,4 +308,24 @@ public class GuavaStringTest {
          　　要注意并不是所有的实现都正真实现了Map<K, Collection<V>>！（尤其是有些Multimap的实现为了最小话开销，使用了自定义的hash table）
          */
     }
+
+    @Test
+    public void testMap(){
+        Multimap<String,Object> maps = ArrayListMultimap.create();
+        maps.put("aa","bb");
+        maps.put("aa","c");
+        maps.forEach((key,value)->{
+            System.out.println(key+"->"+value);
+        });
+    }
+
+    @Test
+    public void testFiles(){
+        File file = new File("E:\\二代核心所有系统");
+        if(file.isDirectory()){
+            for(File f : file.listFiles()){
+
+            }
+        }
+    }
 }
