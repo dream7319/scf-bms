@@ -45,17 +45,17 @@
 
                     <label class="block clearfix">
                         <span class="block input-icon input-icon-right">
-                            <input type="password" class="form-control" ng-model="user.repassword" pwd-equals="user.password" name="repassword" id="repassword" required placeholder="重复密码" />
+                            <input type="password" class="form-control" ng-model="repassword" pwd-equals="user.password" name="repassword" id="repassword" required placeholder="重复密码" />
                             <i class="icon-retweet"></i>
                         </span>
                         <span style="color: red" ng-show="registerForm.repassword.$invalid && registerForm.repassword.$dirty">
                             <span ng-show="registerForm.repassword.$error.required">*请再次输入密码</span>
-                            <span ng-show="user.password!=user.repassword">*两次输入密码不一致</span>
+                            <span ng-show="user.password!=repassword">*两次输入密码不一致</span>
                         </span>
                     </label>
 
                     <label class="block">
-                        <input type="checkbox" ng-model="user.userProtocol" class="ace"/>
+                        <input type="checkbox" ng-model="userProtocol" class="ace"/>
                         <span class="lbl">
                             我接受
                             <a href="#">用户协议</a>

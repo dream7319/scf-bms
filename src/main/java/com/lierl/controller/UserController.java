@@ -3,9 +3,7 @@ package com.lierl.controller;
 import com.lierl.entity.User;
 import com.lierl.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,7 +11,7 @@ import java.util.List;
  * Created by lierl on 2017/6/25.
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
@@ -33,18 +31,9 @@ public class UserController {
 //        return userService.selectPage(new Page<User>(0,1));
 //    }
 
-    @GetMapping("/add")
-    public User addUser(){
-        User user = new User();
-        try {
-            user.setName("lierl1111");
-            user.setAge(28);
-            user.setUserType("1");
-            userService.insert(user);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
+    @PostMapping("/add")
+    public User addUser(@RequestBody User user){
+        System.out.println("---"+user.getEmail());
         return user;
     }
 
