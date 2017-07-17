@@ -2,6 +2,7 @@ package com.lierl.controller;
 
 import com.lierl.entity.User;
 import com.lierl.service.IUserService;
+import com.lierl.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class UserController {
 
     @PostMapping("/add")
     public User addUser(@RequestBody User user){
-        System.out.println("---"+user.getEmail());
+        user.setPassword(Utils.hashHmac(user.getPassword(),Utils.SECRET));
         return user;
     }
 

@@ -68,20 +68,23 @@ loginApp.directive('pwdEquals',function () {
 
 loginApp.controller('registerController',['$scope','$http','$location',function ($scope,$http,$location) {
 	$scope.register = function (user) {
-
-			console.log(user);
-		// if(user.userProtocol){
+		if(user.userProtocol){
 			$http.post('/api/user/add',user).then(function (response) {
-				console.log(response.data);
                 $location.path("/");
             },function (response) {
             });
-		// }else{
-		// 	alert("请选择用户协议");
-		// }
+		}else{
+			alert("请选择用户协议");
+		}
     }
 }]);
 
 loginApp.controller('forgetController',['$scope','$http',function ($scope,$http) {
-
+	$scope.forgetPwd = function(email){
+		$http.get('/api/forget?email='+email).then(function (response) {
+			
+        },function (response) {
+			
+        });
+	}
 }]);
