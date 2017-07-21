@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface IUserService extends IService<User>{
     public List<User> getAllUsers();
-    public void insertUser(User entity) throws Exception;
+    public Integer insertUser(User entity) throws Exception;
 }

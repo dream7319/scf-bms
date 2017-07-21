@@ -25,10 +25,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements IUs
     }
 
     @Transactional
-    public void insertUser(User entity) throws Exception{
+    public Integer insertUser(User entity) throws Exception{
 //        userMapper.insert(entity);
-        baseMapper.insert(entity);
-        throw new RuntimeException("抛出异常");
+        return baseMapper.insert(entity);
     }
 
 

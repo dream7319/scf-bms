@@ -1,7 +1,5 @@
 package com.lierl.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import okhttp3.*;
 
 import java.io.File;
@@ -83,7 +81,6 @@ public final class StorageUtil {
     }
     
     public static void putfileToServer(byte[] fileByte,String filename) throws Exception{
-    	Gson gson = new GsonBuilder().serializeNulls().create();
 
     	RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), fileByte);
         RequestBody requestBody = new MultipartBody.Builder()
@@ -107,7 +104,6 @@ public final class StorageUtil {
     } 
 
     public static void putfileToServer(File file) throws Exception{
-    	Gson gson = new GsonBuilder().serializeNulls().create();
 
     	RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
         RequestBody requestBody = new MultipartBody.Builder()

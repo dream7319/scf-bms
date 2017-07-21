@@ -1,5 +1,6 @@
 package com.lierl.controller;
 
+import com.google.common.collect.Maps;
 import com.lierl.entity.User;
 import com.lierl.service.IUserService;
 import com.lierl.util.Utils;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lierl on 2017/6/25.
@@ -33,9 +35,20 @@ public class UserController {
 //    }
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User user){
-        user.setPassword(Utils.hashHmac(user.getPassword(),Utils.SECRET));
-        return user;
+    public Map<String,Object> addUser(@RequestBody User user){
+        Map<String,Object> results = Maps.newHashMap();
+        results.put("result","error");
+        try {
+            user.setPassword(Utils.hashHmac(user.getPassword(),Utils.SECRET));
+            Integer num = userService.insertUser(user);
+            if(num > 0){
+                results.put("result","success");
+            }
+        } catch (Exception e) {
+            results.put("message","保存用户失败");
+            e.printStackTrace();
+        }
+        return results;
     }
 
 //    public User test(){
