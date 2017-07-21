@@ -24,6 +24,8 @@ public class JodaTimeTest {
 
 		DateTime dt = DateTime.now();
 
+		System.out.println("--"+new DateTime().plusMonths(1).minusDays(1).toDate());
+
 		System.out.println(dt.toString("yyyy年MM月dd日"));
 
 		System.out.println(DateFormatUtils.format(new Date(),"yyyy-MM-dd"));

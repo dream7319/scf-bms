@@ -23,9 +23,6 @@ public class UserController {
     @GetMapping("/lists")
     public List<User> showUsers(){
         List<User> users = userService.getAllUsers();
-        users.forEach(user->{
-            System.out.println(user);
-        });
         return users;
     }
 
