@@ -79,7 +79,7 @@ public class MysqlGenerator {
 		// 包配置
 		PackageConfig pc = new PackageConfig();
 		pc.setParent("com.lierl");
-//		pc.setModuleName("api");
+		pc.setModuleName("api");
 		mpg.setPackageInfo(pc);
 
 		// 关闭默认 xml 生成，调整生成 至 根目录
