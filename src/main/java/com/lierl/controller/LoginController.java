@@ -2,7 +2,7 @@ package com.lierl.controller;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.lierl.base.JSONResult;
+import com.google.common.collect.Maps;
 import com.lierl.common.Constants;
 import com.lierl.entity.User;
 import com.lierl.service.IUserService;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * Created by lierl on 2017/7/2.
@@ -25,13 +26,13 @@ public class LoginController {
     private IUserService userService;
 
     @PostMapping("/login")
-    public JSONResult login(@RequestBody User user, HttpSession session){
-        JSONResult result = new JSONResult();
+    public Map<String,Object> login(@RequestBody User user, HttpSession session){
+        Map<String,Object> results = Maps.newHashMap();
         //1、根据用户名查找用户是否存在
         if(user == null){
-            result.setStatus(201);
-            result.setMessage("传递参数有误");
-            return result;
+            results.put("status",201);
+            results.put("message","传递参数有误");
+            return results;
         }
 
         /*
@@ -54,22 +55,22 @@ public class LoginController {
         Boolean userStatus = u.getUserStatus();
 
         if(!userStatus){
-            result.setStatus(202);
-            result.setMessage("用户已被禁用");
-            return result;
+            results.put("status",202);
+            results.put("message","用户已被禁用");
+            return results;
         }
 
         Boolean deleteFlag = u.getDeleteFlag();
         if(!deleteFlag){
-            result.setStatus(203);
-            result.setMessage("此用户已被删除");
-            return result;
+            results.put("status",203);
+            results.put("message","此用户已被删除");
+            return results;
         }
 
         if(u == null){
-            result.setStatus(204);
-            result.setMessage("用户名或密码错误");
-            return result;
+            results.put("status",204);
+            results.put("message","用户名或密码错误");
+            return results;
         }
 
 //        if(!u.getPassword().equals(Utils.hashHmac(user.getPassword(),Utils.SECRET))){
@@ -82,8 +83,8 @@ public class LoginController {
 
 //        session.setAttribute(Constants.TOKEN,Utils.hashHmac(u.getPassword(),Utils.SECRET));
 
-        result.setStatus(200);
-        result.setData(u);
-        return result;
+        results.put("status",200);
+        results.put("data",u);
+        return results;
     }
 }

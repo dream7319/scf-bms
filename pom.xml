@@ -23,6 +23,7 @@
     <guava.version>22.0</guava.version>
     <springfox.version>2.7.0</springfox.version>
     <lomlok.version>1.16.16</lomlok.version>
+    <velocity.version>1.7</velocity.version>
   </properties>
   <dependencies>
     <dependency>
@@ -65,6 +66,15 @@
       <artifactId>mybatisplus-spring-boot-starter</artifactId>
       <version>1.0.1</version>
     </dependency>
+
+    <!-- generator vm -->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+      <version>${velocity.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
     <dependency>
       <groupId>org.springframework.data</groupId>
@@ -177,7 +187,11 @@
       <artifactId>joda-time</artifactId>
       <version>2.9.9</version>
     </dependency>
-
+    <dependency>
+      <groupId>com.belerweb</groupId>
+      <artifactId>pinyin4j</artifactId>
+      <version>2.5.1</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
