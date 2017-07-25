@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/7/18.
  */
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -29,5 +30,9 @@ public class JodaTimeTest {
 		System.out.println(dt.toString("yyyy年MM月dd日"));
 
 		System.out.println(DateFormatUtils.format(new Date(),"yyyy-MM-dd"));
+
+		System.out.println(StringUtils.uncapitalize("UserServiceImpl"));
+
+
 	}
 }

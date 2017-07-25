@@ -24,7 +24,8 @@ public class MysqlGenerator {
 
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
-		gc.setOutputDir("E:\\intellJWork\\scf-bms\\src\\main\\java\\");
+//		gc.setOutputDir("E:\\intellJWork\\scf-bms\\src\\main\\java\\");
+		gc.setOutputDir("E:\\mp\\");
 		gc.setFileOverride(true);
 		gc.setActiveRecord(false);
 		gc.setEnableCache(false);// XML 二级缓存
@@ -64,7 +65,7 @@ public class MysqlGenerator {
 
 		strategy.setTablePrefix(new String[]{"scf"});// 此处可以修改为您的表前缀
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-		strategy.setInclude(new String[]{"scf_user"}); // 需要生成的表
+		strategy.setInclude(new String[]{"scf_menu","scf_role","scf_role_menu","scf_user_role","scf_menu_resources"}); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
 		strategy.setEntityBuilderModel(false);
 		// 自定义 mapper 父类
@@ -79,11 +80,22 @@ public class MysqlGenerator {
 		// 包配置
 		PackageConfig pc = new PackageConfig();
 		pc.setParent("com.lierl");
+		pc.setController("controller");
+//		pc.setEntity("entity");
+//		pc.setService("service");
+//		pc.setServiceImpl("service.impl");
 		pc.setModuleName("api");
 		mpg.setPackageInfo(pc);
 
 		// 关闭默认 xml 生成，调整生成 至 根目录
 		TemplateConfig tc = new TemplateConfig();
+
+		tc.setController("/template/controller.java.vm");
+		tc.setEntity("/template/entity.java.vm");
+		tc.setMapper("/template/mapper.java.vm");
+		tc.setServiceImpl("/template/serviceImpl.java.vm");
+		tc.setService("/template/service.java.vm");
+
         tc.setXml(null);
 		mpg.setTemplate(tc);
 

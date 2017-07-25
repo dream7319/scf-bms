@@ -4,17 +4,37 @@ import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import ${package.Service}.${table.serviceName};
 import ${superServiceImplClassPackage};
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import java.io.Serializable;
+import java.util.List;
 /**
- * <p>
- * $!{table.comment} 服务实现类
- * </p>
  *
  * @author ${author}
  * @since ${date}
  */
 @Service
 public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
-	
+
+
+	@Transactional
+	public Integer insert${entity}(${entity} ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}) throws Exception{
+		return baseMapper.insert(${entity.substring(0,1).toLowerCase()}${entity.substring(1)});
+	}
+
+	@Transactional
+	public Integer update${entity}ById(${entity} ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}) throws Exception{
+		return baseMapper.updateById(${entity.substring(0,1).toLowerCase()}${entity.substring(1)});
+	}
+
+	@Transactional
+	public Integer delete${entity}ById(Serializable id) throws Exception{
+		return baseMapper.deleteById(id);
+	}
+
+	@Transactional
+	public Integer delete${entity}ByIds(List<Serializable> ids) throws Exception{
+		return baseMapper.deleteBatchIds(ids);
+	}
 }
