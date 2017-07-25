@@ -1,4 +1,4 @@
-package com.lierl;
+package com.lierl.api;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;

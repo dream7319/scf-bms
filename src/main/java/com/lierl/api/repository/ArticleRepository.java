@@ -1,6 +1,7 @@
-package com.lierl.repository;
+package com.lierl.api.repository;
 
-import com.lierl.entity.Article;
+
+import com.lierl.api.entity.Article;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
@@ -8,6 +9,6 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  *
  * Created by lierl on 2017/6/25.
  */
-public interface ArticleRepository extends ElasticsearchRepository<Article,Long>{
+public interface ArticleRepository extends ElasticsearchRepository<Article,Long> {
 
 }

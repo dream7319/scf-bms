@@ -1,4 +1,4 @@
-package com.lierl.config;
+package com.lierl.api.config;
 
 import com.baomidou.mybatisplus.enums.DBType;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by lierl on 2017/6/25.
  */
 @Configuration
-@MapperScan("com.lierl.mapper*")
+@MapperScan("com.lierl.api.mapper*")
 public class MybatisPlusConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {

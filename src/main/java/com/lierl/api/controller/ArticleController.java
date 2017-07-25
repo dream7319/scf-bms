@@ -1,8 +1,8 @@
 package com.lierl.controller;
 
-import com.lierl.entity.Article;
-import com.lierl.repository.ArticleRepository;
-import com.lierl.service.IArticleService;
+import com.lierl.api.entity.Article;
+import com.lierl.api.repository.ArticleRepository;
+import com.lierl.api.service.IArticleService;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.highlight.HighlightBuilder;

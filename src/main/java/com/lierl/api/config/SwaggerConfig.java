@@ -1,4 +1,4 @@
-package com.lierl.config;
+package com.lierl.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

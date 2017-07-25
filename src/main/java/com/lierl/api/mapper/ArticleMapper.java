@@ -1,7 +1,7 @@
-package com.lierl.mapper;
+package com.lierl.api.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.lierl.entity.Article;
+import com.lierl.api.entity.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;

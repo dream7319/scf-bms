@@ -1,10 +1,8 @@
-package com.lierl.service.impl;/**
- * Created by Administrator on 2017/7/24.
- */
+package com.lierl.api.service.impl;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.lierl.service.IBaseService;
+import com.lierl.api.service.IBaseService;
 
 /**
  * @author lierl

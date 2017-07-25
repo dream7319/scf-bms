@@ -1,4 +1,4 @@
-package com.lierl.entity;
+package com.lierl.api.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;

@@ -1,4 +1,4 @@
-package com.lierl.service;
+package com.lierl.api.service;
 
 import com.baomidou.mybatisplus.service.IService;
 

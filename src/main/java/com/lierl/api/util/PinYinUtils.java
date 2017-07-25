@@ -1,6 +1,4 @@
-package com.lierl.util;/**
- * Created by Administrator on 2017/7/24.
- */
+package com.lierl.api.util;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

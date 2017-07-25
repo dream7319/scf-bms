@@ -1,4 +1,4 @@
-package com.lierl.common;
+package com.lierl.api.common;
 
 /**
  * 常量类
