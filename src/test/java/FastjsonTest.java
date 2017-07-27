@@ -3,11 +3,6 @@
  */
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.google.common.collect.Maps;
-
-import java.util.Date;
-import java.util.Map;
 
 /**
  * @author lierl
@@ -15,27 +10,31 @@ import java.util.Map;
  **/
 public class FastjsonTest {
 	public static void main(String[] args) {
-		Map<String,Object> datas = Maps.newHashMap();
-		datas.put("bb","aa");
-		datas.put("aa",new Date());
-		datas.put("cc",Gender.FAMALE.getValue());
-
-		String mm = JSON.toJSONStringWithDateFormat(datas,"yyyy-MM-dd", SerializerFeature.PrettyFormat);
-
-		System.out.println(mm);
+		LoanApply loan = new LoanApply();
+		loan.setAmount(1.0);
+		loan.setProductId("1111111");
+		System.out.println(JSON.toJSONString(loan));
 	}
 }
 
-enum Gender{
-	MALE(1),FAMALE(2);
+class LoanApply{
+	private Double amount;
+	private String productId;
 
-	private int value;
-
-	private Gender(int value){
-		this.value = value;
+	public Double getAmount() {
+		return amount;
 	}
 
-	public int getValue() {
-		return value;
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 }
+
