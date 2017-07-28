@@ -1,8 +1,8 @@
-/**
- * Created by Administrator on 2017/7/21.
- */
-
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.Feature;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lierl
@@ -10,31 +10,11 @@ import com.alibaba.fastjson.JSON;
  **/
 public class FastjsonTest {
 	public static void main(String[] args) {
-		LoanApply loan = new LoanApply();
-		loan.setAmount(1.0);
-		loan.setProductId("1111111");
-		System.out.println(JSON.toJSONString(loan));
+		String aa = "{\"a\":\"aa\",\"b\":\"bb\",\"c\":[{\"c\":\"c\"},{\"d\":\"d\"}]}";
+		Map<String,Object> map = JSON.parseObject(aa, Map.class, Feature.OrderedField);
+		List<Map<String,Object>> data = (List<Map<String,Object>>)map.get("c");
+		System.out.println(data.get(0).get("c"));
 	}
 }
 
-class LoanApply{
-	private Double amount;
-	private String productId;
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}
-}
 

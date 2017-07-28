@@ -17,5 +17,6 @@ public interface UserMapper extends BaseMapper<User>{
             "id, username, age, delete_flag,create_time,birthday,password,user_status," +
             "name,sex,email,telphone,photo,user_type,update_time"+
             " from scf_user")
+//    @Options(statementType = StatementType.CALLABLE)
     public List<User> getAllUsers();
 }
