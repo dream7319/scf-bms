@@ -1,0 +1,164 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-user"></i>
+            后台管理
+        </li>
+
+        <li>
+            <a href="#!/user/list">用户管理</a>
+        </li>
+
+        <li>
+            添加用户
+        </li>
+        <!--<li class="active">Simple &amp; Dynamic</li>-->
+    </ul><!-- .breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- #nav-search -->
+</div>
+<div class="page-content">
+    <!--<div class="page-header">
+        <h1 style="font-weight: bold">
+            后台管理
+            <span style="font-size: smaller">
+                <i class="icon-double-angle-right"></i>
+                用户管理
+            </span>
+
+            <span style="font-size: small">
+                <i class="icon-double-angle-right"></i>
+                添加用户
+            </span>
+
+        </h1>
+    </div>--><!-- /.page-header -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <form class="form-horizontal tasi-form" name="addUserForm" novalidate>
+                <div ng-class="addUserForm.username.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">用户名<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="username" placeholder="用户名" ng-model="user.username" required
+                            ng-blur="usernameChange=true" ng-focus="usernameChange=false"/>
+                        <span ng-show="addUserForm.username.$invalid" style="color:red;">
+                            <span ng-show="addUserForm.username.$error.required && usernameChange">*请输入用户名</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="addUserForm.password.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">密码<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="password" class="form-control" name="password" placeholder="密码" ng-model="user.password" required
+                               ng-blur="passwordChange=true" ng-focus="passwordChange=false"/>
+                        <span ng-show="addUserForm.password.$invalid" style="color:red;">
+                            <span ng-show="addUserForm.password.$error.required && passwordChange">*请输入密码</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="addUserForm.repassword.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">重复密码<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="password" class="form-control" placeholder="重复密码" name="repassword" pwd-equals="user.password"
+                               ng-blur="repasswordChange=true" ng-focus="repasswordChange=false" ng-model="repassword" required />
+                        <span ng-show="addUserForm.repassword.$invalid && addUserForm.repassword.$dirty" style="color:red;">
+                            <span ng-show="addUserForm.repassword.$error.required && repasswordChange">*请再次输入密码</span>
+                            <span ng-show="user.password!=repassword">*两次输入密码不一致</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="addUserForm.name.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">中文名<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" name="name" class="form-control" placeholder="中文名" ng-model="user.name"
+                               ng-blur="nameChange=true" ng-focus="nameChange=false" required />
+                        <span ng-show="addUserForm.name.$invalid" style="color:red;">
+                            <span ng-show="addUserForm.name.$error.required && nameChange">*请输入中文名</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">性别<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input name="sex" type="radio" class="ace" ng-checked="1" ng-model="user.sex" value="MALE">
+                        <span class="lbl">&nbsp;&nbsp;男</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input name="sex" type="radio" class="ace" ng-model="user.sex" value="FEMALE">
+                        <span class="lbl">&nbsp;&nbsp;女</span>
+                    </div>
+                </div>
+
+                <div ng-class="addUserForm.email.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">邮箱<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="email" class="form-control" name="email" placeholder="邮箱" ng-model="user.email"
+                               ng-blur="emailChange=true" ng-focus="emailChange=false" required>
+
+                        <span ng-show="addUserForm.email.$invalid" style="color:red;">
+                            <span ng-show="addUserForm.email.$error.required && emailChange">*请输入邮箱</span>
+                            <span ng-show="addUserForm.email.$error.email">*请输入正确的email地址</span>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div ng-class="addUserForm.telphone.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">手机号<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="telphone" placeholder="手机号" ng-model="user.telphone"
+                               ng-blur="telphoneChange=true" ng-focus="telphoneChange=false" maxlength="11" ng-pattern="/1[3|5|7|8|][0-9]{9}/" required />
+                        <span ng-show="addUserForm.telphone.$invalid" style="color:red;">
+                            <span ng-show="addUserForm.telphone.$error.required && telphoneChange">*请输入手机号</span>
+                            <span ng-show="addUserForm.telphone.$error.pattern">请输入正确的手机号码</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="addUserForm.birthday.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">出生日期<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control datetimepicker" name="birthday" placeholder="出生日期" ng-model="user.birthday"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">是否禁用<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input class="ace ace-switch ace-switch-6" type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="userStatus">
+                        <span class="lbl"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button class="btn" ng-disabled="addUserForm.$invalid || isUnchanged(user)"
+                            ng-click="addUser(user)">
+                            <i class="icon-ok bigger-110"></i>
+                            提交
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-warning" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>

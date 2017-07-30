@@ -11,23 +11,16 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
  * Created by lierl on 2017/6/25.
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
 
     private final static Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -35,8 +28,8 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/{id}")
-    public Map<String,Object> getUserById(@PathVariable Integer id){
+    @GetMapping("/user")
+    public Map<String,Object> getUserById(@RequestParam Integer id){
         Map<String,Object> results = Maps.newHashMap();
         if(StringUtils.isNotEmpty(ObjectUtils.toString(id))){
             User user = userService.selectById(id);
@@ -53,12 +46,13 @@ public class UserController {
 //        return userService.selectPage(new Page<User>(0,1));
 //    }
 
-    @PostMapping("/add")
+    @PostMapping("/user/add")
     public Map<String,Object> addUser(@RequestBody User user){
         Map<String,Object> results = Maps.newHashMap();
         results.put("result","error");
         try {
             user.setPassword(Utils.hashHmac(user.getPassword(),Utils.SECRET));
+            user.setCreateTime(new Date());
             Integer num = userService.insertUser(user);
             if(num > 0){
                 results.put("result","success");
@@ -71,17 +65,17 @@ public class UserController {
         return results;
     }
 
-    @GetMapping("/test")
-    public Map<String,Object> test(@RequestParam(value="username",defaultValue = "1") Integer username){
+    @GetMapping("/user/list")
+    public Map<String,Object> queryUsers(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
+                                   @RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
         Map<String,Object> results = Maps.newHashMap();
         EntityWrapper<User> wrapper = new EntityWrapper<User>();
-        wrapper.addFilter("username={0}",username);
-        Page<User> userListPage = userService.selectPage(new Page<User>(1, 5),wrapper);
+        Page<User> userListPage = userService.selectPage(new Page<User>(pageNum, pageSize));
         results.put("data",userListPage);
         return results;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/user/delete/{id}")
     public Map<String,Object> deleteUserById(@PathVariable("id") Integer id){
         Map<String,Object> results = Maps.newHashMap();
         results.put("result","error");
@@ -98,7 +92,7 @@ public class UserController {
         return results;
     }
 
-    @PutMapping("/update")
+    @PutMapping("/user/update")
     public Map<String,Object> updateUserById(@RequestBody User user){
         Map<String,Object> results = Maps.newHashMap();
         results.put("result","error");

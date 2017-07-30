@@ -1,4 +1,4 @@
-package com.lierl.controller;
+package com.lierl.api.controller;
 
 import com.lierl.api.entity.Article;
 import com.lierl.api.repository.ArticleRepository;

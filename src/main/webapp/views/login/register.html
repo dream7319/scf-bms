@@ -12,10 +12,10 @@
                 <fieldset>
                     <label class="block clearfix">
                         <span class="block input-icon input-icon-right">
-                            <input type="email" ng-model="user.email" name="email"class="form-control" placeholder="邮箱" required/>
+                            <input type="email" ng-model="user.email" name="email" class="form-control" placeholder="邮箱" required/>
                             <i class="icon-envelope"></i>
                         </span>
-                        <span style="color: red" ng-show="registerForm.email.$invalid && registerForm.email.$dirty">
+                        <span ng-show="registerForm.email.$invalid && registerForm.email.$dirty" style="color:red;">
                             <span ng-show="registerForm.email.$error.required">*请输入邮箱</span>
                             <span ng-show="registerForm.email.$error.email">*请输入正确的email地址</span>
                         </span>
@@ -26,7 +26,7 @@
                             <input type="text" ng-model="user.username" name="username" class="form-control" placeholder="用户名" required/>
                             <i class="icon-user"></i>
                         </span>
-                        <span style="color: red" ng-show="registerForm.username.$invalid && registerForm.username.$dirty">
+                        <span ng-show="registerForm.username.$invalid && registerForm.username.$dirty" style="color:red;">
                             <span ng-show="registerForm.username.$error.required">*请输入用户名</span>
                         </span>
                     </label>
@@ -36,7 +36,7 @@
                             <input type="password" ng-model="user.password" name="password" id="password" class="form-control" required placeholder="密码" />
                             <i class="icon-lock"></i>
                         </span>
-                        <span style="color: red" ng-show="registerForm.password.$invalid && registerForm.password.$dirty">
+                        <span ng-show="registerForm.password.$invalid && registerForm.password.$dirty" style="color:red;">
                             <span ng-show="registerForm.password.$error.required">*请输入密码</span>
                             <!--<span ng-show="registerForm.password.$error.minlength">*密码长度不小于6</span>
                             <span ng-show="registerForm.password.$error.maxlength">*密码长度不超过20</span>   -->
@@ -48,7 +48,7 @@
                             <input type="password" class="form-control" ng-model="repassword" pwd-equals="user.password" name="repassword" id="repassword" required placeholder="重复密码" />
                             <i class="icon-retweet"></i>
                         </span>
-                        <span style="color: red" ng-show="registerForm.repassword.$invalid && registerForm.repassword.$dirty">
+                        <span ng-show="registerForm.repassword.$invalid && registerForm.repassword.$dirty" style="color:red;">
                             <span ng-show="registerForm.repassword.$error.required">*请再次输入密码</span>
                             <span ng-show="user.password!=repassword">*两次输入密码不一致</span>
                         </span>
