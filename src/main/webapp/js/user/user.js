@@ -18,11 +18,15 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
 
     });
     
-    $scope.query = function (pageNum,pageSize) {
-        $http.get('/api/user/list',{params:{pageNum:pageNum,pageSize:pageSize}}).then(function (response) {
+    $scope.query = function (pageNum) {
+        $http.get('/api/user/list',{params:{pageNum:pageNum,pageSize:10}}).then(function (response) {
             $scope.users = response.data.data.records;
-            $scope.pages = response.data.data.pages;
-            console.log(response.data.data);
+            $scope.pages = response.data.data.showPages;
+            $scope.cur = response.data.data.num;
+            $scope.prev = response.data.data.prev;
+            $scope.next = response.data.data.next;
+            $scope.pageCount=response.data.data.pageCount;
+
         },function (response) {
             toastr.error('查询失败');
         });
@@ -42,7 +46,7 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
         });
     }
 
-    $scope.query(1,10);
+    $scope.query(1);
 }]);
 
 app.controller('editCtrl',['$scope','$http','$routeParams','$ocLazyLoad','$location','toastr',function ($scope,$http,$routeParams,$ocLazyLoad,$location,toastr) {

@@ -3,6 +3,7 @@ package com.lierl.api.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
+import com.lierl.api.base.ResponseData;
 import com.lierl.api.entity.User;
 import com.lierl.api.service.IUserService;
 import com.lierl.api.util.Utils;
@@ -41,11 +42,6 @@ public class UserController {
         return results;
     }
 
-//    @GetMapping("/selectPage")
-//    public Page<User> selectPage(){
-//        return userService.selectPage(new Page<User>(0,1));
-//    }
-
     @PostMapping("/user/add")
     public Map<String,Object> addUser(@RequestBody User user){
         Map<String,Object> results = Maps.newHashMap();
@@ -70,8 +66,9 @@ public class UserController {
                                    @RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
         Map<String,Object> results = Maps.newHashMap();
         EntityWrapper<User> wrapper = new EntityWrapper<User>();
-        Page<User> userListPage = userService.selectPage(new Page<User>(pageNum, pageSize));
-        results.put("data",userListPage);
+//        userService.selectList()
+        Page<User> pages = userService.selectPage(new Page<User>(pageNum, pageSize));
+        results.put("data",new ResponseData<User>(pages));
         return results;
     }
 

@@ -4,16 +4,35 @@ import com.lierl.api.entity.Menu;
 import com.lierl.api.mapper.MenuMapper;
 import com.lierl.api.service.IMenuService;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import java.io.Serializable;
+import java.util.List;
 /**
- * <p>
- *  服务实现类
- * </p>
  *
  * @author lierl
- * @since 2017-07-25
+ * @since 2017-07-31
  */
 @Service
 public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implements IMenuService {
-	
+
+
+	@Transactional
+	public Integer insertMenu(Menu menu) throws Exception{
+		return baseMapper.insert(menu);
+	}
+
+	@Transactional
+	public Integer updateMenuById(Menu menu) throws Exception{
+		return baseMapper.updateById(menu);
+	}
+
+	@Transactional
+	public Integer deleteMenuById(Serializable id) throws Exception{
+		return baseMapper.deleteById(id);
+	}
+
+	@Transactional
+	public Integer deleteMenuByIds(List<Serializable> ids) throws Exception{
+		return baseMapper.deleteBatchIds(ids);
+	}
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  *
  * @author lierl
- * @since 2017-07-25
+ * @since 2017-07-31
  */
 @TableName("scf_menu")
 public class Menu implements Serializable {

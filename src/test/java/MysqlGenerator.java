@@ -65,17 +65,18 @@ public class MysqlGenerator {
 
 		strategy.setTablePrefix(new String[]{"scf"});// 此处可以修改为您的表前缀
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-		strategy.setInclude(new String[]{"scf_menu","scf_role","scf_role_menu","scf_user_role","scf_menu_resources"}); // 需要生成的表
+		//,"scf_role","scf_role_menu","scf_user_role","scf_menu_resources"
+		strategy.setInclude(new String[]{"scf_menu"}); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
 		strategy.setEntityBuilderModel(false);
 		// 自定义 mapper 父类
 		strategy.setSuperMapperClass("com.baomidou.mybatisplus.mapper.BaseMapper");
 		// 自定义 service 父类
-		strategy.setSuperServiceClass("com.lierl.service.IBaseService");
+		strategy.setSuperServiceClass("com.lierl.api.service.IBaseService");
 		// 自定义 service 实现类父类
 		strategy.setDbColumnUnderline(true);
 		mpg.setStrategy(strategy);
-		strategy.setSuperServiceImplClass("com.lierl.service.impl.BaseServiceImpl");
+		strategy.setSuperServiceImplClass("com.lierl.api.service.impl.BaseServiceImpl");
 
 		// 包配置
 		PackageConfig pc = new PackageConfig();

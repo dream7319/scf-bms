@@ -1,7 +1,7 @@
 package ${package.Service};
 
 import ${package.Entity}.${entity};
-import ${superServiceClassPackage};
+##import ${superServiceClassPackage};
 import java.io.Serializable;
 
 import java.util.List;
@@ -19,5 +19,5 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
 	Integer delete${entity}ById(Serializable id) throws Exception;
 
-	Integer delete${entity}ByIds(List<Serializable> ids) throws Exception
+	Integer delete${entity}ByIds(List<Serializable> ids) throws Exception;
 }

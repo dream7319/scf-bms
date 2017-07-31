@@ -76,11 +76,9 @@
                                         <a href="#">{{user.username}}</a>
                                     </td>
                                     <td>{{user.name}}</td>
-                                    <td class="hidden-480" ng-if="user.sex === 'MALE'">
-                                        男
-                                    </td>
-                                    <td class="hidden-480" ng-if="user.sex === 'FEMALE'">
-                                        女
+                                    <td class="hidden-480">
+                                        <span ng-if="user.sex === 'MALE'">男</span>
+                                        <span ng-if="user.sex === 'FEMALE'">女</span>
                                     </td>
                                     <td>{{user.email}}</td>
                                     <td class="hidden-480">{{user.telphone}}</td>
@@ -126,33 +124,54 @@
                                 </tr>
                             </tbody>
                         </table>
-                       <!-- <div class="pagination-right">
-                            <ul class="pagination" >
-                                <li>1</li>
-                                <li>2</li>
-                                <li>3</li>
-                                &lt;!&ndash;<li ng-repeat="page in pages" ng-class="{active:page==cur}"  ng-click="query(page)" >
-                                    <a href="javascript:void(0);">{{page}}</a>
-                                </li>&ndash;&gt;
-                            </ul>
-                        </div>-->
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="dataTables_paginate">
-                                    <ul class="pagination">
-                                        <li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i></a>
+                        <div class="row" style="margin-right:0px;">
+                            <div class="col-sm-12">
+                                <div class="dataTables_paginate" style="text-align:center;">
+                                    <ul class="pagination pagination-lg">
+                                        <li class="first disabled" ng-class="{disabled:cur == 1}">
+                                            <a href="javascript:void(0);" ng-click="query(1)">
+                                                <i class="icon-double-angle-left"></i>
+                                            </a>
                                         </li>
-                                        <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li class="next"><a href="#"><i class="icon-double-angle-right"></i></a></li>
+                                        <li class="prev" ng-class="{disabled:cur == 1}">
+                                            <a href="javascript:void(0);" ng-click="query(prev)">
+                                                <i class="icon-angle-left "></i>
+                                            </a>
+                                        </li>
+                                        <li ng-repeat="page in pages" ng-class="{active:page==cur}"  ng-click="query(page)" >
+                                            <a href="javascript:void(0);">{{page}}</a>
+                                        </li>
+                                        <li class="next" ng-class="{disabled:cur == pageCount}">
+                                            <a href="javascript:void(0);" ng-click="query(next)">
+                                                <i class="icon-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="last" ng-class="{disabled:cur == pageCount}">
+                                            <a href="javascript:void(0);" ng-click="query(pageCount)">
+                                                <i class="icon-double-angle-right"></i>
+                                            </a>
+                                        </li>
+
+                                        <li class="last disabled">
+                                            <a href="javascript:void(0);">
+                                                共{{pageCount}}页
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+
+                        <!--<div class="row">
+                            <div class="x_content">
+                                <a class="btn btn-info btn-ls" ng-click="refresh(1)" ng-disabled="first">首页</a>
+                                <a class="btn btn-info" ng-click="refresh(prev)" ng-disabled="first">上一页</a>
+                                <a class="btn btn-default" ng-repeat="page in showPages" ng-class="{'btn-primary':page==pageNum}"  ng-click="refresh(page)">{{page}}</a>
+                                <a class="btn btn-info" ng-click="refresh(next)" ng-disabled="last">下一页</a>
+                                <a class="btn btn-info" ng-click="refresh(pageCount)" ng-disabled="last">末页</a>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
