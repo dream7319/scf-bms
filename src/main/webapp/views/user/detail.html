@@ -1,0 +1,99 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-user"></i>
+            后台管理
+        </li>
+
+        <li>
+            <a href="#!/user/list">用户管理</a>
+        </li>
+
+        <li>
+            用户详情
+        </li>
+        <!--<li class="active">Simple &amp; Dynamic</li>-->
+    </ul><!-- .breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- #nav-search -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">用户名:</label>
+                    <div class="col-sm-5">
+                        <p class="form-control-static">{{user.username}}</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">中文名:</label>
+                    <div class="col-lg-5">
+                        <p class="form-control-static">{{user.name}}</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">性别:</label>
+                    <div class="col-lg-5">
+                        <p class="form-control-static">
+                            <span ng-if="user.sex === 'MALE'">男</span>
+                            <span ng-if="user.sex === 'FEMALE'">女</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">邮箱:</label>
+                    <div class="col-lg-5">
+                        <p class="form-control-static">{{user.email}}</p>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">手机号:</label>
+                    <div class="col-lg-5">
+                        <p class="form-control-static">{{user.telphone}}</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">出生日期:</label>
+                    <div class="col-lg-5">
+                        <p class="form-control-static">{{user.birthday | date:'yyyy-MM-dd'}}</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-lg-3">是否禁用:</label>
+                    <div class="col-lg-5">
+                        <p class="form-control-static">
+                            <span class="label label-sm label-warning" ng-if="!user.userStatus">禁用</span>
+                            <span class="label label-sm label-success" ng-if="user.userStatus">可用</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <a class="btn btn-sm" href="javascript:history.go(-1);">
+                            <i class="icon-ok bigger-110"></i>
+                            返回
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>

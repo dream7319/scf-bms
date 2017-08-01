@@ -12,7 +12,9 @@ import ${superControllerClassPackage};
 #end
 
 import java.util.Map;
+import java.util.Date;
 
+import com.lierl.api.base.ResponseData;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.ObjectUtils;
 
@@ -85,9 +87,9 @@ public class ${table.controllerName} {
     public Map<String,Object> insert${entity}(@RequestBody ${entity} ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}){
 		Map<String,Object> results = Maps.newHashMap();
 		results.put("result","error");
-
 		try{
 			if(${entity.substring(0,1).toLowerCase()}${entity.substring(1)} != null){
+				${entity.substring(0,1).toLowerCase()}${entity.substring(1)}.setCreateTime(new Date());
                 Integer num = ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}Service.insert${entity}(${entity.substring(0,1).toLowerCase()}${entity.substring(1)});
                 if(num > 0){
                     results.put("result","success");
@@ -127,6 +129,7 @@ public class ${table.controllerName} {
 		results.put("result","error");
 		try {
 			if(${entity.substring(0,1).toLowerCase()}${entity.substring(1)} != null){
+				${entity.substring(0,1).toLowerCase()}${entity.substring(1)}.setUpdateTime(new Date());
 				int num = ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}Service.update${entity}ById(${entity.substring(0,1).toLowerCase()}${entity.substring(1)});
 				if(num > 0){
 					results.put("result","success");

@@ -3019,7 +3019,7 @@ button.btn:active {
 .btn, .btn-default, .btn:focus, .btn-default:focus {
     background-color: #58c9f3 !important;
     border-color: #58c9f3;
-    border-radius:4px
+    border-radius: 4px
 
 }
 
@@ -9149,7 +9149,7 @@ th .lbl:only-child, td .lbl:only-child {
 }
 
 .login-layout {
-/*    background-color: #1d2024*/
+    /*    background-color: #1d2024*/
 }
 
 .login-layout .main-container:after {
@@ -15247,6 +15247,14 @@ th[aria-selected=true] .ui-jqgrid-sortable {
     padding-left: 0;
     padding-right: 0;
     float: none
+}
+
+.nav-foot {
+    height: 20px;
+    width: 100%;
+    text-align: center;
+    line-height: 20px;
+    margin-bottom: 2px;
 }
 
 @media (min-width: 768px) {

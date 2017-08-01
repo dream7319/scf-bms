@@ -3,6 +3,7 @@ app.config(['$routeProvider',function ($routeProvider) {
         .when("/user/list",{templateUrl:'/views/user/lists.html?t='+getVersion(),controller:'userControllerList'})
         .when("/user/edit/:id",{templateUrl:'/views/user/edit.html?t='+getVersion(),controller:'editCtrl'})
         .when("/user/add",{templateUrl:'/views/user/add.html?t='+getVersion(),controller:'addCtrl'})
+        .when("/user/detail/:id",{templateUrl:'/views/user/detail.html?t='+getVersion(),controller:'detailCtrl'})
         .otherwise({redirectTo:'/'});
 }]);
 
@@ -11,11 +12,10 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
     $('table th input:checkbox').on('click' , function(){
         var that = this;
         $(this).closest('table').find('tr > td:first-child input:checkbox')
-            .each(function(){
+            .each(function () {
                 this.checked = that.checked;
                 $(this).closest('tr').toggleClass('selected');
             });
-
     });
     
     $scope.query = function (pageNum) {
@@ -26,7 +26,7 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
             $scope.prev = response.data.data.prev;
             $scope.next = response.data.data.next;
             $scope.pageCount=response.data.data.pageCount;
-
+            $scope.pageSize = 10;
         },function (response) {
             toastr.error('查询失败');
         });
@@ -47,6 +47,48 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
     }
 
     $scope.query(1);
+
+    $scope.u = {};
+    $scope.lockUser = function (user,status) {
+        $scope.u.id = user.id;
+        $scope.u.userStatus = status;
+
+        $http.put('/api/user/update',$scope.u).then(function (response) {
+            var result = response.data.result;
+            if(result == 'success'){
+                $scope.promptMsg('success',status);
+                $route.reload();
+            }else{
+                $scope.promptMsg('error',status);
+            }
+        },function (response) {
+            $scope.promptMsg('error',status);
+        });
+    }
+    
+    $scope.promptMsg = function (result,status) {
+        if(result == 'success'){
+            if(status){
+                toastr.success('启用成功');
+            }else{
+                toastr.success('禁用成功');
+            }
+        }else{
+            if(status){
+                toastr.error('启用失败');
+            }else{
+                toastr.error('禁用失败');
+            }
+        }
+
+    }
+}]);
+
+app.controller('detailCtrl',['$scope','$http','$routeParams',function ($scope,$http,$routeParams) {
+    $http.get('/api/user?id='+$routeParams.id).then(function (response) {
+        $scope.user = response.data.user;
+        console.log($scope.user);
+    });
 }]);
 
 app.controller('editCtrl',['$scope','$http','$routeParams','$ocLazyLoad','$location','toastr',function ($scope,$http,$routeParams,$ocLazyLoad,$location,toastr) {
@@ -78,7 +120,6 @@ app.controller('editCtrl',['$scope','$http','$routeParams','$ocLazyLoad','$locat
     }
 
 }]);
-
 app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',function ($scope,$http,$ocLazyLoad,$location,toastr) {
     $ocLazyLoad.load('datetimepicker').then(function() {
         $(".datetimepicker").datetimepicker({
@@ -87,8 +128,15 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
             language: 'zh-CN',
             autoclose:true
         });
+
+        $("#userStatusId").bootstrapSwitch({
+            onText:"启用",
+            offText:"禁用",
+            onColor:"success",
+            offColor:"warning"
+        });
     });
-    
+
     $scope.addUser = function (user) {
         user.birthday = $(".datetimepicker").val();
         user.sex = $("input[type='radio']:checked").val();

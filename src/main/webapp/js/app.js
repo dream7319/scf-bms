@@ -8,8 +8,10 @@ app.config(['$ocLazyLoadProvider',function ($ocLazyLoadProvider) {
 			serie:true,
 			files:[
 				'/static/css/bootstrap-datetimepicker.min.css',
+                '/static/css/bootstrap-switch.min.css',
 				'/static/js/bootstrap-datetimepicker.min.js',
-				'/static/js/bootstrap-datetimepicker.zh-CN.js'
+				'/static/js/bootstrap-datetimepicker.zh-CN.js',
+                '/static/js/bootstrap-switch.js'
 			]
 		}]
 	});

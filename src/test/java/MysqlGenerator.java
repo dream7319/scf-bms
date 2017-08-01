@@ -24,8 +24,8 @@ public class MysqlGenerator {
 
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
-//		gc.setOutputDir("E:\\intellJWork\\scf-bms\\src\\main\\java\\");
-		gc.setOutputDir("E:\\mp\\");
+		gc.setOutputDir("E:\\intellJWork\\scf-bms\\src\\main\\java\\");
+//		gc.setOutputDir("E:\\mp\\");
 		gc.setFileOverride(true);
 		gc.setActiveRecord(false);
 		gc.setEnableCache(false);// XML 二级缓存
@@ -66,7 +66,7 @@ public class MysqlGenerator {
 		strategy.setTablePrefix(new String[]{"scf"});// 此处可以修改为您的表前缀
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
 		//,"scf_role","scf_role_menu","scf_user_role","scf_menu_resources"
-		strategy.setInclude(new String[]{"scf_menu"}); // 需要生成的表
+		strategy.setInclude(new String[]{"scf_role"}); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
 		strategy.setEntityBuilderModel(false);
 		// 自定义 mapper 父类

@@ -2,6 +2,7 @@ package com.lierl.api.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -25,6 +26,7 @@ public class User {
     private Boolean userStatus;//用户状态 0:禁用，1:可用
     @TableField("user_type")
     private String userType;//用户类型 0:普通用户,1:管理员,2:超级管理员
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="CET")
     private Date birthday;//出生日期
     @TableField("create_time")
     private Date createTime;//创建日期
