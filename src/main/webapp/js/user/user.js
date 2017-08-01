@@ -128,20 +128,19 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
             language: 'zh-CN',
             autoclose:true
         });
-
-        $("#userStatusId").bootstrapSwitch({
-            onText:"启用",
-            offText:"禁用",
-            onColor:"success",
-            offColor:"warning"
-        });
     });
 
     $scope.addUser = function (user) {
         user.birthday = $(".datetimepicker").val();
         user.sex = $("input[type='radio']:checked").val();
-        user.userStatus = $scope.userStatus;
-        $http.post('/api/user/add',user).then(function (response) {
+
+        if($("#userStatusId").hasClass('switch-on')){
+            user.userStatus = true;
+        }else{
+            user.userStatus = false;
+        }
+        console.log(user);
+        /*$http.post('/api/user/add',user).then(function (response) {
             var result = response.data.result;
             if(result == 'success'){
                 toastr.success('添加成功');
@@ -151,7 +150,7 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
             }
         },function (response) {
             toastr.error('添加失败');
-        });
+        });*/
     }
 }]);
 

@@ -7,11 +7,11 @@ app.config(['$ocLazyLoadProvider',function ($ocLazyLoadProvider) {
 			insertBefore:'#ng_load_plugins_before',
 			serie:true,
 			files:[
+                '/static/css/custom-switch.css',
 				'/static/css/bootstrap-datetimepicker.min.css',
-                '/static/css/bootstrap-switch.min.css',
 				'/static/js/bootstrap-datetimepicker.min.js',
 				'/static/js/bootstrap-datetimepicker.zh-CN.js',
-                '/static/js/bootstrap-switch.js'
+                '/static/js/custom-switch.js'
 			]
 		}]
 	});
