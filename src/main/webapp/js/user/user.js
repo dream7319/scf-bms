@@ -139,8 +139,8 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
         }else{
             user.userStatus = false;
         }
-        console.log(user);
-        /*$http.post('/api/user/add',user).then(function (response) {
+        // console.log(user);
+        $http.post('/api/user/add',user).then(function (response) {
             var result = response.data.result;
             if(result == 'success'){
                 toastr.success('添加成功');
@@ -150,7 +150,7 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
             }
         },function (response) {
             toastr.error('添加失败');
-        });*/
+        });
     }
 }]);
 

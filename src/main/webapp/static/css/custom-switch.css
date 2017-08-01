@@ -1,11 +1,11 @@
-[class|=switch] {
+.customer-switch {
 	position: relative;
 	display: inline-block;
 	width: 50px;
 	height: 30px;
 	border-radius: 16px;
 	line-height: 32px;
-	-webkit-tap-highlight-color:rgba(255,255,255,0);
+	/*-webkit-tap-highlight-color:rgba(255,255,255,0);*/
 }
 .switch-on {
 	border: 1px solid white;
