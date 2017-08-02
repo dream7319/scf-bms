@@ -47,7 +47,7 @@ public class RoleController {
 	/**
 	* 分页查询列表
 	*/
-	@GetMapping("/role/lists")
+	@GetMapping("/role/list")
     public Map<String,Object> getRoles(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
 						@RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
 		Map<String,Object> results = Maps.newHashMap();

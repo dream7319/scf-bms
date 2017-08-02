@@ -1,8 +1,5 @@
 package com.lierl.api.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.*;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,12 +16,12 @@ import java.util.Date;
  *
  * Created by lierl on 2017/6/25.
  */
-@Document(indexName = "article_index",type="article",shards = 5,replicas = 1,indexStoreType = "fs",refreshInterval = "-1")
+//@Document(indexName = "article_index",type="article",shards = 5,replicas = 1,indexStoreType = "fs",refreshInterval = "-1")
 public class Article implements Serializable{
 
     private static final long serialVersionUID = 7756135478992558574L;
 
-    @Id
+//    @Id
     private Long id;
 
     private String title;//标题
@@ -45,7 +42,7 @@ public class Article implements Serializable{
      *这些默认值指的是我们没有在我们没有在属性上添加@Filed注解的默认处理。一旦添加了@Filed注解，
      * 所有的默认值都不再生效。此外，如果添加了@Filed注解，那么type字段必须指定
      */
-    @Field(format = DateFormat.date_time,index = FieldIndex.no,store = true,type = FieldType.Date)
+//    @Field(format = DateFormat.date_time,index = FieldIndex.no,store = true,type = FieldType.Date)
     private Date postTime;//发表时间
 
     private Long clickCount;//点击率

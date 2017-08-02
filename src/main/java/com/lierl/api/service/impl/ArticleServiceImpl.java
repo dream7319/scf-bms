@@ -11,10 +11,11 @@ import java.util.List;
 /**
  * Created by lierl on 2017/6/25.
  */
-@Service
+//@Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> implements IArticleService {
     @Override
     public List<Article> getAllArticles() {
-        return baseMapper.getAllArticles();
+//        return baseMapper.getAllArticles();
+        return null;
     }
 }

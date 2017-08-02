@@ -1,25 +1,7 @@
 package com.lierl.api.controller;
 
-import com.lierl.api.entity.Article;
-import com.lierl.api.repository.ArticleRepository;
-import com.lierl.api.service.IArticleService;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.highlight.HighlightBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 /**
  * Created by lierl on 2017/6/25.
@@ -28,7 +10,7 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 @RequestMapping("/article")
 public class ArticleController {
 
-    @Autowired
+    /*@Autowired
     private IArticleService articleService;
 
     @Autowired
@@ -86,6 +68,6 @@ public class ArticleController {
                 .build();
 
         Page<Article> search = articleRepository.search(searchQuery);
-    }
+    }*/
 
 }

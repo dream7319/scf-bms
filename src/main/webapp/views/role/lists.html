@@ -32,7 +32,7 @@
 
                     <div class="table-responsive">
                         <div class="btn-group" style="margin-bottom:3px;">
-                            <a class="btn btn-default btn-sm" href="#!/role/add">
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);" ng-click="addRole();">
                                 添加
                             </a>
                             <!--<a class="btn btn-default btn-info">
@@ -50,13 +50,9 @@
                                     </th>
                                     <th class="center">序号</th>
                                     <th>角色名称</th>
-                                    <th></th>
-                                    <th class="hidden-480">性别</th>
-                                    <th>邮箱</th>
-                                    <th class="hidden-480">手机号</th>
                                     <th class="hidden-480">
                                         <i class="icon-time bigger-110 hidden-480"></i>
-                                        出生日期
+                                        创建时间
                                     </th>
                                     <th class="hidden-480">是否禁用</th>
                                     <th>操作</th>
@@ -64,7 +60,7 @@
                             </thead>
 
                             <tbody>
-                                <tr ng-repeat="user in users track by $index">
+                                <tr ng-repeat="role in roles track by $index">
                                     <td class="center">
                                         <label>
                                             <input type="checkbox" class="ace" />
@@ -72,64 +68,41 @@
                                         </label>
                                     </td>
                                     <td class="center">
-
+                                        {{$index+1+(cur-1)*pageSize}}
                                     </td>
                                     <td>
-                                        <a href="#!/role/detail/{{role.id}}">
-
-                                        </a>
+                                        {{role.roleName}}
                                     </td>
-                                    <td></td>
+                                    <td>{{role.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <td class="hidden-480">
-                                        <span ng-if="user.sex === 'MALE'">男</span>
-                                        <span ng-if="user.sex === 'FEMALE'">女</span>
-                                    </td>
-                                    <td>{{user.email}}</td>
-                                    <td class="hidden-480">{{user.telphone}}</td>
-                                    <td>{{user.birthday | date:'yyyy-MM-dd'}}</td>
-                                    <td class="hidden-480">
-                                        <span class="label label-sm label-warning" ng-if="!user.userStatus">禁用</span>
-                                        <span class="label label-sm label-success" ng-if="user.userStatus">可用</span>
-                                        <!--<span class="label label-sm label-inverse arrowed-in">Flagged</span>
-                                        <span class="label label-sm label-info arrowed arrowed-righ">Sold</span>-->
+                                        <span class="label label-sm label-warning" ng-if="!role.roleStatus">禁用</span>
+                                        <span class="label label-sm label-success" ng-if="role.roleStatus">可用</span>
                                     </td>
 
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                            <a class="blue" href="#!/user/detail/{{user.id}}">
-                                                <i class="icon-zoom-in bigger-130"></i>
-                                            </a>
-
-                                            <a class="green" href="#!/user/edit/{{user.id}}">
+                                            <a class="green" href="javascript:void(0);" ng-click="editRole(role);">
                                                 <i class="icon-pencil bigger-130"></i>
                                             </a>
 
-                                            <a class="red" href="javascript:void(0);" ng-click="deleteUser(user);">
+                                            <a class="red" href="javascript:void(0);" ng-click="deleteRole(role);">
                                                 <i class="icon-trash bigger-130"></i>
                                             </a>
 
-                                            <a class="red" href="javascript:void(0);" title="禁用" ng-if="user.userStatus" ng-click="lockUser(user,false)">
+                                            <a class="red" href="javascript:void(0);" title="禁用" ng-if="role.roleStatus" ng-click="lockRole(role,false)">
                                                 <i class="icon-lock bigger-120"></i>
                                             </a>
 
-                                            <a class="green" href="javascript:void(0);" title="启用" ng-if="!user.userStatus" ng-click="lockUser(user,true)">
+                                            <a class="green" href="javascript:void(0);" title="启用" ng-if="!role.roleStatus" ng-click="lockRole(role,true)">
                                                 <i class="icon-unlock bigger-120"></i>
                                             </a>
-
-                                            <!--<a class="btn btn-xs btn-danger">
-                                                <i class="icon-trash bigger-120"></i>
-                                            </a>
-
-                                            <a class="btn btn-xs btn-warning">
-                                                <i class="icon-flag bigger-120"></i>
-                                            </a>-->
                                         </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <div class="row" style="margin-right:0px;">
+                        <div class="row" style="margin-right:0px;" ng-if="roles">
                             <div class="col-sm-12">
                                 <div class="dataTables_paginate" style="text-align:center;">
                                     <ul class="pagination pagination-lg">
