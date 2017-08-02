@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `scf_menu`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `scf_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `meu_name` varchar(50) DEFAULT NULL,
+  `menu_name` varchar(50) DEFAULT NULL,
   `menu_url` varchar(100) DEFAULT NULL,
   `menu_level` int(11) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
