@@ -20,6 +20,7 @@ app.controller('menuControllerList',['$scope','$http','toastr','$location','$rou
     $scope.query = function (pageNum) {
         $http.get('/api/menu/list',{params:{pageNum:pageNum,pageSize:10}}).then(function (response) {
             $scope.menus = response.data.data.records;
+            console.log($scope.menus);
             $scope.pages = response.data.data.showPages;
             $scope.cur = response.data.data.num;
             $scope.prev = response.data.data.prev;
