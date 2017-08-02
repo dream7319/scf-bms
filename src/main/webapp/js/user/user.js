@@ -17,7 +17,7 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
                 $(this).closest('tr').toggleClass('selected');
             });
     });
-    
+
     $scope.query = function (pageNum) {
         $http.get('/api/user/list',{params:{pageNum:pageNum,pageSize:10}}).then(function (response) {
             $scope.users = response.data.data.records;
@@ -31,7 +31,7 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
             toastr.error('查询失败');
         });
     }
-    
+
     $scope.deleteUser = function (user) {
         $http.delete('/api/user/delete/'+user.id).then(function (response) {
             var result = response.data.result;
@@ -48,8 +48,9 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
 
     $scope.query(1);
 
-    $scope.u = {};
+
     $scope.lockUser = function (user,status) {
+        $scope.u = {};
         $scope.u.id = user.id;
         $scope.u.userStatus = status;
 
@@ -65,7 +66,7 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
             $scope.promptMsg('error',status);
         });
     }
-    
+
     $scope.promptMsg = function (result,status) {
         if(result == 'success'){
             if(status){
@@ -104,7 +105,7 @@ app.controller('editCtrl',['$scope','$http','$routeParams','$ocLazyLoad','$locat
     $http.get('/api/user?id='+$routeParams.id).then(function (response) {
         $scope.user = response.data.user;
     });
-    
+
     $scope.editUser = function (user) {
         $http.put('/api/user/update',user).then(function (response) {
             var result = response.data.result;

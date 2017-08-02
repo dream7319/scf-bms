@@ -1,33 +1,34 @@
 package com.lierl.api.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Maps;
 import com.lierl.api.base.ResponseData;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import com.lierl.api.entity.Menu;
+import com.lierl.api.service.IMenuService;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.google.common.collect.Maps;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.lierl.api.entity.Menu;
-import com.lierl.api.service.IMenuService;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
 /**
  *
  * @author lierl
- * @since 2017-07-31
+ * @since 2017-08-02
  */
 @RestController
 @RequestMapping("/api")
@@ -39,14 +40,24 @@ public class MenuController {
     private IMenuService menuService;
 
 	/**
+	* 查询全部
+	*/
+	@GetMapping("/menu/lists")
+    public Map<String,Object> getMenus(){
+		Map<String,Object> results = Maps.newHashMap();
+		List<Menu> menus = menuService.selectList(null);
+		results.put("data",menus);
+		return results;
+    }
+
+	/**
 	* 分页查询列表
 	*/
 	@GetMapping("/menu/list")
-    public Map<String,Object> getMenus(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
+    public Map<String,Object> getMenuByPages(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
 						@RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
 		Map<String,Object> results = Maps.newHashMap();
-		EntityWrapper<Menu> wrapper = new EntityWrapper<Menu>();
-		Page<Menu> pages = menuService.selectPage(new Page<Menu>(pageNum, pageSize),wrapper);
+		Page<Menu> pages = menuService.getAllMenus(new Page<Menu>(pageNum, pageSize));
 		results.put("data",new ResponseData<Menu>(pages));
 		return results;
 	}
@@ -73,9 +84,9 @@ public class MenuController {
     public Map<String,Object> insertMenu(@RequestBody Menu menu){
 		Map<String,Object> results = Maps.newHashMap();
 		results.put("result","error");
-
 		try{
 			if(menu != null){
+				menu.setCreateTime(new Date());
                 Integer num = menuService.insertMenu(menu);
                 if(num > 0){
                     results.put("result","success");
@@ -115,6 +126,7 @@ public class MenuController {
 		results.put("result","error");
 		try {
 			if(menu != null){
+				menu.setUpdateTime(new Date());
 				int num = menuService.updateMenuById(menu);
 				if(num > 0){
 					results.put("result","success");

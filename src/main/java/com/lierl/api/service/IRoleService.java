@@ -8,7 +8,7 @@ import java.util.List;
 /**
  *
  * @author lierl
- * @since 2017-08-01
+ * @since 2017-08-02
  */
 public interface IRoleService extends IBaseService<Role> {
 

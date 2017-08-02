@@ -1,6 +1,7 @@
 package com.lierl.api.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -33,5 +34,6 @@ public class User {
     @TableField("update_time")
     private Date updateTime;//更新日期
     @TableField("delete_flag")
+    @TableLogic
     private Boolean deleteFlag;//删除标识：0：删除,1：未删除
 }

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,6 +69,14 @@ public class UserController {
             logger.error(e.getMessage());
         }
         return results;
+    }
+
+    @GetMapping("/user/lists")
+    public Map<String,Object> getUsers(){
+        Map<String,Object> results = Maps.newHashMap();
+        List<User> users = userService.selectList(null);
+        results.put("data",users);
+        return null;
     }
 
     @GetMapping("/user/list")

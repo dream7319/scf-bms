@@ -18,4 +18,15 @@ public class MybatisPlusConfig {
         paginationInterceptor.setDialectType(DBType.MYSQL.getDb());
         return paginationInterceptor;
     }
+
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactory() throws Exception {
+//        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+//        PaginationInterceptor pagination = new PaginationInterceptor();
+//        // 具体参考自己设置，参考 xml 参数说明或源码注释
+//        sqlSessionFactory.setPlugins(new Interceptor[]{
+//                pagination
+//        });
+//        return sqlSessionFactory.getObject();
+//    }
 }

@@ -1,15 +1,18 @@
 package com.lierl.api.entity;
 
 import com.baomidou.mybatisplus.enums.IdType;
+
+import java.beans.Transient;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author lierl
- * @since 2017-07-31
+ * @since 2017-08-02
  */
 @TableName("scf_menu")
 public class Menu implements Serializable {
@@ -18,14 +21,34 @@ public class Menu implements Serializable {
 
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
-	private String meuName;
+	private String menuName;
 	private String menuUrl;
 	private Integer menuLevel;
 	private Integer parentId;
 	private Date createTime;
 	private Date updateTime;
-	private Integer menuStatus;
+	private Boolean menuStatus;
 
+	transient List<Menu> subMenus;
+
+	private transient String parentMenuName;
+
+
+	public String getParentMenuName() {
+		return parentMenuName;
+	}
+
+	public void setParentMenuName(String parentMenuName) {
+		this.parentMenuName = parentMenuName;
+	}
+
+	public List<Menu> getSubMenus() {
+		return subMenus;
+	}
+
+	public void setSubMenus(List<Menu> subMenus) {
+		this.subMenus = subMenus;
+	}
 
 	public Integer getId() {
 		return id;
@@ -35,12 +58,12 @@ public class Menu implements Serializable {
 		this.id = id;
 	}
 
-	public String getMeuName() {
-		return meuName;
+	public String getMenuName() {
+		return menuName;
 	}
 
-	public void setMeuName(String meuName) {
-		this.meuName = meuName;
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
 
 	public String getMenuUrl() {
@@ -83,11 +106,11 @@ public class Menu implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public Integer getMenuStatus() {
+	public Boolean getMenuStatus() {
 		return menuStatus;
 	}
 
-	public void setMenuStatus(Integer menuStatus) {
+	public void setMenuStatus(Boolean menuStatus) {
 		this.menuStatus = menuStatus;
 	}
 

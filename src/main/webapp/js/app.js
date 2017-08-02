@@ -38,3 +38,7 @@ app.directive('pwdEquals',function () {
         }
     }
 });
+
+function getVersion(){
+    return new Date().getTime();
+}

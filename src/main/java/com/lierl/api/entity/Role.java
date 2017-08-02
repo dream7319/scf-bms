@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  *
  * @author lierl
- * @since 2017-08-01
+ * @since 2017-08-02
  */
 @TableName("scf_role")
 public class Role implements Serializable {
@@ -21,7 +21,7 @@ public class Role implements Serializable {
 	private String roleName;
 	private Date createTime;
 	private Date updateTime;
-	private Integer roleStatus;
+	private Boolean roleStatus;
 
 
 	public Integer getId() {
@@ -56,11 +56,11 @@ public class Role implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public Integer getRoleStatus() {
+	public Boolean isRoleStatus() {
 		return roleStatus;
 	}
 
-	public void setRoleStatus(Integer roleStatus) {
+	public void setRoleStatus(Boolean roleStatus) {
 		this.roleStatus = roleStatus;
 	}
 

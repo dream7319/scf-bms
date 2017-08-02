@@ -1,7 +1,6 @@
 app.config(['$routeProvider',function ($routeProvider) {
     $routeProvider.when("/",{templateUrl:'/views/role/lists.html?t='+getVersion(),controller:'roleControllerList'})
         .when("/role/list",{templateUrl:'/views/role/lists.html?t='+getVersion(),controller:'roleControllerList'})
-        .when("/role/edit/:id",{templateUrl:'/views/role/edit.html?t='+getVersion(),controller:'editCtrl'})
         .otherwise({redirectTo:'/'});
 }]);
 
@@ -79,20 +78,80 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
             });
         });
     }
-    
+
     $scope.editRole = function (role) {
-        $scope.role = {};
         $http.get('/api/role?id='+role.id).then(function (response) {
-            $scope.role = response.data.role;
+            swal({
+                title: "角色添加",
+                text: "请输入角色名称:",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputPlaceholder: "角色名称",
+                inputValue:response.data.role.roleName,
+                html: true
+            }, function(inputValue){
+                if (inputValue === false) return false;
+                if (inputValue === "") {
+                    swal.showInputError("请输入角色名称!");
+                    return false;
+                }
+                if(inputValue === response.data.role.roleName){
+                    swal.showInputError("角色名称未改变,请重新输入");
+                    return false;
+                }
+                $scope.r={};
+                $scope.r.roleName = inputValue;
+                $scope.r.id = response.data.role.id;
+                $http.put('/api/role/update',$scope.r).then(function (response) {
+                    var result = response.data.result;
+                    if(result == 'success'){
+                        swal.close();
+                        toastr.success('修改成功');
+                        $route.reload();
+                    }else{
+                        toastr.error('修改失败');
+                    }
+                },function (response) {
+                    toastr.error('修改失败');
+                });
+
+            });
         });
-
-        console.log($scope.role);
     }
-}]);
 
-app.controller('editCtrl',['$scope','$http','$routeParams','$ocLazyLoad','$location','toastr',function ($scope,$http,$routeParams,$ocLazyLoad,$location,toastr) {
-
-
+    $scope.deleteRole = function (role) {
+        $http.delete('/api/role/delete/'+role.id).then(function (response) {
+            var result = response.data.result;
+            if(result == 'success'){
+                toastr.success('删除成功');
+                $route.reload();
+            }else{
+                toastr.error('删除失败');
+            }
+        },function (response) {
+            toastr.error('删除失败');
+        });
+    }
+    
+    $scope.lockRole = function (role,status) {
+        $scope.r = {};
+        $scope.r.id = role.id;
+        $scope.r.roleStatus = status;
+        $http.put('/api/role/update',$scope.r).then(function (response) {
+            var result = response.data.result;
+            if(result == 'success'){
+                swal.close();
+                toastr.success('修改成功');
+                $route.reload();
+            }else{
+                toastr.error('修改失败');
+            }
+        },function (response) {
+            toastr.error('修改失败');
+        });
+    }
 }]);
 
 function getVersion(){

@@ -53,10 +53,21 @@ public class ${table.controllerName} {
     private I${entity}Service ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}Service;
 
 	/**
+	* 查询全部
+	*/
+	@GetMapping("/${table.entityPath}/lists")
+    public Map<String,Object> get${entity}s(){
+		Map<String,Object> results = Maps.newHashMap();
+		List<${entity}> ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s = ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}Service.selectList(null);
+		results.put("data",${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s);
+		return results;
+    }
+
+	/**
 	* 分页查询列表
 	*/
 	@GetMapping("/${table.entityPath}/list")
-    public Map<String,Object> get${entity}s(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
+    public Map<String,Object> get${entity}ByPages(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
 						@RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
 		Map<String,Object> results = Maps.newHashMap();
 		EntityWrapper<${entity}> wrapper = new EntityWrapper<${entity}>();

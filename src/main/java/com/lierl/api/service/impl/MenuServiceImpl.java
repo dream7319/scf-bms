@@ -1,6 +1,9 @@
 package com.lierl.api.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.lierl.api.entity.Menu;
+import com.lierl.api.entity.User;
 import com.lierl.api.mapper.MenuMapper;
 import com.lierl.api.service.IMenuService;
 import org.springframework.stereotype.Service;
@@ -35,4 +38,10 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 	public Integer deleteMenuByIds(List<Serializable> ids) throws Exception{
 		return baseMapper.deleteBatchIds(ids);
 	}
+
+	public Page<Menu> getAllMenus(Page<Menu> page){
+		page.setRecords(baseMapper.getAllMenus(page));
+		return page;
+	}
+
 }

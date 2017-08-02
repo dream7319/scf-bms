@@ -3,37 +3,33 @@ package com.lierl.api.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
-
+import com.lierl.api.base.ResponseData;
 import com.lierl.api.entity.Role;
 import com.lierl.api.service.IRoleService;
-
-
-import java.util.Map;
-import java.util.Date;
-
-import com.lierl.api.base.ResponseData;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.ObjectUtils;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
  *
  * @author lierl
- * @since 2017-08-01
+ * @since 2017-08-02
  */
 @RestController
 @RequestMapping("/api")
@@ -45,10 +41,22 @@ public class RoleController {
     private IRoleService roleService;
 
 	/**
+	 * 获取全部
+	 * @return
+	 */
+	@GetMapping("/role/lists")
+	public Map<String,Object> getRoles(){
+		Map<String,Object> results = Maps.newHashMap();
+		List<Role> roles = roleService.selectList(null);
+		results.put("data",roles);
+		return results;
+	}
+
+	/**
 	* 分页查询列表
 	*/
 	@GetMapping("/role/list")
-    public Map<String,Object> getRoles(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
+    public Map<String,Object> getRoleByPages(@RequestParam(value="pageNum",defaultValue = "1") Integer pageNum,
 						@RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
 		Map<String,Object> results = Maps.newHashMap();
 		EntityWrapper<Role> wrapper = new EntityWrapper<Role>();
