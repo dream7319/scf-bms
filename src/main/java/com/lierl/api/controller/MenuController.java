@@ -1,5 +1,8 @@
 package com.lierl.api.controller;
 
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
 import com.lierl.api.base.ResponseData;
@@ -42,7 +45,7 @@ public class MenuController {
 	/**
 	* 查询全部
 	*/
-	@GetMapping("/menu/lists")
+	@GetMapping(value="/menu/lists",produces = "application/json")
     public Map<String,Object> getMenus(){
 		Map<String,Object> results = Maps.newHashMap();
 		List<Menu> menus = menuService.selectList(null);
@@ -69,13 +72,25 @@ public class MenuController {
 	public Map<String,Object> getMenuById(@RequestParam Integer id){
 		Map<String,Object> results = Maps.newHashMap();
 		if(StringUtils.isNotEmpty(ObjectUtils.toString(id))){
-			Menu menu = menuService.selectById(id);
+			Menu menu = menuService.selectMenuById(id);
 			results.put("menu",menu);
 		}else {
 			results.put("menu", new Menu());
 		}
 		return results;
     }
+
+    @GetMapping("/menu/queryKey")
+    public Map<String,Object> queryKey(@RequestParam String key){
+		Map<String,Object> results = Maps.newHashMap();
+		Wrapper<Menu> wrapper = new EntityWrapper<Menu>();
+
+		wrapper.where("menu_level={0}",1)
+				.like("menu_name",key);
+		List<Menu> menus = menuService.selectList(wrapper);
+		results.put("data",menus);
+		return results;
+	}
 
 	/**
 	* 添加

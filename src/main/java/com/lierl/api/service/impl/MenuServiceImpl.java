@@ -44,4 +44,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 		return page;
 	}
 
+	public Menu selectMenuById(Integer id){
+		return baseMapper.selectMenuById(id);
+	}
 }

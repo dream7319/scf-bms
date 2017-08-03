@@ -22,4 +22,6 @@ public interface IMenuService extends IBaseService<Menu> {
 	Integer deleteMenuByIds(List<Serializable> ids) throws Exception;
 
 	Page<Menu> getAllMenus(Page<Menu> page);
+
+	Menu selectMenuById(Integer id);
 }

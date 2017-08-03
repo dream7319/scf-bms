@@ -94,15 +94,20 @@
 
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                            <a class="blue" href="#!/user/detail/{{user.id}}">
-                                                <i class="icon-zoom-in bigger-130"></i>
+                                            <a class="blue" href="#!/user/detail/{{user.id}}" title="详情">
+                                                <i class="icon-search bigger-130"></i>
                                             </a>
 
-                                            <a class="green" href="#!/user/edit/{{user.id}}">
+                                            <a class="blue" href="javascript:void(0);" title="添加角色"
+                                                ng-click="addUserRole(user);">
+                                                <i class="icon-plus-sign-alt"></i>
+                                            </a>
+
+                                            <a class="green" href="#!/user/edit/{{user.id}}" title="编辑">
                                                 <i class="icon-pencil bigger-130"></i>
                                             </a>
 
-                                            <a class="red" href="javascript:void(0);" ng-click="deleteUser(user);">
+                                            <a class="red" href="javascript:void(0);" ng-click="deleteUser(user);" title="删除">
                                                 <i class="icon-trash bigger-130"></i>
                                             </a>
 
@@ -114,11 +119,7 @@
                                                 <i class="icon-unlock bigger-120"></i>
                                             </a>
 
-                                            <!--<a class="btn btn-xs btn-danger">
-                                                <i class="icon-trash bigger-120"></i>
-                                            </a>
-
-                                            <a class="btn btn-xs btn-warning">
+                                            <!--<a class="btn btn-xs btn-warning">
                                                 <i class="icon-flag bigger-120"></i>
                                             </a>-->
                                         </div>

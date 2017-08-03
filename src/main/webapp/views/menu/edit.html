@@ -1,0 +1,99 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-user"></i>
+            后台管理
+        </li>
+
+        <li>
+            <a href="#!/menu/list">菜单管理</a>
+        </li>
+
+        <li>
+            修改菜单
+        </li>
+        <!--<li class="active">Simple &amp; Dynamic</li>-->
+    </ul><!-- .breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- #nav-search -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <form class="form-horizontal tasi-form" name="editMenuForm" novalidate>
+                <div ng-class="editMenuForm.menuName.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">菜单名称<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="menuName" placeholder="菜单名称" ng-model="menu.menuName" required
+                            ng-blur="menuNameChange=true" ng-focus="menuNameChange=false"/>
+                        <span ng-show="editMenuForm.menuName.$invalid" style="color:red;">
+                            <span ng-show="editMenuForm.menuName.$error.required && menuNameChange">*请输入菜单名称</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="editMenuForm.menuLevel.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">菜单级别<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <select ng-model="menu.menuLevel" class="form-control" ng-value="menu.menuLevel">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div ng-class="editMenuForm.url.$invalid ? '' : 'has-success'" class="form-group"
+                     ng-if="menu.menuLevel == 2" >
+                    <label class="control-label col-lg-3">url<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="url" placeholder="url" ng-model="menu.menuUrl" required
+                               ng-blur="urlChange=true" ng-focus="urlChange=false"/>
+                        <span ng-show="editMenuForm.url.$invalid" style="color:red;">
+                            <span ng-show="editMenuForm.url.$error.required && urlChange">*请输入url</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="editMenuForm.parentMenuName.$invalid ? '' : 'has-success'" class="form-group"
+                     ng-if="menu.menuLevel == 2">
+                    <label class="control-label col-lg-3">父菜单<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" name="parentMenuName" class="form-control" placeholder="父菜单"
+                               ng-focus required ng-model="menu.parentMenuName" ng-change="queryParentMenu(menu.parentMenuName);"
+                                id="parentMenuNameId" autocomplete="off"/>
+                        <span ng-show="editMenuForm.parentMenuName.$invalid && editMenuForm.parentMenuName.$focused" style="color:red;">
+                            <span ng-show="editMenuForm.parentMenuName.$error.required">*请选择父菜单</span>
+                        </span>
+
+                        <input type="text" name="parentId" id="parentId" ng-model="menu.parentId" style="display: none;"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button class="btn" ng-disabled="editMenuForm.$invalid || isUnchanged(menu)"
+                            ng-click="editMenu(menu)">
+                            <i class="icon-ok bigger-110"></i>
+                            提交
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-warning" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>

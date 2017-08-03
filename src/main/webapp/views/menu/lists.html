@@ -50,8 +50,8 @@
                                     </th>
                                     <th class="center">序号</th>
                                     <th>菜单名称</th>
-                                    <th>url</th>
                                     <th class="hidden-480">菜单级别</th>
+                                    <th>url</th>
                                     <th>父菜单</th>
                                     <th class="hidden-480">
                                         <i class="icon-time bigger-110 hidden-480"></i>
@@ -74,12 +74,12 @@
                                         {{$index+1+(cur-1)*pageSize}}
                                     </td>
                                     <td>
-                                        <a href="#!/menu/detail/{{menu.id}}">{{menu.menuName}}</a>
+                                        {{menu.menuName}}
                                     </td>
-                                    <td>{{menu.menuUrl}}</td>
                                     <td class="hidden-480">
                                         {{menu.menuLevel}}
                                     </td>
+                                    <td>{{menu.menuUrl}}</td>
                                     <td>{{menu.parentMenuName}}</td>
                                     <td>{{menu.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <td class="hidden-480">
@@ -91,10 +91,6 @@
 
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                            <a class="blue" href="">
-                                                <i class="icon-zoom-in bigger-130"></i>
-                                            </a>
-
                                             <a class="green" href="#!/menu/edit/{{menu.id}}">
                                                 <i class="icon-pencil bigger-130"></i>
                                             </a>
