@@ -6,11 +6,11 @@
         </li>
 
         <li>
-            <a href="#!/menu/list">菜单管理</a>
+            <a href="#!/resource/list">资源管理</a>
         </li>
 
         <li>
-            添加菜单
+            添加资源
         </li>
         <!--<li class="active">Simple &amp; Dynamic</li>-->
     </ul><!-- .breadcrumb -->
@@ -25,79 +25,52 @@
     </div><!-- #nav-search -->
 </div>
 <div class="page-content">
-    <!--<div class="page-header">
-        <h1 style="font-weight: bold">
-            后台管理
-            <span style="font-size: smaller">
-                <i class="icon-double-angle-right"></i>
-                用户管理
-            </span>
-
-            <span style="font-size: small">
-                <i class="icon-double-angle-right"></i>
-                添加用户
-            </span>
-
-        </h1>
-    </div>--><!-- /.page-header -->
-
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
-            <form class="form-horizontal tasi-form" name="addMenuForm" novalidate>
-                <div ng-class="addMenuForm.menuName.$invalid ? '' : 'has-success'" class="form-group">
-                    <label class="control-label col-lg-3">菜单名称<sup style="color:red;">*</sup>:</label>
+            <form class="form-horizontal tasi-form" name="addResourceForm" novalidate>
+                <div ng-class="addResourceForm.resourceName.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">资源名称<sup style="color:red;">*</sup>:</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="menuName" placeholder="菜单名称" ng-model="menu.menuName" required
-                            ng-blur="menuNameChange=true" ng-focus="menuNameChange=false"/>
-                        <span ng-show="addMenuForm.menuName.$invalid" style="color:red;">
-                            <span ng-show="addMenuForm.menuName.$error.required && menuNameChange">*请输入菜单名称</span>
+                        <input type="text" class="form-control" name="resourceName" placeholder="资源名称" ng-model="resource.resourceName" required
+                            ng-blur="resourceNameChange=true" ng-focus="resourceNameChange=false"/>
+                        <span ng-show="addResourceForm.resourceName.$invalid" style="color:red;">
+                            <span ng-show="addResourceForm.resourceName.$error.required && resourceNameChange">*请输入资源名称</span>
                         </span>
                     </div>
                 </div>
 
-                <div ng-class="addMenuForm.menuLevel.$invalid ? '' : 'has-success'" class="form-group">
-                    <label class="control-label col-lg-3">菜单级别<sup style="color:red;">*</sup>:</label>
-                    <div class="col-lg-5">
-                        <select ng-model="menu.menuLevel" class="form-control" ng-init="menu.menuLevel='1'">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div ng-class="addMenuForm.url.$invalid ? '' : 'has-success'" class="form-group"
-                     ng-if="menu.menuLevel == 2" >
+                <div ng-class="addResourceForm.url.$invalid ? '' : 'has-success'" class="form-group">
                     <label class="control-label col-lg-3">url<sup style="color:red;">*</sup>:</label>
                     <div class="col-lg-5">
-                        <input type="text" class="form-control" name="url" placeholder="url" ng-model="menu.menuUrl" required
+                        <input type="text" class="form-control" name="url" placeholder="url" ng-model="resource.resourceUrl" required
                                ng-blur="urlChange=true" ng-focus="urlChange=false"/>
-                        <span ng-show="addMenuForm.url.$invalid" style="color:red;">
-                            <span ng-show="addMenuForm.url.$error.required && urlChange">*请输入url</span>
+                        <span ng-show="addResourceForm.url.$invalid" style="color:red;">
+                            <span ng-show="addResourceForm.url.$error.required && urlChange">*请输入url</span>
                         </span>
                     </div>
                 </div>
 
-                <div ng-class="addMenuForm.parentMenuName.$invalid ? '' : 'has-success'" class="form-group"
-                     ng-if="menu.menuLevel == 2">
-                    <label class="control-label col-lg-3">父菜单<sup style="color:red;">*</sup>:</label>
+                <div ng-class="addResourceForm.menuName.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">所属菜单<sup style="color:red;">*</sup>:</label>
                     <div class="col-lg-5">
-                        <input type="text" name="parentMenuName" class="form-control" placeholder="父菜单"
-                               ng-focus required ng-model="menu.parentMenuName" ng-change="queryParentMenu(menu.parentMenuName);"
-                                id="parentMenuNameId" autocomplete="off"/>
-                        <span ng-show="addMenuForm.parentMenuName.$invalid && addMenuForm.parentMenuName.$focused" style="color:red;">
-                            <span ng-show="addMenuForm.parentMenuName.$error.required">*请选择父菜单</span>
+                        <input type="text" name="menuName" class="form-control" placeholder="菜单名称"
+                               ng-focus required ng-model="resource.menuName" ng-change="queryMenu(resource.menuName);"
+                                id="menuNameId" autocomplete="off"/>
+                        <span ng-show="addResourceForm.menuName.$invalid && addResourceForm.menuName.$focused" style="color:red;">
+                            <span ng-show="addResourceForm.menuName.$error.required">*请选择菜单</span>
                         </span>
 
-                        <input type="hidden" name="parentId" id="parentId"/>
+                        <input type="hidden" name="menuId" id="menuId"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-offset-4 col-md-8">
-                        <button class="btn" ng-disabled="addMenuForm.$invalid || isUnchanged(menu)"
-                            ng-click="addMenu(menu)">
+                        <button class="btn" ng-disabled="addResourceForm.$invalid || isUnchanged(resource)"
+                            ng-click="addResource(resource)">
                             <i class="icon-ok bigger-110"></i>
                             提交
                         </button>

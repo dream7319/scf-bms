@@ -85,28 +85,13 @@ app.controller('editCtrl',['$scope','$http','$routeParams','$ocLazyLoad','$locat
     $ocLazyLoad.load("autocomplete");
 
     $scope.queryParentMenu = function (parentMenuName) {
-        $("#parentMenuNameId").autocomplete({
-            url:'/api/menu/queryKey?key='+parentMenuName,
-            remoteDataType: 'json',
-            processData: function(data) {
-                var result = data.data;
-                var processed = [];
-                angular.forEach(result,function (data,index,array) {
-                    processed.push([array[index].menuName,array[index].id]);
-                });
-                return processed;
-            },
-            onItemSelect: function(item) {
-                $("#parentId").val(item.data[0]);
-            },
-        });
+        queryParentMenu(parentMenuName);
     }
     $http.get('/api/menu?id='+$routeParams.id).then(function (response) {
         $scope.menu = response.data.menu;
     });
 
     $scope.editMenu = function (menu) {
-        console.log(menu);
         menu.parentId = $("#parentId").val();
         $http.put('/api/menu/update',menu).then(function (response) {
             var result = response.data.result;
@@ -127,21 +112,7 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
     $ocLazyLoad.load("autocomplete");
     
     $scope.queryParentMenu = function (parentMenuName) {
-        $("#parentMenuNameId").autocomplete({
-            url:'/api/menu/queryKey?key='+parentMenuName,
-            remoteDataType: 'json',
-            processData: function(data) {
-                var result = data.data;
-                var processed = [];
-                angular.forEach(result,function (data,index,array) {
-                    processed.push([array[index].menuName,array[index].id]);
-                });
-                return processed;
-            },
-            onItemSelect: function(item) {
-                $("#parentId").val(item.data[0]);
-            },
-        });
+        queryParentMenu(parentMenuName);
     }
 
     $scope.addMenu = function (menu) {
@@ -161,17 +132,20 @@ app.controller('addCtrl',['$scope','$http','$ocLazyLoad','$location','toastr',fu
 
 }]);
 
-function query(http,key) {
-    /*http.get('/api/menu/queryKey?key='+key).then(function (response) {
-        
-    },function (response) {
-        
-    });*/
-
-    http.get('/api/menu/lists').then(function (response) {
-        console.log(response.data.data);
-
-    },function (response) {
-
+function queryParentMenu(key) {
+    $("#parentMenuNameId").autocomplete({
+        url:'/api/menu/queryKey?key='+key+"&query=parent",
+        remoteDataType: 'json',
+        processData: function(data) {
+            var result = data.data;
+            var processed = [];
+            angular.forEach(result,function (data,index,array) {
+                processed.push([array[index].menuName,array[index].id]);
+            });
+            return processed;
+        },
+        onItemSelect: function(item) {
+            $("#parentId").val(item.data[0]);
+        },
     });
 }

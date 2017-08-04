@@ -60,7 +60,7 @@ public class ${table.controllerName} {
     public Map<String,Object> get${entity}s(){
 		Map<String,Object> results = Maps.newHashMap();
 		List<${entity}> ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s = ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}Service.selectList(null);
-		results.put("${entity.substring(0,1).toLowerCase()}${entity.substring(1)}",${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s);
+		results.put("${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s",${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s);
 		return results;
     }
 
@@ -73,7 +73,7 @@ public class ${table.controllerName} {
 		Map<String,Object> results = Maps.newHashMap();
 		EntityWrapper<${entity}> wrapper = new EntityWrapper<${entity}>();
 		Page<${entity}> pages = ${entity.substring(0,1).toLowerCase()}${entity.substring(1)}Service.selectPage(new Page<${entity}>(pageNum, pageSize),wrapper);
-		results.put("${entity.substring(0,1).toLowerCase()}${entity.substring(1)}",new ResponseData<${entity}>(pages));
+		results.put("${entity.substring(0,1).toLowerCase()}${entity.substring(1)}s",new ResponseData<${entity}>(pages));
 		return results;
 	}
 

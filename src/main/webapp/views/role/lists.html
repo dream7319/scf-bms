@@ -81,11 +81,15 @@
 
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                            <a class="green" href="javascript:void(0);" ng-click="editRole(role);">
+                                            <a class="green" href="javascript:void(0);" ng-click="editRole(role);" title="编辑">
                                                 <i class="icon-pencil bigger-130"></i>
                                             </a>
 
-                                            <a class="red" href="javascript:void(0);" ng-click="deleteRole(role);">
+                                            <a class="green" href="javascript:void(0);" ng-click="addRoleMenu(role);" title="分配菜单">
+                                                <i class="icon-plus bigger-130"></i>
+                                            </a>
+
+                                            <a class="red" href="javascript:void(0);" ng-click="deleteRole(role);" title="删除">
                                                 <i class="icon-trash bigger-130"></i>
                                             </a>
 
