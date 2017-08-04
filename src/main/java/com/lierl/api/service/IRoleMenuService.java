@@ -19,4 +19,6 @@ public interface IRoleMenuService extends IBaseService<RoleMenu> {
 	Integer deleteRoleMenuById(Serializable id) throws Exception;
 
 	Integer deleteRoleMenuByIds(List<Serializable> ids) throws Exception;
+
+	Boolean addOrUpdate(String ids,String roleId) throws Exception;
 }

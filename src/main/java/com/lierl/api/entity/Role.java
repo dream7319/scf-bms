@@ -23,6 +23,15 @@ public class Role implements Serializable {
 	private Date updateTime;
 	private Boolean roleStatus;
 
+	private transient Boolean checked;
+
+	public Boolean getChecked() {
+		return checked;
+	}
+
+	public void setChecked(Boolean checked) {
+		this.checked = checked;
+	}
 
 	public Integer getId() {
 		return id;

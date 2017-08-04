@@ -27,7 +27,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 			"left join scf_menu m2 " +
 			"on m1.parent_id=m2.id")
 //    @Options(statementType = StatementType.CALLABLE)
-	public List<Menu> getAllMenus(Pagination page);
+	List<Menu> getAllMenus(Pagination page);
 
 	@Select("SELECT " +
 			"m1.id," +
@@ -42,5 +42,15 @@ public interface MenuMapper extends BaseMapper<Menu> {
 			"left join scf_menu m2 " +
 			"on m1.parent_id=m2.id " +
 			"where m1.id=#{id}")
-	public Menu selectMenuById(Integer id);
+	Menu selectMenuById(Integer id);
+
+	@Select("select " +
+			"menu.id," +
+			"menu.menu_name," +
+			"menu.parent_id," +
+			"case when menu.id=rm.menu_id then 1 else 0 end checked " +
+			"from scf_menu menu " +
+			"left join scf_role_menu rm " +
+			"on menu.id = rm.menu_id and rm.role_id=#{roleId}")
+	List<Menu> selectMenusByRoleId(Integer roleId);
 }

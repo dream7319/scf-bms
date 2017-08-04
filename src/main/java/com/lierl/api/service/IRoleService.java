@@ -19,4 +19,6 @@ public interface IRoleService extends IBaseService<Role> {
 	Integer deleteRoleById(Serializable id) throws Exception;
 
 	Integer deleteRoleByIds(List<Serializable> ids) throws Exception;
+
+	List<Role> selectRolesByUserId(Integer userId);
 }

@@ -1,0 +1,157 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-user"></i>
+            后台管理
+        </li>
+
+        <li>
+            角色管理
+        </li>
+        <!--<li class="active">Simple &amp; Dynamic</li>-->
+    </ul><!-- .breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- #nav-search -->
+</div>
+<div class="page-content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+                   <!-- <div class="table-header">
+                        列表
+                    </div>-->
+
+                    <div class="table-responsive">
+                        <div class="btn-group" style="margin-bottom:3px;">
+                            <a class="btn btn-default btn-sm" href="javascript:void(0);" ng-click="addRole();">
+                                添加
+                            </a>
+                            <!--<a class="btn btn-default btn-info">
+                                导出
+                            </a>-->
+                        </div>
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="center">
+                                        <label>
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th class="center">序号</th>
+                                    <th>角色名称</th>
+                                    <th class="hidden-480">
+                                        <i class="icon-time bigger-110 hidden-480"></i>
+                                        创建时间
+                                    </th>
+                                    <th class="hidden-480">是否禁用</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="role in roles track by $index">
+                                    <td class="center">
+                                        <label>
+                                            <input type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+                                    <td class="center">
+                                        {{$index+1+(cur-1)*pageSize}}
+                                    </td>
+                                    <td>
+                                        {{role.roleName}}
+                                    </td>
+                                    <td>{{role.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td class="hidden-480">
+                                        <span class="label label-sm label-warning" ng-if="!role.roleStatus">禁用</span>
+                                        <span class="label label-sm label-success" ng-if="role.roleStatus">可用</span>
+                                    </td>
+
+                                    <td>
+                                        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                            <a class="green" href="javascript:void(0);" ng-click="editRole(role);">
+                                                <i class="icon-pencil bigger-130"></i>
+                                            </a>
+
+                                            <a class="red" href="javascript:void(0);" ng-click="deleteRole(role);">
+                                                <i class="icon-trash bigger-130"></i>
+                                            </a>
+
+                                            <a class="red" href="javascript:void(0);" title="禁用" ng-if="role.roleStatus" ng-click="lockRole(role,false)">
+                                                <i class="icon-lock bigger-120"></i>
+                                            </a>
+
+                                            <a class="green" href="javascript:void(0);" title="启用" ng-if="!role.roleStatus" ng-click="lockRole(role,true)">
+                                                <i class="icon-unlock bigger-120"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row" style="margin-right:0px;" ng-hide="roles.length == 0">
+                            <div class="col-sm-12">
+                                <div class="dataTables_paginate" style="text-align:center;">
+                                    <ul class="pagination pagination-lg">
+                                        <li class="first disabled" ng-class="{disabled:cur == 1}">
+                                            <a href="javascript:void(0);" ng-click="query(1)">
+                                                <i class="icon-double-angle-left"></i>
+                                            </a>
+                                        </li>
+                                        <li class="prev" ng-class="{disabled:cur == 1}">
+                                            <a href="javascript:void(0);" ng-click="query(prev)">
+                                                <i class="icon-angle-left "></i>
+                                            </a>
+                                        </li>
+                                        <li ng-repeat="page in pages" ng-class="{active:page==cur}"  ng-click="query(page)" >
+                                            <a href="javascript:void(0);">{{page}}</a>
+                                        </li>
+                                        <li class="next" ng-class="{disabled:cur == pageCount}">
+                                            <a href="javascript:void(0);" ng-click="query(next)">
+                                                <i class="icon-angle-right"></i>
+                                            </a>
+                                        </li>
+                                        <li class="last" ng-class="{disabled:cur == pageCount}">
+                                            <a href="javascript:void(0);" ng-click="query(pageCount)">
+                                                <i class="icon-double-angle-right"></i>
+                                            </a>
+                                        </li>
+
+                                        <li class="last disabled">
+                                            <a href="javascript:void(0);">
+                                                共{{pageCount}}页
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--<div class="row">
+                            <div class="x_content">
+                                <a class="btn btn-info btn-ls" ng-click="refresh(1)" ng-disabled="first">首页</a>
+                                <a class="btn btn-info" ng-click="refresh(prev)" ng-disabled="first">上一页</a>
+                                <a class="btn btn-default" ng-repeat="page in showPages" ng-class="{'btn-primary':page==pageNum}"  ng-click="refresh(page)">{{page}}</a>
+                                <a class="btn btn-info" ng-click="refresh(next)" ng-disabled="last">下一页</a>
+                                <a class="btn btn-info" ng-click="refresh(pageCount)" ng-disabled="last">末页</a>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div><!-- /.page-content -->

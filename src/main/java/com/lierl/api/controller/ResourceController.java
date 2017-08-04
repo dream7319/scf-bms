@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
 
+import com.lierl.api.entity.Menu;
 import com.lierl.api.entity.Resource;
 import com.lierl.api.service.IResourceService;
 
@@ -34,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author lierl
- * @since 2017-08-03
+ * @since 2017-08-04
  */
 @RestController
 @RequestMapping("/api")
@@ -64,8 +65,9 @@ public class ResourceController {
 						@RequestParam(value="pageSize",defaultValue = "10") Integer pageSize){
 		Map<String,Object> results = Maps.newHashMap();
 		EntityWrapper<Resource> wrapper = new EntityWrapper<Resource>();
-		Page<Resource> pages = resourceService.selectPage(new Page<Resource>(pageNum, pageSize),wrapper);
-		results.put("resource",new ResponseData<Resource>(pages));
+
+		Page<Resource> pages = resourceService.getAllResources(new Page<Resource>(pageNum, pageSize));
+		results.put("resources",new ResponseData<Resource>(pages));
 		return results;
 	}
 
@@ -93,6 +95,7 @@ public class ResourceController {
 		results.put("result","error");
 		try{
 			if(resource != null){
+				resource.setCreateTime(new Date());
                 Integer num = resourceService.insertResource(resource);
                 if(num > 0){
                     results.put("result","success");

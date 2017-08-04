@@ -1,13 +1,12 @@
 package com.lierl.api.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.lierl.api.entity.Menu;
-import com.lierl.api.entity.User;
 import com.lierl.api.mapper.MenuMapper;
 import com.lierl.api.service.IMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.io.Serializable;
 import java.util.List;
 /**
@@ -46,5 +45,10 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
 
 	public Menu selectMenuById(Integer id){
 		return baseMapper.selectMenuById(id);
+	}
+
+	@Override
+	public List<Menu> selectMenusByRoleId(Integer roleId) {
+		return baseMapper.selectMenusByRoleId(roleId);
 	}
 }

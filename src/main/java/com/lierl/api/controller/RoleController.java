@@ -140,4 +140,12 @@ public class RoleController {
 		}
 		return results;
 	}
+
+	@GetMapping("/role/user/{id}")
+	public Map<String,Object> selectRolesByUserId(@PathVariable Integer id){
+		Map<String,Object> results = Maps.newHashMap();
+		List<Role> roles = roleService.selectRolesByUserId(id);
+		results.put("data",roles);
+		return results;
+	}
 }
