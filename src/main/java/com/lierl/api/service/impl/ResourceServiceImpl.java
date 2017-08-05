@@ -1,5 +1,6 @@
 package com.lierl.api.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.lierl.api.entity.Resource;
 import com.lierl.api.mapper.ResourceMapper;
 import com.lierl.api.service.IResourceService;
@@ -35,4 +36,12 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 	public Integer deleteResourceByIds(List<Serializable> ids) throws Exception{
 		return baseMapper.deleteBatchIds(ids);
 	}
+
+	@Override
+	public Page<Resource> getAllResources(Page<Resource> page) {
+		page.setRecords(baseMapper.getAllResources(page));
+		return page;
+	}
+
+
 }

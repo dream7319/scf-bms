@@ -81,12 +81,16 @@ public class MenuController {
     }
 
     @GetMapping("/menu/queryKey")
-    public Map<String,Object> queryKey(@RequestParam String key){
+    public Map<String,Object> queryKey(@RequestParam String key,@RequestParam String query){
 		Map<String,Object> results = Maps.newHashMap();
 		Wrapper<Menu> wrapper = new EntityWrapper<Menu>();
+		if("parent".equals(query)){
+			wrapper.where("menu_level={0}",1)
+					.like("menu_name",key);
+		}else{
+			wrapper.like("menu_name",key);
+		}
 
-		wrapper.where("menu_level={0}",1)
-				.like("menu_name",key);
 		List<Menu> menus = menuService.selectList(wrapper);
 		results.put("data",menus);
 		return results;
@@ -101,6 +105,10 @@ public class MenuController {
 		results.put("result","error");
 		try{
 			if(menu != null){
+				int level = menu.getMenuLevel();
+				if(level == 1){
+					menu.setParentId(0);
+				}
 				menu.setCreateTime(new Date());
                 Integer num = menuService.insertMenu(menu);
                 if(num > 0){
@@ -141,6 +149,10 @@ public class MenuController {
 		results.put("result","error");
 		try {
 			if(menu != null){
+				int level = menu.getMenuLevel();
+				if(level == 1){
+					menu.setParentId(0);
+				}
 				menu.setUpdateTime(new Date());
 				int num = menuService.updateMenuById(menu);
 				if(num > 0){
@@ -150,6 +162,14 @@ public class MenuController {
 		}catch (Exception e){
 			logger.error(e.getMessage());
 		}
+		return results;
+	}
+
+	@GetMapping("/menu/role/{id}")
+	public Map<String,Object> selectMenusByRoleId(@PathVariable Integer id){
+		Map<String,Object> results = Maps.newHashMap();
+		List<Menu> menus = menuService.selectMenusByRoleId(id);
+		results.put("menus",menus);
 		return results;
 	}
 }

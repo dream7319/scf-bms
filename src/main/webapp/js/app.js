@@ -22,6 +22,15 @@ app.config(['$ocLazyLoadProvider',function ($ocLazyLoadProvider) {
                 '/static/css/jquery.autocomplete.css',
                 '/static/js/jquery.autocomplete.min.js'
             ]
+        },{
+            name:'ztreePlugins',
+            insertBefore:'#ng_load_plugins_before',
+            serie:true,
+            files:[
+                '/static/css/zTreeStyle.css',
+                '/static/js/jquery.ztree.core.min.js',
+                '/static/js/jquery.ztree.excheck.min.js'
+            ]
         }]
 	});
 }]).config(['cfpLoadingBarProvider',function(cfpLoadingBarProvider) {

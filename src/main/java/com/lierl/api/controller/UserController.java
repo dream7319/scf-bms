@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
 import com.lierl.api.base.ResponseData;
 import com.lierl.api.entity.User;
+import com.lierl.api.service.IUserRoleService;
 import com.lierl.api.service.IUserService;
 import com.lierl.api.util.Utils;
 import org.apache.commons.lang.ObjectUtils;
@@ -38,6 +39,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @GetMapping("/user")
     public Map<String,Object> getUserById(@RequestParam Integer id){
@@ -124,4 +128,6 @@ public class UserController {
         }
         return results;
     }
+
+
 }

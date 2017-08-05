@@ -1,0 +1,88 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="icon-user"></i>
+            后台管理
+        </li>
+
+        <li>
+            <a href="#!/resource/list">资源管理</a>
+        </li>
+
+        <li>
+            添加资源
+        </li>
+        <!--<li class="active">Simple &amp; Dynamic</li>-->
+    </ul><!-- .breadcrumb -->
+
+    <div class="nav-search" id="nav-search">
+        <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+        </form>
+    </div><!-- #nav-search -->
+</div>
+<div class="page-content">
+    <div class="row">
+        <div class="col-xs-12">
+            <!-- PAGE CONTENT BEGINS -->
+
+            <form class="form-horizontal tasi-form" name="addResourceForm" novalidate>
+                <div ng-class="addResourceForm.resourceName.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">资源名称<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="resourceName" placeholder="资源名称" ng-model="resource.resourceName" required
+                            ng-blur="resourceNameChange=true" ng-focus="resourceNameChange=false"/>
+                        <span ng-show="addResourceForm.resourceName.$invalid" style="color:red;">
+                            <span ng-show="addResourceForm.resourceName.$error.required && resourceNameChange">*请输入资源名称</span>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div ng-class="addResourceForm.url.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">url<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="url" placeholder="url" ng-model="resource.resourceUrl" required
+                               ng-blur="urlChange=true" ng-focus="urlChange=false"/>
+                        <span ng-show="addResourceForm.url.$invalid" style="color:red;">
+                            <span ng-show="addResourceForm.url.$error.required && urlChange">*请输入url</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-class="addResourceForm.menuName.$invalid ? '' : 'has-success'" class="form-group">
+                    <label class="control-label col-lg-3">所属菜单<sup style="color:red;">*</sup>:</label>
+                    <div class="col-lg-5">
+                        <input type="text" name="menuName" class="form-control" placeholder="菜单名称"
+                               ng-focus required ng-model="resource.menuName" ng-change="queryMenu(resource.menuName);"
+                                id="menuNameId" autocomplete="off"/>
+                        <span ng-show="addResourceForm.menuName.$invalid && addResourceForm.menuName.$focused" style="color:red;">
+                            <span ng-show="addResourceForm.menuName.$error.required">*请选择菜单</span>
+                        </span>
+
+                        <input type="hidden" name="menuId" id="menuId"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <button class="btn" ng-disabled="addResourceForm.$invalid || isUnchanged(resource)"
+                            ng-click="addResource(resource)">
+                            <i class="icon-ok bigger-110"></i>
+                            提交
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+                        <button class="btn btn-warning" type="reset">
+                            <i class="icon-undo bigger-110"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</div>

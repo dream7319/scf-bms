@@ -89,7 +89,7 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
             animation: true,//打开时的动画开关
             templateUrl: '/views/modal/roleModal.html',//模态框的页面内容,这里的url是可以自己定义的,也就意味着什么都可以写
             controller: 'modalCtrl',//这是模态框的控制器,是用来控制模态框的
-            size: 'lg',//模态框的大小尺寸
+            size: '',//模态框的大小尺寸
             resolve: {//这是一个入参,这个很重要,它可以把主控制器中的参数传到模态框控制器中
                 user: function () {//items是一个回调函数
                     return user;//这个值会被模态框的控制器获取到
@@ -98,22 +98,38 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
         });
 
         modalInstance.result.then(function (selectedItem) {//这是一个接收模态框返回值的函数
-            $scope.selected = selectedItem;//模态框的返回值
+            $scope.roleIds = [];
+            $("input[type=checkbox]").each(function () {
+                if($(this).is(':checked')){
+                    var value = $(this).next().next().val();
+                    $scope.roleIds.push(value);
+                }
+            });
+            $http.get('/api/userRole/addOrUpdate',{params:{ids:$scope.roleIds.join(','),userId:user.id}}).then(function (response) {
+                var result = response.data.result;
+                if(result == 'success'){
+                    toastr.success('保存成功');
+                }else{
+                    toastr.error('保存失败');
+                }
+            },function (response) {
+                toastr.error('保存失败');
+            });
+            
         }, function () {
-            console.log('Modal dismissed at: ' + new Date());
+            // console.log('Modal dismissed at: ' + new Date());
         });
     }
 }]);
 
-app.controller('modalCtrl',['$scope','$http','$uibModalInstance','user',function ($scope,$http,$uibModalInstance,user) {
+app.controller('modalCtrl',['$scope','$http','toastr','$uibModalInstance','user',function ($scope,$http,toastr,$uibModalInstance,user) {
     //这是模态框的控制器,记住$uibModalInstance这个是用来调用函数将模态框内的数据传到外层控制器中的,items则上面所说的入参函数,
     //它可以获取到外层主控制器的参数
-    $scope.user = user;//这里就可以去外层主控制器的数据了
-
-    $http.get('/api/role/lists').then(function (response) {
+    // $scope.user = user;//这里就可以去外层主控制器的数据了
+    $http.get('/api/role/user/'+user.id).then(function (response) {
         $scope.roles = response.data.data;
     },function (response) {
-        
+        toastr.error('加载数据失败');
     });
 
     $scope.ok = function () {
