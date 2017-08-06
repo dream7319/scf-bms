@@ -6,7 +6,7 @@ loginApp.config(['$routeProvider',function($routeProvider) {
 }]);
 
 loginApp.controller('loginController', ['$scope','$http','$cookies','$window',function($scope,$http,$cookies,$window){
-
+	console.log("loginController");
 	var token = $cookies.getObject("token");
 
 	$scope.hide=function(){
@@ -26,13 +26,13 @@ loginApp.controller('loginController', ['$scope','$http','$cookies','$window',fu
 		}
 
 		$http.post('/api/login',user).then(function(response){
-			var status = response.status;
+			var status = response.data.status;
 			if(status != 200){
 				$cookies.remove('token');
-				$("#loginpassword").tooltip({title:response.message,placement:"auto"}).tooltip('show');
+				$("#loginpassword").tooltip({title:response.data.data.message,placement:"auto"}).tooltip('show');
                 return false;
 			}else{
-				$cookies.putObject("token",response.data,{expires:new Date(new Date().getTime+1000*60)});
+				$cookies.putObject("token",response.data.data,{expires:new Date(new Date().getTime+1000*60)});
 				$window.location.href="/views/index.html";
 			}
 		},function(data){
@@ -41,7 +41,7 @@ loginApp.controller('loginController', ['$scope','$http','$cookies','$window',fu
 	}
 
 	if(token != undefined){
-		console.log(token.data);
+		$scope.login(token);
 	}
 }]);
 
@@ -67,6 +67,7 @@ loginApp.directive('pwdEquals',function () {
 });
 
 loginApp.controller('registerController',['$scope','$http','$location',function ($scope,$http,$location) {
+	console.log("registerController");
 	$scope.register = function (user) {
 		if(user.userProtocol){
 			$http.post('/api/user/add',user).then(function (response) {
@@ -80,6 +81,7 @@ loginApp.controller('registerController',['$scope','$http','$location',function 
 }]);
 
 loginApp.controller('forgetController',['$scope','$http',function ($scope,$http) {
+    console.log("forgetController");
 	$scope.forgetPwd = function(email){
 		$http.get('/api/forget?email='+email).then(function (response) {
 			

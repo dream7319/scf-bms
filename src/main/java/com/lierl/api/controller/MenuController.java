@@ -1,6 +1,5 @@
 package com.lierl.api.controller;
 
-import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -13,15 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -169,6 +160,14 @@ public class MenuController {
 	public Map<String,Object> selectMenusByRoleId(@PathVariable Integer id){
 		Map<String,Object> results = Maps.newHashMap();
 		List<Menu> menus = menuService.selectMenusByRoleId(id);
+		results.put("menus",menus);
+		return results;
+	}
+
+	@GetMapping("/menu/user/{id}")
+	public Map<String,Object> selectMenusByUserId(@PathVariable Integer id){
+		Map<String,Object> results = Maps.newHashMap();
+		List<Menu> menus = menuService.selectMenusByUserId(id);
 		results.put("menus",menus);
 		return results;
 	}

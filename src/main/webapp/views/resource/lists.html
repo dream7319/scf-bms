@@ -15,7 +15,7 @@
         <form class="form-search">
             <span class="input-icon">
                 <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                <i class="icon-search nav-search-icon"></i>
+                <i class="fa fa-search nav-search-icon"></i>
             </span>
         </form>
     </div><!-- #nav-search -->
@@ -49,10 +49,10 @@
                                     <th class="hidden-480">资源路径</th>
                                     <th>所属菜单</th>
                                     <th class="hidden-480">
-                                        <i class="icon-time bigger-110 hidden-480"></i>
+                                        <i class="fa fa-clock-o bigger-110 hidden-480"></i>
                                         创建时间
                                     </th>
-
+                                    <th>状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -78,14 +78,26 @@
                                         {{resource.menuName}}
                                     </td>
                                     <td>{{resource.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                    <td class="hidden-480">
+                                        <span class="label label-sm label-warning" ng-if="!resource.resourceStatus">禁用</span>
+                                        <span class="label label-sm label-success" ng-if="resource.resourceStatus">可用</span>
+                                    </td>
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-                                            <a class="green" href="javascript:void(0);" ng-click="editResource(resource);">
-                                                <i class="icon-pencil bigger-130"></i>
+                                            <a class="green" href="#!/resource/edit/{{resource.id}}" title="编辑">
+                                                <i class="fa fa-pencil bigger-130"></i>
                                             </a>
 
-                                            <a class="red" href="javascript:void(0);" ng-click="deleteResource(resource);">
-                                                <i class="icon-trash bigger-130"></i>
+                                            <a class="red" href="javascript:void(0);" ng-click="deleteResource(resource);" title="删除">
+                                                <i class="fa fa-trash bigger-130"></i>
+                                            </a>
+
+                                            <a class="red" href="javascript:void(0);" title="禁用" ng-if="resource.resourceStatus" ng-click="lockResource(resource,false)">
+                                                <i class="fa fa-lock bigger-120"></i>
+                                            </a>
+
+                                            <a class="green" href="javascript:void(0);" title="启用" ng-if="!resource.resourceStatus" ng-click="lockResource(resource,true)">
+                                                <i class="fa fa-unlock bigger-120"></i>
                                             </a>
                                         </div>
                                     </td>

@@ -53,4 +53,22 @@ public interface MenuMapper extends BaseMapper<Menu> {
 			"left join scf_role_menu rm " +
 			"on menu.id = rm.menu_id and rm.role_id=#{roleId}")
 	List<Menu> selectMenusByRoleId(Integer roleId);
+
+	@Select("select " +
+			"m.id," +
+			"m.menu_name," +
+			"m.menu_url," +
+			"m.menu_level," +
+			"m.parent_id," +
+			"m.menu_status," +
+			"m.icon_class " +
+			"from scf_user u " +
+			"left join scf_user_role ur " +
+			"on u.id = ur.user_id " +
+			"left join scf_role_menu rm " +
+			"on ur.role_id = rm.role_id " +
+			"left join scf_menu m " +
+			"on rm.menu_id=m.id " +
+			"where u.id=#{userId} and m.menu_status=1")
+	List<Menu> selectMenusByUserId(Integer userId);
 }

@@ -22,4 +22,6 @@ public interface IResourceService extends IBaseService<Resource> {
 	Integer deleteResourceByIds(List<Serializable> ids) throws Exception;
 
 	Page<Resource> getAllResources(Page<Resource> page);
+
+	Resource selectResourceById(Serializable id);
 }

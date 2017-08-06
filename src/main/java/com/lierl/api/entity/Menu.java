@@ -1,12 +1,11 @@
 package com.lierl.api.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-
-import java.beans.Transient;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +27,7 @@ public class Menu implements Serializable {
 	private Date createTime;
 	private Date updateTime;
 	private Boolean menuStatus;
+	private String iconClass;
 
 	transient List<Menu> subMenus;
 
@@ -123,4 +123,21 @@ public class Menu implements Serializable {
 		this.menuStatus = menuStatus;
 	}
 
+	public String getIconClass() {
+		return iconClass;
+	}
+
+	public void setIconClass(String iconClass) {
+		this.iconClass = iconClass;
+	}
+
+	@Override
+	public String toString() {
+		return "Menu{" +
+				"id=" + id +
+				", menuName='" + menuName + '\'' +
+				", parentId=" + parentId +
+				", subMenus=" + subMenus +
+				'}';
+	}
 }

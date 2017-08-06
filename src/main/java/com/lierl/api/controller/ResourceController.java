@@ -3,33 +3,19 @@ package com.lierl.api.controller;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
-
-import com.lierl.api.entity.Menu;
+import com.lierl.api.base.ResponseData;
 import com.lierl.api.entity.Resource;
 import com.lierl.api.service.IResourceService;
-
-
-import java.util.Map;
-import java.util.Date;
-import java.util.List;
-
-import com.lierl.api.base.ResponseData;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.ObjectUtils;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -78,7 +64,7 @@ public class ResourceController {
 	public Map<String,Object> getResourceById(@RequestParam Integer id){
 		Map<String,Object> results = Maps.newHashMap();
 		if(StringUtils.isNotEmpty(ObjectUtils.toString(id))){
-			Resource resource = resourceService.selectById(id);
+			Resource resource = resourceService.selectResourceById(id);
 			results.put("resource",resource);
 		}else {
 			results.put("resource", new Resource());

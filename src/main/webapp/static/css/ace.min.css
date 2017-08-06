@@ -2143,6 +2143,16 @@ li [class^="icon-"], li [class*=" icon-"], .nav-list li [class^="icon-"], .nav-l
     margin-right: 2px
 }
 
+.nav-list > li > a > [class*="fa-"]:first-child {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 30px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: normal;
+    margin-right: 2px
+}
+
 .nav-list > li > a:focus {
     background-color: #f9f9f9;
     color: #1963aa
@@ -2402,6 +2412,19 @@ li [class^="icon-"], li [class*=" icon-"], .nav-list li [class^="icon-"], .nav-l
 }
 
 .sidebar-collapse > [class*="icon-"] {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    color: #aaa;
+    border: 1px solid #bbb;
+    padding: 0 5px;
+    line-height: 18px;
+    border-radius: 16px;
+    background-color: #fff;
+    position: relative
+}
+
+.sidebar-collapse > [class*="fa-"] {
     display: inline-block;
     cursor: pointer;
     font-size: 14px;
@@ -5267,6 +5290,7 @@ span.input-icon {
     padding-right: 24px
 }
 
+
 .input-icon > [class*="icon-"] {
     padding: 0 3px;
     z-index: 2;
@@ -5286,6 +5310,28 @@ span.input-icon {
 }
 
 .input-icon > input:focus + [class*="icon-"] {
+    color: #579
+}
+
+.input-icon > [class*="fa-"] {
+    padding: 0 3px;
+    z-index: 2;
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    left: 3px;
+    line-height: 28px;
+    display: inline-block;
+    color: #909090;
+    font-size: 16px
+}
+
+.input-icon.input-icon-right > [class*="fa-"] {
+    left: auto;
+    right: 3px
+}
+
+.input-icon > input:focus + [class*="fa-"] {
     color: #579
 }
 

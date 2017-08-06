@@ -54,6 +54,8 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
             closeOnConfirm: false,
             animation: "slide-from-top",
             inputPlaceholder: "角色名称",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
             html: true
         }, function(inputValue){
             if (inputValue === false) return false;
@@ -63,7 +65,6 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
             }
             $scope.role={};
             $scope.role.roleName = inputValue;
-            console.log($scope.role);
             $http.post('/api/role/add',$scope.role).then(function (response) {
                 var result = response.data.result;
                 if(result == 'success'){
@@ -82,7 +83,7 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
     $scope.editRole = function (role) {
         $http.get('/api/role?id='+role.id).then(function (response) {
             swal({
-                title: "角色添加",
+                title: "角色修改",
                 text: "请输入角色名称:",
                 type: "input",
                 showCancelButton: true,
@@ -90,6 +91,8 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
                 animation: "slide-from-top",
                 inputPlaceholder: "角色名称",
                 inputValue:response.data.role.roleName,
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
                 html: true
             }, function(inputValue){
                 if (inputValue === false) return false;
@@ -121,19 +124,6 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
         });
     }
 
-    $scope.deleteRole = function (role) {
-        $http.delete('/api/role/delete/'+role.id).then(function (response) {
-            var result = response.data.result;
-            if(result == 'success'){
-                toastr.success('删除成功');
-                $route.reload();
-            }else{
-                toastr.error('删除失败');
-            }
-        },function (response) {
-            toastr.error('删除失败');
-        });
-    }
     
     $scope.lockRole = function (role,status) {
         $scope.r = {};
@@ -142,34 +132,13 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
         $http.put('/api/role/update',$scope.r).then(function (response) {
             var result = response.data.result;
             if(result == 'success'){
-                swal.close();
-                toastr.success('修改成功');
+                promptMsg(toastr,'success',status);
                 $route.reload();
             }else{
-                toastr.error('修改失败');
+                promptMsg(toastr,'error',status);
             }
         },function (response) {
-            toastr.error('修改失败');
-        });
-    }
-    
-    $scope.addMenu = function (role) {
-        $scope.datas = response.data.data;
-        console.log($scope.datas);
-        angular.forEach($scope.datas,function (data,index,array) {
-            if(array[index].parentId == 0){
-                $scope.roles.push({"id":array[index].id,
-                    "pId":array[index].parentId,
-                    "name":array[index].roleName,
-                    "open":true,
-                    "iconOpen":"",
-                    "iconClose":""});
-            }else {
-                $scope.roles.push({"id": array[index].id,
-                    "pId": array[index].parentId,
-                    "name": array[index].menuName,
-                    "icon":""});
-            }
+            promptMsg(toastr,'error',status);
         });
     }
 

@@ -53,31 +53,14 @@ app.controller('menuControllerList',['$scope','$http','toastr','$location','$rou
         $http.put('/api/menu/update',$scope.m).then(function (response) {
             var result = response.data.result;
             if(result == 'success'){
-                $scope.promptMsg('success',status);
+                promptMsg(toastr,'success',status);
                 $route.reload();
             }else{
-                $scope.promptMsg('error',status);
+                promptMsg(toastr,'error',status);
             }
         },function (response) {
-            $scope.promptMsg('error',status);
+            promptMsg(toastr,'error',status);
         });
-    }
-
-    $scope.promptMsg = function (result,status) {
-        if(result == 'success'){
-            if(status){
-                toastr.success('启用成功');
-            }else{
-                toastr.success('禁用成功');
-            }
-        }else{
-            if(status){
-                toastr.error('启用失败');
-            }else{
-                toastr.error('禁用失败');
-            }
-        }
-
     }
 }]);
 

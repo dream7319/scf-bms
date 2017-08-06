@@ -26,4 +26,6 @@ public interface IMenuService extends IBaseService<Menu> {
 	Menu selectMenuById(Integer id);
 
 	List<Menu> selectMenusByRoleId(Integer roleId);
+
+	List<Menu> selectMenusByUserId(Integer userId);
 }

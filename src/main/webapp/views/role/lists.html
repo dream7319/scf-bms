@@ -15,7 +15,7 @@
         <form class="form-search">
             <span class="input-icon">
                 <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                <i class="icon-search nav-search-icon"></i>
+                <i class="fa fa-search nav-search-icon"></i>
             </span>
         </form>
     </div><!-- #nav-search -->
@@ -51,10 +51,10 @@
                                     <th class="center">序号</th>
                                     <th>角色名称</th>
                                     <th class="hidden-480">
-                                        <i class="icon-time bigger-110 hidden-480"></i>
+                                        <i class="fa fa-clock-o bigger-110 hidden-480"></i>
                                         创建时间
                                     </th>
-                                    <th class="hidden-480">是否禁用</th>
+                                    <th class="hidden-480">状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -82,7 +82,7 @@
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                             <a class="green" href="javascript:void(0);" ng-click="editRole(role);" title="编辑">
-                                                <i class="icon-pencil bigger-130"></i>
+                                                <i class="fa fa-pencil bigger-130"></i>
                                             </a>
 
                                             <a class="green" href="javascript:void(0);" ng-click="addRoleMenu(role);" title="分配菜单">
@@ -90,15 +90,15 @@
                                             </a>
 
                                             <a class="red" href="javascript:void(0);" ng-click="deleteRole(role);" title="删除">
-                                                <i class="icon-trash bigger-130"></i>
+                                                <i class="fa fa-trash bigger-130"></i>
                                             </a>
 
                                             <a class="red" href="javascript:void(0);" title="禁用" ng-if="role.roleStatus" ng-click="lockRole(role,false)">
-                                                <i class="icon-lock bigger-120"></i>
+                                                <i class="fa fa-lock bigger-120"></i>
                                             </a>
 
                                             <a class="green" href="javascript:void(0);" title="启用" ng-if="!role.roleStatus" ng-click="lockRole(role,true)">
-                                                <i class="icon-unlock bigger-120"></i>
+                                                <i class="fa fa-unlock bigger-120"></i>
                                             </a>
                                         </div>
                                     </td>

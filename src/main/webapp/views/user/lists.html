@@ -15,7 +15,7 @@
         <form class="form-search">
             <span class="input-icon">
                 <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                <i class="icon-search nav-search-icon"></i>
+                <i class="fa fa-search nav-search-icon"></i>
             </span>
         </form>
     </div><!-- #nav-search -->
@@ -55,10 +55,10 @@
                                     <th>邮箱</th>
                                     <th class="hidden-480">手机号</th>
                                     <th class="hidden-480">
-                                        <i class="icon-time bigger-110 hidden-480"></i>
+                                        <i class="fa fa-clock-o bigger-110 hidden-480"></i>
                                         出生日期
                                     </th>
-                                    <th class="hidden-480">是否禁用</th>
+                                    <th class="hidden-480">状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -95,28 +95,28 @@
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
                                             <a class="blue" href="#!/user/detail/{{user.id}}" title="详情">
-                                                <i class="icon-search bigger-130"></i>
+                                                <i class="fa fa-search bigger-130"></i>
                                             </a>
 
                                             <a class="blue" href="javascript:void(0);" title="分配角色"
                                                 ng-click="addUserRole(user);">
-                                                <i class="icon-plus-sign-alt"></i>
+                                                <i class="fa fa-user-plus"></i>
                                             </a>
 
                                             <a class="green" href="#!/user/edit/{{user.id}}" title="编辑">
-                                                <i class="icon-pencil bigger-130"></i>
+                                                <i class="fa fa-pencil bigger-130" aria-hidden="true"></i>
                                             </a>
 
                                             <a class="red" href="javascript:void(0);" ng-click="deleteUser(user);" title="删除">
-                                                <i class="icon-trash bigger-130"></i>
+                                                <i class="fa fa-trash bigger-130"></i>
                                             </a>
 
                                             <a class="red" href="javascript:void(0);" title="禁用" ng-if="user.userStatus" ng-click="lockUser(user,false)">
-                                                <i class="icon-lock bigger-120"></i>
+                                                <i class="fa fa-lock bigger-120"></i>
                                             </a>
 
                                             <a class="green" href="javascript:void(0);" title="启用" ng-if="!user.userStatus" ng-click="lockUser(user,true)">
-                                                <i class="icon-unlock bigger-120"></i>
+                                                <i class="fa fa-unlock bigger-120"></i>
                                             </a>
                                         </div>
                                     </td>

@@ -43,5 +43,10 @@ public class ResourceServiceImpl extends BaseServiceImpl<ResourceMapper, Resourc
 		return page;
 	}
 
+	@Override
+	public Resource selectResourceById(Serializable id) {
+		return baseMapper.selectResourceById(id);
+	}
+
 
 }
