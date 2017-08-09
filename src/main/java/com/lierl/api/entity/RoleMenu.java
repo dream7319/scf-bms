@@ -19,8 +19,6 @@ public class RoleMenu implements Serializable {
 	private Integer id;
 	private Integer roleId;
 	private Integer menuId;
-	private Boolean roleStatus;
-	private Boolean menuStatus;
 
 
 	public Integer getId() {
@@ -45,22 +43,6 @@ public class RoleMenu implements Serializable {
 
 	public void setMenuId(Integer menuId) {
 		this.menuId = menuId;
-	}
-
-	public Boolean isRoleStatus() {
-		return roleStatus;
-	}
-
-	public void setRoleStatus(Boolean roleStatus) {
-		this.roleStatus = roleStatus;
-	}
-
-	public Boolean isMenuStatus() {
-		return menuStatus;
-	}
-
-	public void setMenuStatus(Boolean menuStatus) {
-		this.menuStatus = menuStatus;
 	}
 
 }

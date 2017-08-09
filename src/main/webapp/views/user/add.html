@@ -25,34 +25,18 @@
     </div><!-- #nav-search -->
 </div>
 <div class="page-content">
-    <!--<div class="page-header">
-        <h1 style="font-weight: bold">
-            后台管理
-            <span style="font-size: smaller">
-                <i class="icon-double-angle-right"></i>
-                用户管理
-            </span>
-
-            <span style="font-size: small">
-                <i class="icon-double-angle-right"></i>
-                添加用户
-            </span>
-
-        </h1>
-    </div>--><!-- /.page-header -->
-
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
-            <form class="form-horizontal tasi-form" name="addUserForm" novalidate>
+            <form role="form" class="form-horizontal tasi-form" name="addUserForm" novalidate>
                 <div ng-class="addUserForm.username.$invalid ? '' : 'has-success'" class="form-group">
                     <label class="control-label col-lg-3">用户名<sup style="color:red;">*</sup>:</label>
                     <div class="col-lg-5">
                         <input type="text" class="form-control" name="username" placeholder="用户名" ng-model="user.username" required
                             ng-blur="usernameChange=true" ng-focus="usernameChange=false"/>
-                        <span ng-show="addUserForm.username.$invalid" style="color:red;">
-                            <span ng-show="addUserForm.username.$error.required && usernameChange">*请输入用户名</span>
+                        <span ng-show="addUserForm.username.$invalid && addUserForm.username.$error.required && usernameChange" style="color:red;">
+                            *请输入用户名
                         </span>
                     </div>
                 </div>
@@ -72,7 +56,7 @@
                     <label class="control-label col-lg-3">重复密码<sup style="color:red;">*</sup>:</label>
                     <div class="col-lg-5">
                         <input type="password" class="form-control" placeholder="重复密码" name="repassword" pwd-equals="user.password"
-                               ng-blur="repasswordChange=true" ng-focus="repasswordChange=false" ng-model="repassword" required />
+                               ng-blur="repasswordChange=true" ng-model="repassword" required />
                         <span ng-show="addUserForm.repassword.$invalid && addUserForm.repassword.$dirty" style="color:red;">
                             <span ng-show="addUserForm.repassword.$error.required && repasswordChange">*请再次输入密码</span>
                             <span ng-show="user.password!=repassword">*两次输入密码不一致</span>

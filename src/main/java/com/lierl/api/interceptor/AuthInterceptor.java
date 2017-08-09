@@ -27,7 +27,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String authorization=request.getHeader("Authorization");
+//        String authorization=request.getHeader("Authorization");
         Cookie[] cookies=request.getCookies();
         String value=null;
         if(cookies!=null){

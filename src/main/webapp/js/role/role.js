@@ -160,7 +160,6 @@ app.controller('roleControllerList',['$scope','$http','toastr','$location','$rou
 
         modalInstance.result.then(function (selectedItem) {//这是一个接收模态框返回值的函数
             var result = onCheck();
-            console.log(result);
             $http.get('/api/roleMenu/addOrUpdate',{params:{ids:result,roleId:role.id}}).then(function (response) {
                 var result = response.data.result;
                 if(result == 'success'){

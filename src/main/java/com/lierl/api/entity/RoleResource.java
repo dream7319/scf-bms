@@ -8,16 +8,16 @@ import java.io.Serializable;
 /**
  *
  * @author lierl
- * @since 2017-08-03
+ * @since 2017-08-07
  */
-@TableName("scf_user_role")
-public class UserRole implements Serializable {
+@TableName("scf_role_resource")
+public class RoleResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 	@TableId(value="id", type= IdType.AUTO)
 	private Integer id;
-	private Integer userId;
+	private Integer resourceId;
 	private Integer roleId;
 
 
@@ -29,12 +29,12 @@ public class UserRole implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getResourceId() {
+		return resourceId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setResourceId(Integer resourceId) {
+		this.resourceId = resourceId;
 	}
 
 	public Integer getRoleId() {
@@ -44,4 +44,5 @@ public class UserRole implements Serializable {
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
+
 }

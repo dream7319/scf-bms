@@ -5,6 +5,7 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -23,9 +24,18 @@ public class Resource implements Serializable {
 	private String resourceUrl;
 	private Date createTime;
 	private Boolean resourceStatus;
-	private Boolean menuStatus;
 
 	private transient String menuName;
+
+	private transient List<Resource> subResources;
+
+	public List<Resource> getSubResources() {
+		return subResources;
+	}
+
+	public void setSubResources(List<Resource> subResources) {
+		this.subResources = subResources;
+	}
 
 	public String getMenuName() {
 		return menuName;
@@ -83,12 +93,27 @@ public class Resource implements Serializable {
 		this.resourceStatus = resourceStatus;
 	}
 
-	public Boolean isMenuStatus() {
-		return menuStatus;
+	public Resource() {
 	}
 
-	public void setMenuStatus(Boolean menuStatus) {
-		this.menuStatus = menuStatus;
+	public Resource(Integer id, Integer menuId, String resourceName, String resourceUrl, Boolean resourceStatus, String menuName) {
+		this.id = id;
+		this.menuId = menuId;
+		this.resourceName = resourceName;
+		this.resourceUrl = resourceUrl;
+		this.resourceStatus = resourceStatus;
+		this.menuName = menuName;
 	}
 
+	@Override
+	public String toString() {
+		return "Resource{" +
+				"id=" + id +
+				", menuId=" + menuId +
+				", resourceName='" + resourceName + '\'' +
+				", resourceUrl='" + resourceUrl + '\'' +
+				", resourceStatus=" + resourceStatus +
+				", menuName='" + menuName + '\'' +
+				'}';
+	}
 }
