@@ -17,7 +17,6 @@ app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBa
             if (token) {
                 config.headers['Authorization'] =tokenObj.username;
             }
-            console.log(config.headers);
             return config;
         },
         //
@@ -117,24 +116,35 @@ app.directive('ngFocus', function () {
                 element.removeClass(FOCUS_CLASS);
                 scope.$apply(function(){
                     ctrl.$focused = true;
-                })
+                });
             })
         }
     }
 });
-app.controller('MenuController',['$scope','$cookies','$http',function ($scope,$cookies,$http) {
-    console.log('left');
+app.controller('MenuController',['$scope','$cookies','$http','toastr',function ($scope,$cookies,$http,toastr) {
     var token = $cookies.getObject('token');
+    if(token == undefined ){
+        $window.location.href="/login.html";
+    }
     $http.get('/api/menu/user/'+token.id).then(function (response) {
         $scope.menus = response.data.menus;
     },function (response) {
-
+        toastr.error("加载失败");
     });
 }]);
 
-app.controller('TopController',['$scope',function ($scope) {
-    console.log('top');
+app.controller('TopController',['$scope','$cookies','$window',function ($scope,$cookies,$window) {
+    var token = $cookies.getObject('token');
+    if(token == undefined ){
+        $window.location.href="/login.html";
+    }
+    $scope.username = token.username;
+    $scope.logout = function () {
+        $cookies.remove('token');
+        $window.location.href="/login.html";
+    }
 }]);
+
 function promptMsg(toastr,result,status) {
     if(result == 'success'){
         if(status){

@@ -23,6 +23,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         //请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）
 
         String uri = request.getRequestURI();
+        logger.info(uri);
         if(uri.endsWith("/error") || uri.endsWith("/api/login")){
             return true;
         }
