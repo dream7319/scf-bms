@@ -6,7 +6,6 @@ loginApp.config(['$routeProvider',function($routeProvider) {
 }]);
 
 loginApp.controller('loginController', ['$scope','$http','$cookies','$window',function($scope,$http,$cookies,$window){
-	console.log("loginController");
 	var token = $cookies.getObject("token");
 
 	$scope.hide=function(){
@@ -15,29 +14,23 @@ loginApp.controller('loginController', ['$scope','$http','$cookies','$window',fu
 	}
 
 	$scope.login = function(user){
-		if(user == undefined){
+		if(user == undefined || user.username == undefined){
 			$("#loginusername").tooltip({title:"请输入用户名",placement:"auto"}).tooltip('show');
-			return false;
-		}
+		}else{
+			$http.post('/api/login',user).then(function(response){
+                var status = response.data.status;
+                if(status == 201){
+                    $cookies.remove('token');
+                    $("#loginpassword").tooltip({title:response.data.message,placement:"auto"}).tooltip('show');
+                }else{
+                    //半个小时
+                    $cookies.putObject("token",response.data,{expires:new Date(new Date().getTime()+1000*60*30)});
+                    $window.location.href="/views/index.html";
+                }
+            },function(data){
 
-		if(user.username == undefined){
-			$("#loginusername").tooltip({title:"请输入用户名",placement:"auto"}).tooltip('show');
-            return false;
-		}
-
-		$http.post('/api/login',user).then(function(response){
-			var status = response.data.status;
-			if(status != 200){
-				$cookies.remove('token');
-				$("#loginpassword").tooltip({title:response.data.data.message,placement:"auto"}).tooltip('show');
-                return false;
-			}else{
-				$cookies.putObject("token",response.data.data,{expires:new Date(new Date().getTime+1000*60)});
-				$window.location.href="/views/index.html";
-			}
-		},function(data){
-
-		});
+            });
+        }
 	}
 
 	if(token != undefined){
@@ -68,15 +61,24 @@ loginApp.directive('pwdEquals',function () {
 
 loginApp.controller('registerController',['$scope','$http','$location',function ($scope,$http,$location) {
 	console.log("registerController");
+
+	$scope.submitted = false;
 	$scope.register = function (user) {
-		if(user.userProtocol){
-			$http.post('/api/user/add',user).then(function (response) {
-                $location.path("/");
-            },function (response) {
-            });
-		}else{
-			alert("请选择用户协议");
-		}
+        //表单正常提交
+        if($scope.registerForm.$valid){
+            //正常提交表单
+            if(user.userProtocol){
+                $http.post('/api/user/add',user).then(function (response) {
+                    $location.path("/");
+                },function (response) {
+
+                });
+            }else{
+                alert("请选择用户协议");
+            }
+        }else{
+            $scope.submitted = true;
+        }
     }
 }]);
 

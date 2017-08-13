@@ -1,6 +1,5 @@
 package com.lierl.api.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Maps;
@@ -14,15 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -45,15 +36,16 @@ public class UserController {
 
     @GetMapping("/user")
     public Map<String,Object> getUserById(@RequestParam Integer id){
-        Map<String,Object> results = Maps.newHashMap();
-        if(StringUtils.isNotEmpty(ObjectUtils.toString(id))){
-            User user = userService.selectById(id);
-            logger.info(JSON.toJSONString(user));
-            results.put("user",user);
-        }else {
-            results.put("user", new User());
-        }
-        return results;
+//        Map<String,Object> results = Maps.newHashMap();
+//        if(StringUtils.isNotEmpty(ObjectUtils.toString(id))){
+//            User user = userService.selectById(id);
+//            logger.info(JSON.toJSONString(user));
+//            results.put("user",user);
+//        }else {
+//            results.put("user", new User());
+//        }
+//        return results;
+        throw new RuntimeException("发生异常");
     }
 
     @PostMapping("/user/add")

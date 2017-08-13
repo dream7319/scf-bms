@@ -1,7 +1,14 @@
 package com.lierl.api.interceptor;
 
+import com.alibaba.fastjson.JSON;
+import com.lierl.api.common.Constants;
+import com.lierl.api.entity.User;
+import com.lierl.api.service.IResourceService;
+import com.lierl.api.util.Utils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,18 +24,24 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     private final static Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
+    @Autowired
+    private IResourceService resourceService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         //请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）
 
         String uri = request.getRequestURI();
-        logger.info(uri);
-        if(uri.endsWith("/error") || uri.endsWith("/api/login")){
+        int status = response.getStatus();
+
+        if(uri.equals("/api/login")){
             return true;
         }
 
-//        String authorization=request.getHeader("Authorization");
+        if(status == 404) Utils.write(response,404);
+
+        if(status == 500) Utils.write(response,500);
+
         Cookie[] cookies=request.getCookies();
         String value=null;
         if(cookies!=null){
@@ -40,8 +53,12 @@ public class AuthInterceptor implements HandlerInterceptor {
             }
         }
 
+        if(StringUtils.isEmpty(value)) Utils.write(response,201);
+        User user = JSON.parseObject(value, User.class);
+        if(user == null) Utils.write(response,201);
 
-
+        User u = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
+        if (u == null) Utils.write(response,201);
 
         return true;// 只有返回true才会继续向下执行，返回false取消当前请求
     }

@@ -12,16 +12,15 @@ app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBa
             }
             $rootScope.username = tokenObj.username;
             cfpLoadingBar.start();
-            config.headers = config.headers || {};
+            /*config.headers = config.headers || {};
             var token = $cookies.get('token');
             if (token) {
                 config.headers['Authorization'] =tokenObj.username;
-            }
+            }*/
             return config;
         },
-        //
         requestError:function () {
-            
+            console.log("请求错误");
         },
         //通过实现 response 方法拦截响应: 该方法会在 $http 接收到从后台过来的响应之后执行
         response:function (response) {
@@ -32,7 +31,13 @@ app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBa
         responseError:function (response) {
             cfpLoadingBar.complete();
             if(response.status == 500){
+                $window.location.href="/error/500.html";
+                return $q.reject(response);
+            }else if(response.status == 201){
                 $window.location.href="/login.html";
+                return $q.reject(response);
+            }else if(response.status == 404){
+                $window.location.href="/error/404.html";
                 return $q.reject(response);
             }
             return $q.reject(response);
@@ -121,10 +126,11 @@ app.directive('ngFocus', function () {
         }
     }
 });
-app.controller('MenuController',['$scope','$cookies','$http','toastr',function ($scope,$cookies,$http,toastr) {
+app.controller('MenuController',['$scope','$cookies','$http','toastr','$window',function ($scope,$cookies,$http,toastr,$window) {
     var token = $cookies.getObject('token');
     if(token == undefined ){
         $window.location.href="/login.html";
+        return false;
     }
     $http.get('/api/menu/user/'+token.id).then(function (response) {
         $scope.menus = response.data.menus;
@@ -134,14 +140,17 @@ app.controller('MenuController',['$scope','$cookies','$http','toastr',function (
 }]);
 
 app.controller('TopController',['$scope','$cookies','$window',function ($scope,$cookies,$window) {
-    var token = $cookies.getObject('token');
-    if(token == undefined ){
-        $window.location.href="/login.html";
-    }
-    $scope.username = token.username;
     $scope.logout = function () {
-        $cookies.remove('token');
-        $window.location.href="/login.html";
+        // delete $cookies['token'];
+        // $cookies.remove('token');
+        // console.log($cookies.getObject("token"));
+
+        // console.log($cookies.get("token"));
+
+        $cookies.remove("token");
+        console.log($cookies.getAll());
+
+        // $window.location.href="/login.html";
     }
 }]);
 

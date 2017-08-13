@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletResponse;
 
 public class Utils {
 
@@ -21,5 +22,12 @@ public class Utils {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public static boolean write(HttpServletResponse response, int status) {
+		response.setStatus(status);
+		response.setHeader("Content-type", "text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		return false;
 	}
 }

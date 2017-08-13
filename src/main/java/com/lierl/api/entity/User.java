@@ -1,11 +1,8 @@
 package com.lierl.api.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableLogic;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.lierl.api.excel.FieldColumnMapping;
-import lombok.Data;
 
 import java.util.Date;
 
@@ -33,9 +30,16 @@ public class User {
     private Date createTime;//创建日期
     @TableField("update_time")
     private Date updateTime;//更新日期
-    @TableField("delete_flag")
-    @TableLogic
-    private Boolean deleteFlag;//删除标识：0：删除,1：未删除
+
+    private transient String token;//如果已经登录过，则接受cookie token
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Integer getId() {
         return id;
@@ -147,13 +151,5 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Boolean getDeleteFlag() {
-        return deleteFlag;
-    }
-
-    public void setDeleteFlag(Boolean deleteFlag) {
-        this.deleteFlag = deleteFlag;
     }
 }

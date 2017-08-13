@@ -8,9 +8,13 @@ import com.lierl.api.entity.User;
 import com.lierl.api.service.IMenuService;
 import com.lierl.api.service.IUserService;
 import com.lierl.api.util.Utils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -27,8 +31,7 @@ public class LoginController {
     private IMenuService menuService;
 
     @PostMapping("/api/login")
-    public Map<String,Object> login(@RequestBody User user, HttpSession session){
-        int status = 500;
+    public Map<String,Object> login(@RequestBody User user, HttpServletResponse response, HttpSession session){
         Map<String,Object> results = Maps.newHashMap();
         //1、根据用户名查找用户是否存在
         if(user == null){
@@ -42,47 +45,38 @@ public class LoginController {
         User u = userService.selectOne(conditions);
 
         if(u == null){
-            results.put("status",500);
+            results.put("status",201);
             results.put("message","用户名或密码错误");
             return results;
         }
         Boolean userStatus = u.getUserStatus();
 
         if(!userStatus){
-            results.put("status",202);
+            results.put("status",201);
             results.put("message","用户已被禁用");
             return results;
         }
 
-        Boolean deleteFlag = u.getDeleteFlag();
-        if(deleteFlag){
-            results.put("status",203);
-            results.put("message","此用户已被删除");
-            return results;
-        }
+        if(StringUtils.isNotEmpty(user.getToken())){//登录过
+            if(!Utils.hashHmac(u.getPassword(),Utils.SECRET).equals(user.getToken())){
+                results.put("status",201);
+                results.put("message","用户名或密码错误");
+                return results;
+            }
 
-        if(u == null){
-            results.put("status",500);
-            results.put("message","用户名或密码错误");
-            return results;
-        }
-
-        if(!u.getPassword().equals(Utils.hashHmac(user.getPassword(),Utils.SECRET))){
-            results.put("status",500);
+        }else if(!u.getPassword().equals(Utils.hashHmac(user.getPassword(),Utils.SECRET))){
+            results.put("status",201);
             results.put("message","用户名或密码错误");
             return results;
         }
 
         session.setAttribute(Constants.CURRENT_USER,u);
-        session.setAttribute(Constants.TOKEN,Utils.hashHmac(u.getPassword(),Utils.SECRET));
 
+        results.put("token",Utils.hashHmac(u.getPassword(),Utils.SECRET));
         results.put("status",200);
-        results.put("data",u);
+        results.put("username",u.getUsername());
+//        results.put("user",u);
+        results.put("id",u.getId());
         return results;
-    }
-
-    @GetMapping("/error")
-    public String error(){
-        return "error";
     }
 }
