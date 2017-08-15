@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -77,6 +78,10 @@ public class LoginController {
         results.put("username",u.getUsername());
 //        results.put("user",u);
         results.put("id",u.getId());
+
+//        Cookie cookie = new Cookie("miao","miao");
+//        cookie.setMaxAge(60*30);
+//        response.addCookie(cookie);
         return results;
     }
 }

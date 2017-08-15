@@ -24,6 +24,12 @@ loginApp.controller('loginController', ['$scope','$http','$cookies','$window',fu
                     $("#loginpassword").tooltip({title:response.data.message,placement:"auto"}).tooltip('show');
                 }else{
                     //半个小时
+                    var json = {
+                        id: "11",
+                        img: "22"
+                    }
+                    $window.sessionStorage.setItem("aaa", JSON.stringify(json));
+
                     $cookies.putObject("token",response.data,{expires:new Date(new Date().getTime()+1000*60*30)});
                     $window.location.href="/views/index.html";
                 }

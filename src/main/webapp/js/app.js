@@ -148,7 +148,9 @@ app.controller('TopController',['$scope','$cookies','$window',function ($scope,$
         // console.log($cookies.get("token"));
 
         $cookies.remove("token");
-        console.log($cookies.getAll());
+        console.log($cookies.get("token"));
+        var aaa = $window.sessionStorage.getItem("aaa");
+        console.log(aaa);
 
         // $window.location.href="/login.html";
     }
