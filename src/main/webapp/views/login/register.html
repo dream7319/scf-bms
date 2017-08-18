@@ -54,6 +54,18 @@
                         </span>
                     </label>
 
+                    <label class="block clearfix" ng-class="registerForm.telphone.$invalid ? '' : 'has-success'">
+                        <span class="block input-icon input-icon-right">
+                            <input type="text" class="form-control" ng-model="user.telphone" name="telphone" placeholder="手机号"
+                                   ng-pattern="/^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}$/" required/>
+                            <i class="icon-retweet"></i>
+                        </span>
+                        <span ng-show="registerForm.telphone.$invalid && submitted" style="color:red;">
+                            <span ng-show="registerForm.telphone.$error.required">*请输入手机号</span>
+                            <span ng-show="!registerForm.telphone.$error.required && registerForm.telphone.$error.pattern">*输入手机不合法</span>
+                        </span>
+                    </label>
+
                     <label class="block">
                         <input type="checkbox" ng-model="user.userProtocol" class="ace"/>
                         <span class="lbl">

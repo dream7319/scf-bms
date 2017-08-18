@@ -34,6 +34,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         int status = response.getStatus();
 
+        System.out.println(uri+"<=====>"+status);
+
         if(uri.equals("/api/login")){
             return true;
         }

@@ -30,6 +30,8 @@ loginApp.controller('loginController', ['$scope','$http','$cookies','$window',fu
                     }
                     $window.sessionStorage.setItem("aaa", JSON.stringify(json));
 
+                    var wsCache = new WebStorageCache();
+                    wsCache.set("test","test",{exp:30});
                     $cookies.putObject("token",response.data,{expires:new Date(new Date().getTime()+1000*60*30)});
                     $window.location.href="/views/index.html";
                 }
@@ -85,6 +87,11 @@ loginApp.controller('registerController',['$scope','$http','$location',function 
         }else{
             $scope.submitted = true;
         }
+    }
+
+    $scope.test = function () {
+        var pattern = /^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}$/;
+        console.log(pattern.test("18639710226"));
     }
 }]);
 

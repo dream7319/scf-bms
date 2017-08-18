@@ -1,5 +1,5 @@
 var app = angular.module("app",['ngRoute','oc.lazyLoad','chieffancypants.loadingBar',
-                                'ngAnimate','toastr','ui.bootstrap','ngCookies']);
+    'ngAnimate','toastr','ui.bootstrap','ngCookies']);
 //全局拦截器
 app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBar',function ($q,$rootScope,$window,$cookies,cfpLoadingBar) {
     var requestInteceptor = {
@@ -13,10 +13,14 @@ app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBa
             $rootScope.username = tokenObj.username;
             cfpLoadingBar.start();
             /*config.headers = config.headers || {};
-            var token = $cookies.get('token');
-            if (token) {
-                config.headers['Authorization'] =tokenObj.username;
-            }*/
+             var token = $cookies.get('token');
+             if (token) {
+             config.headers['Authorization'] =tokenObj.username;
+             }*/
+
+            var aaa = $window.sessionStorage.getItem("aaa");
+
+            console.log(JSON.parse(aaa).img);
             return config;
         },
         requestError:function () {
@@ -30,6 +34,7 @@ app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBa
 
         responseError:function (response) {
             cfpLoadingBar.complete();
+            console.log(response.status);
             if(response.status == 500){
                 $window.location.href="/error/500.html";
                 return $q.reject(response);
@@ -49,20 +54,20 @@ app.factory('myInteceptor',['$q','$rootScope','$window','$cookies','cfpLoadingBa
 }]);
 
 app.config(['$ocLazyLoadProvider',function ($ocLazyLoadProvider) {
-	$ocLazyLoadProvider.config({
-		events:true,
-		modules:[{
-			name:'datetimepicker',
-			insertBefore:'#ng_load_plugins_before',
-			serie:true,
-			files:[
+    $ocLazyLoadProvider.config({
+        events:true,
+        modules:[{
+            name:'datetimepicker',
+            insertBefore:'#ng_load_plugins_before',
+            serie:true,
+            files:[
                 '/static/css/custom-switch.css',
-				'/static/css/bootstrap-datetimepicker.min.css',
-				'/static/js/bootstrap-datetimepicker.min.js',
-				'/static/js/bootstrap-datetimepicker.zh-CN.js',
+                '/static/css/bootstrap-datetimepicker.min.css',
+                '/static/js/bootstrap-datetimepicker.min.js',
+                '/static/js/bootstrap-datetimepicker.zh-CN.js',
                 '/static/js/custom-switch.js'
-			]
-		},{
+            ]
+        },{
             name:'autocomplete',
             insertBefore:'#ng_load_plugins_before',
             serie:true,
@@ -80,7 +85,7 @@ app.config(['$ocLazyLoadProvider',function ($ocLazyLoadProvider) {
                 '/static/js/jquery.ztree.excheck.min.js'
             ]
         }]
-	});
+    });
 }]).config(['cfpLoadingBarProvider',function(cfpLoadingBarProvider) {
     var svg= '<svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" stroke="#3498DB"><g fill="none" fill-rule="evenodd"><g transform="translate(1 1)" stroke-width="2"><circle stroke-opacity=".5" cx="18" cy="18" r="18"></circle><path d="M36 18c0-9.94-8.06-18-18-18" transform="rotate(96.1606 18 18)"><animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="1s" repeatCount="indefinite"></animateTransform></path></g></g></svg>';
     cfpLoadingBarProvider.includeSpinner = true;
@@ -150,8 +155,11 @@ app.controller('TopController',['$scope','$cookies','$window',function ($scope,$
         $cookies.remove("token");
         console.log($cookies.get("token"));
         var aaa = $window.sessionStorage.getItem("aaa");
-        console.log(aaa);
 
+        console.log(JSON.parse(aaa).id);
+
+        var wsCache = new WebStorageCache();
+        console.log(wsCache.get("test"));
         // $window.location.href="/login.html";
     }
 }]);

@@ -129,7 +129,6 @@ app.controller('modalCtrl',['$scope','$http','toastr','$uibModalInstance','user'
 app.controller('detailCtrl',['$scope','$http','$routeParams',function ($scope,$http,$routeParams) {
     $http.get('/api/user?id='+$routeParams.id).then(function (response) {
         $scope.user = response.data.user;
-        console.log($scope.user);
     });
 }]);
 
