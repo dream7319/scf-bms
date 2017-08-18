@@ -17,7 +17,6 @@ app.controller('userControllerList',['$scope','$http','toastr','$location','$rou
                 $(this).closest('tr').toggleClass('selected');
             });
     });
-
     $scope.query = function (pageNum) {
         $http.get('/api/user/list',{params:{pageNum:pageNum,pageSize:10}}).then(function (response) {
             $scope.users = response.data.data.records;

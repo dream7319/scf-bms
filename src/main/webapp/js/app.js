@@ -132,6 +132,7 @@ app.directive('ngFocus', function () {
     }
 });
 app.controller('MenuController',['$scope','$cookies','$http','toastr','$window',function ($scope,$cookies,$http,toastr,$window) {
+
     var token = $cookies.getObject('token');
     if(token == undefined ){
         $window.location.href="/login.html";
