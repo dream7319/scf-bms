@@ -20,6 +20,7 @@ import java.util.stream.Stream;
  **/
 public class FileTest {
 	public static void main(String[] args) throws IOException {
+
 		List<String> lines = Files.readAllLines(Paths.get("E:\\aa.txt"), StandardCharsets.UTF_8);
 
 		Iterator<String> iters = lines.stream().filter(line -> line.contains("a")).iterator();
