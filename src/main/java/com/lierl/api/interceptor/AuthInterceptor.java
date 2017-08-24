@@ -1,6 +1,7 @@
 package com.lierl.api.interceptor;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.lierl.api.common.Constants;
 import com.lierl.api.entity.User;
 import com.lierl.api.service.IResourceService;
@@ -16,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLDecoder;
+import java.util.List;
 
 /**
  * Created by lierl on 2017/7/16.
@@ -36,7 +38,11 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         System.out.println(uri+"<=====>"+status);
 
-        if(uri.equals("/api/login")){
+        List<String> uris = Lists.newArrayList();
+        uris.add("/api/login");
+        uris.add("/error");
+
+        if(uris.contains(uri)){
             return true;
         }
 
