@@ -38,8 +38,7 @@ od 以二进制方式显示档案内容
 
 7、systemctl status mysqld 查看mysql状态
 
-8、	systemctl enable mysqld
-	systemctl daemon-reload 开机启动
+8、systemctl enable mysqld
 
 9、修改密码
 	Ⅰ修改密码策略：vim /etc/my.cnf	
@@ -60,6 +59,44 @@ mysql>flush privileges;
 	I、	vim /etc/sysconfig/iptables
 	II、	添加-A INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
 	III、	service iptables restart  重启防火墙
+
+
+systemctl stop firewalld.service #停止firewall
+systemctl disable firewalld.service #禁止firewall开机启动
+firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）
+firewalld 开放单个端口命令如下 
+firewall-cmd --permanent --zone=public --add-port=100/tcp 
+firewall-cmd --permanent --zone=public --add-port=100/udp 
+firewall-cmd --reload 
+开放多个端口
+firewall-cmd --permanent --zone=public --add-port=100-500/tcp 
+firewall-cmd --permanent --zone=public --add-port=100-500/udp 
+firewall-cmd --reload
+
+
+# 启动和关闭 MySQL Server
+service mysqld start
+service mysqld status
+service mysqld stop
+
+
+
+卸载：
+1、yum list installed mysql* 查看MySQL是否安装:
+或rpm -qa | grep -i mysql
+
+2、yum remove mysql mysql-devel mysql-server mysql-libs compat-mysql57
+
+3、rm -rf /var/lib/mysql
+
+4、rm /etc/my.cnf
+
+5、rpm -aq | grep -i mysql
+
+6、rpm -e 第五步出现的名称
+
+7、whereis mysql	删除目录
+
 
 
 -----------------完成mysql安装--------------------------------
@@ -150,6 +187,7 @@ source /etc/profile
 1、git clone https://github.com/dream7319/scf-bms.git
 2、进入scf-bms目录
 3、mvn package
+4、java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App
 
 Maven最常见的几个生命周期的阶段：
 
