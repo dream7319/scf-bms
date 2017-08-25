@@ -56,7 +56,6 @@ public class AuthInterceptor implements HandlerInterceptor {
             for(Cookie cookie:cookies){
                 if("token".equals(cookie.getName())){
                     value= URLDecoder.decode(cookie.getValue(),"UTF-8");
-//                    logger.info(value);
                 }
             }
         }
