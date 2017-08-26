@@ -57,7 +57,14 @@ git config --global alias.st status 创建别名 st代表 status<br/>
 [user]<br/>
     name = Your Name<br/>
     email = your@email.com<br/>
-    
+ 
+Git pull 强制覆盖本地文件
+git fetch --all  
+git reset --hard origin/master 
+git pull
+
+
+
 elasticsearch 
 1、修改Elasticsearch配置文件
 编辑elasticsearch-5.1.1/config/elasticsearch.yml,加入以下内容：
