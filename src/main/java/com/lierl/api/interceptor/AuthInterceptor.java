@@ -40,6 +40,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         List<String> uris = Lists.newArrayList();
         uris.add("/api/login");
+        uris.add("/api/test");
         uris.add("/error");
 
         if(uris.contains(uri)){

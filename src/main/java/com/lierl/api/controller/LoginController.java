@@ -10,13 +10,11 @@ import com.lierl.api.service.IUserService;
 import com.lierl.api.util.Utils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -82,6 +80,23 @@ public class LoginController {
 //        Cookie cookie = new Cookie("miao","miao");
 //        cookie.setMaxAge(60*30);
 //        response.addCookie(cookie);
+        return results;
+    }
+
+    @GetMapping("/api/test")
+    public Map<String,Object> getUser(@RequestParam String id){
+        Map<String,Object> results = Maps.newHashMap();
+        if(StringUtils.isNotEmpty(id)){
+            User user = userService.selectById(id);
+            results.put("user",user);
+        }else{
+            try {
+                List<User> users = userService.getAllUsers();
+                results.put("users",users);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return results;
     }
 }
