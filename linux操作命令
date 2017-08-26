@@ -89,6 +89,8 @@ log_bin_index=/var/lib/mysql/mysql-bin.index
 当然也有一种简单的配置，一个参数就可以搞定
 log-bin=/var/lib/mysql/mysql-bin
 
+skip_ssl 版本5.7之后会有ssl验证，跳过
+
 这些配置完毕之后对于5.7以下版本应该是可以了，但是我们这个时候用的如果是5.7及以上版本的话，
 重启mysql服务会报错。这个时候我们必须还要指定一个参数
 server-id=123454
