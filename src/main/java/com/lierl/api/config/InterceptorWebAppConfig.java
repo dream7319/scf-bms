@@ -3,6 +3,7 @@ package com.lierl.api.config;
 import com.lierl.api.interceptor.AuthInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -17,6 +18,12 @@ public class InterceptorWebAppConfig extends WebMvcConfigurerAdapter{
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
+        registry.addResourceHandler("/**").addResourceLocations("/");
     }
 
     /*@Override
