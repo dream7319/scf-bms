@@ -36,7 +36,7 @@ public class Article implements Serializable{
      * format() default DateFormat.none;
      * store() default false;#默认情况下不存储原文
      * searchAnalyzer() default "";#指定字段搜索时使用的分词器
-     *  indexAnalyzer() default "";#指定字段建立索引时指定的分词器
+     * indexAnalyzer() default "";#指定字段建立索引时指定的分词器
      * ignoreFields() default {};#如果某个字段需要被忽略
      *
      *这些默认值指的是我们没有在我们没有在属性上添加@Filed注解的默认处理。一旦添加了@Filed注解，
