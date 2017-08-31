@@ -1,3 +1,12 @@
+查看集群状态
+curl -XGET 'http://192.168.151.14:9200/_cluster/health'
+curl 'http://192.168.151.14:9200/_nodes/process?pretty' 查看集群信息
+curl -XGET 'http://192.168.151.14:9200/_cat/shards'查看所有分片
+curl -XGET 'http://192.168.151.14:9200/_cat/shards'| grep UNASSIGNED  看unassignded shards：
+
+
+
+
 1、创建索引
 	curl -XPUT http://192.168.151.14:9200/bank
 	
@@ -5,7 +14,13 @@
 	curl -H "Content-Type: application/json" -XPOST 'http://192.168.151.14:9200/bank/account/_bulk?pretty&refresh' --data-binary "@accounts.json"
 	
 
-3、匹配查询(完全匹配)
+检索范围为twitter索引中，tweet和user这两种type：
+curl -XGET 'http://localhost:9200/twitter/tweet,user/_search?q=user:kimchy'
+检索范围为kimchy与elasticsearch两个索引中tweet这种type：
+curl -XGET 'http://localhost:9200/kimchy,elasticsearch/tweet/_search?q=tag:wow'
+
+
+3、lastname中包含Ayala
   curl -XGET http://192.168.151.14:9200/bank/account/_search?q=lastname:Ayala
 
 	curl -XGET '192.168.151.14:9200/_search?pretty' -H 'Content-Type: application/json' -d'
@@ -17,2751 +32,440 @@
 	查询索引megacorp下的数据，size为每页大小,from是从哪条数据开始
 	curl -XGET http://192.168.151.14:9200/megacorp/_search?size=2&from=0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+5、导入数据
+	curl -XPOST "http://192.168.151.14:9200/bookdb_index/book/_bulk" -d'
+	{"index": { "_id": 1 }}
+	{"title": "Elasticsearch: The Definitive Guide", "authors": ["clinton gormley", "zachary tong"], "summary" : "A distibuted real-time search and analytics engine", "publish_date" : "2015-02-07", "num_reviews": 20, "publisher": "oreilly" }
+	{"index": { "_id": 2 }}
+	{"title": "Taming Text: How to Find, Organize, and Manipulate It", "authors": ["grant ingersoll", "thomas morton", "drew farris"], "summary" : "organize text using approaches such as full-text search, proper name recognition, clustering, tagging, information extraction, and summarization", "publish_date" : "2013-01-24", "num_reviews": 12, "publisher": "manning" }
+	{"index": { "_id": 3 }}
+	{"title": "Elasticsearch in Action", "authors": ["radu gheorge", "matthew lee hinman", "roy russo"], "summary" : "build scalable search applications using Elasticsearch without having to do complex low-level programming or understand advanced data science algorithms", "publish_date" : "2015-12-03", "num_reviews": 18, "publisher": "manning" }
+	{"index": { "_id": 4 }}
+	{"title": "Solr in Action", "authors": ["trey grainger", "timothy potter"], "summary" : "Comprehensive guide to implementing a scalable search engine using Apache Solr", "publish_date" : "2014-04-05", "num_reviews": 23, "publisher": "manning" }
+	'
+6、所有字段中查询字符串"guide"
+	-XGET /bookdb_index/book/_search?q=guide
+	相同：
+	{
+	    "query": {
+		"multi_match" : {
+		    "query" : "guide",
+		    "fields" : ["_all"]--表示查询所有字段
+		}
+	    }
+	}
+7、指定了要返回的结果数量、偏移位置（对分页有用）、要返回的文档字段和高亮显示的项。
+POST /bookdb_index/book/_search
+{
+    "query": {
+        "match" : {
+            "title" : "in action"	--标题中包含in action
+        }
+    },
+    "size": 2,
+    "from": 0,
+    "_source": [ "title", "summary", "publish_date" ],	_source中显示这三个字段
+    "highlight": {
+        "fields" : {
+            "title" : {}	--对标题title进行高亮显示
+        }
+    }
+}
+
+8、多字段查询
+POST /bookdb_index/book/_search
+{
+    "query": {
+        "multi_match" : {
+            "query" : "elasticsearch guide",
+            "fields": ["title", "summary"]
+        }
+    }
+}
+在title和summary中，只要出现elasticsearch、guide中任意一个单词都会被查询出来
+
+9、Boosting 算法
+将summary字段的权重提高三倍，以提高这个字段的重要性，从而增强文档 _id 4的相关性
+{
+    "query": {
+        "multi_match" : {
+            "query" : "elasticsearch guide",--不区分大小写匹配
+            "fields": ["title", "summary^3"]
+        }
+    },
+    "_source": ["title", "summary", "publish_date"]
+}
+Boosting并不意味着计算的权重会被boost因子翻倍。实际的boost值会进行一些规范化和内部优化
+
+10、Bool 查询(bool查询接受must参数（等效于AND），must_not参数（等效于NOT），should参数（等效于OR）)
+查询标题中带有“Elasticsearch” 或（OR） “Solr”的书，并且（AND）是由“clinton gormley”创作，
+而不是（NOT） “radu gheorge”
+{
+    "query": {
+        "bool": {
+            "must": {
+                "bool" : { 
+			"should": [
+			      { "match": { "title": "Elasticsearch" }},
+			      { "match": { "title": "Solr" }} 
+			 ] 
+		}
+            },
+            "must": { "match": { "authors": "clinton gormely" }},
+            "must_not": { "match": {"authors": "radu gheorge" }}
+        }
+    }
+}
+
+11、模糊查询
+糊匹配可以在匹配和多重匹配查询上启用以捕获拼写错误。模糊程度由原始词之间的Levenshtein距离决定
+{
+    "query": {
+        "multi_match" : {
+            "query" : "comprihensiv guide",
+            "fields": ["title", "summary"],
+            "fuzziness": "AUTO"
+        }
+    },
+    "_source": ["title", "summary", "publish_date"],
+    "size": 1
+}
+当术语长度大于5个字符时，"AUTO"的模糊值等同于指定值“2”。
+80％的人类拼写错误的编辑距离为1，所以，将模糊值设置为“1”可能会提高您的整体搜索性能
+fuzziness：
+0 for strings of one or two characters
+1 for strings of three, four, or five characters
+2 for strings of more than five characters
+
+12、通配符查询
+通配符查询允许你指定匹配的模式，而不是整个术语。?匹配任何字符，*匹配零个或多个字符。
+例如，要查找名称以字母't'开头的所有作者的记录
+{
+    "query": {
+        "wildcard" : {
+            "authors" : "t*"
+        }
+    },
+    "_source": ["title", "authors"],
+    "highlight": {
+        "fields" : {
+            "authors" : {}
+        }
+    }
+}
+
+13、正则查询(正则查询允许你指定比通配符查询更复杂的查询模式)
+{
+    "query": {
+        "regexp" : {
+            "authors" : "t[a-z]*y"
+        }
+    },
+    "_source": ["title", "authors"],
+    "highlight": {
+        "fields" : {
+            "authors" : {}
+        }
+    }
+}
+
+14、匹配短语查询
+匹配短语查询要求查询字符串中的所有字词都在文档中存在，要遵循查询字符串的指定顺序还要彼此接近。默认情况下，
+术语要求彼此相同，但你可以指定slop值，进行文档匹配时，该值可以指定词的距离
+{
+    "query": {
+        "multi_match" : {
+            "query": "search engine",
+            "fields": ["title", "summary"],
+            "type": "phrase",
+            "slop": 3
+        }
+    },
+    "_source": [ "title", "summary", "publish_date" ]
+}
+
+在上述例子中，对于非短语类型查询，文档_id 1通常会以较高的权重出现在文档_id 4之前，因为其字段长度更加短。
+然而，作为短语查询，术语的接近度也需要考虑在内，因此文档_id 4权重会更高
+
+15、匹配短语前缀查询
+匹配短语前缀查询在查询时提供“自动搜索”功能（search-as-you-type）或者说词穷时的自动补充功能，
+你无需以任何方式准备数据。和match_phrase查询一样，它接受slop参数，使得字的顺序和相对位置的调整不那么死板。
+它还接受max_expansions参数，以限制匹配的术语数量，减少资源强度
+{
+    "query": {
+        "match_phrase_prefix" : {
+            "summary": {
+                "query": "search en",
+                "slop": 3,
+                "max_expansions": 10
+            }
+        }
+    },
+    "_source": [ "title", "summary", "publish_date" ]
+}
+
+16、查询字符串查询
+查询字符串查询提供了以简明的速记语法执行multi_match查询，bool查询，boosting查询，模糊匹配查询，
+通配符查询，regexp和范围查询的方法。下面示例中，我对“search algorithm”执行了模糊查询，
+其中一本书的作者是“grant ingersoll” 或 “tom morton”，我对所有字段都进行查询，但在summary字段，boost值设为“2
+
+模糊查询也可以saerch~1
+{
+    "query": {
+        "query_string" : {
+            "query": "(saerch~1 algorithm~1) AND (grant ingersoll)  OR (tom morton)",
+            "fields": ["_all", "summary^2"]
+        }
+    },
+    "_source": [ "title", "summary", "authors" ],
+    "highlight": {
+        "fields" : {
+            "summary" : {}
+        }
+    }
+}
+
+17、简单查询字符串查询
+简单查询字符串（simple_query_string）查询是字符串（query_string）查询的一个版本，更适合用户在单个搜索框中使用。
+它分别用+ | - 替换AND OR NOT的使用，并且自动过滤掉查询的无效部分，而不是在用户犯错误时抛出异常
+{
+    "query": {
+        "simple_query_string" : {
+            "query": "(saerch~1 algorithm~1) + (grant ingersoll)  | (tom morton)",
+            "fields": ["_all", "summary^2"]
+        }
+    },
+    "_source": [ "title", "summary", "authors" ],
+    "highlight": {
+        "fields" : {
+            "summary" : {}
+        }
+    }
+}
+
+18、术语查询
+以上都是全文搜索的例子。但是有些盆友对结构化搜索更感兴趣，希望在其中找到完全匹配并返回结果。
+这时，术语查询便可以帮到我们。在下面例子中，我们将搜索Manning Publications出版的所有书籍
+{
+    "query": {
+        "term" : {
+            "publisher": "manning"
+        }
+    },
+    "_source" : ["title","publish_date","publisher"]
+}
+
+可以使用术语关键字来指定多个术语，并传入搜索术语数组
+{
+    "query": {
+        "terms" : {
+            "publisher": ["oreilly", "packt"]
+        }
+    }
+}
+
+19、术语查询——排序
+术语查询结果（与所有其他查询结果一样）可以轻松排序， 也允许多级排序
+{
+    "query": {
+        "term" : {
+            "publisher": "manning"
+        }
+    },
+    "_source" : ["title","publish_date","publisher"],
+    "sort": [
+        { "publish_date": {"order":"desc"}},
+        { "title": { "order": "desc" }}
+    ]
+}
+
+20、范围查询
+另一个结构化查询示例是范围查询。 在此示例中，我们将搜索在2015年出版的图书：
+{
+    "query": {
+        "range" : {
+            "publish_date": {
+                "gte": "2015-01-01",
+                "lte": "2015-12-31"
+            }
+        }
+    },
+    "_source" : ["title","publish_date","publisher"]
+}
+范围查询适用于日期，数字和字符串类型字段。
+
+21、过滤查询
+过滤查询允许您过滤查询的结果。 例如，我们要查询标题或摘要中包含术语“Elasticsearch”的书籍，
+但要求结果过滤到包含20条以上评论的书
+{
+    "query": {
+        "bool": {
+            "must" : {
+                "multi_match": {
+                    "query": "elasticsearch",
+                    "fields": ["title","summary"]
+                }
+            },
+            "filter": {
+                "range" : {
+                    "num_reviews": {
+                        "gte": 20
+                    }
+                }
+            }
+        }
+    },
+    "_source" : ["title","summary","publisher", "num_reviews"]
+}
+
+过滤查询不要求过滤的查询的存在。如果没有指定查询，则运行match_all查询，它基本上能返回索引中的所有文档，
+然后对其进行过滤。实际上，首先运行的是过滤器，这减少了需要查询的面积。 
+此外，过滤器在第一次使用后缓存，这能使它更高效。
+
+22、多项过滤器
+多项过滤器可以通过bool过滤器结合起来，在下一个示例中，过滤器指定返回的结果必须至少有20条评论，
+发布时间在2015年之后，并应由oreilly发布
+{
+    "query": {
+        "bool": {
+            "must" : {
+                "multi_match": {
+                    "query": "elasticsearch",
+                    "fields": ["title","summary"]
+                }
+            },
+            "filter": {
+                "bool": {
+                    "must": {
+                        "range" : { "num_reviews": { "gte": 20 } }
+                    },
+                    "must_not": {
+                        "range" : { "publish_date": { "lte": "2014-12-31" } }
+                    },
+                    "should": {
+                        "term": { "publisher": "oreilly" }
+                    }
+                }
+            }
+        }
+    },
+    "_source" : ["title","summary","publisher", "num_reviews", "publish_date"]
+}
+
+23、函数权重：字段值要素
+可能有这样的情况，您希望将文档中特定字段的值考虑到相关性权重的计算中。 这在脚本中很常见，基于其受欢迎程度，
+你会希望boost文档的相关性。 在我们的例子中，我们希望更受欢迎的书（根据评论的数量判断）得到boost。 
+这就可能使用到field_value_factor函数权重
+{
+    "query": {
+        "function_score": {
+            "query": {
+                "multi_match" : {
+                    "query" : "search engine",
+                    "fields": ["title", "summary"]
+                }
+            },
+            "field_value_factor": {
+                "field" : "num_reviews",
+                "modifier": "log1p",
+                "factor" : 2
+            }
+        }
+    },
+    "_source": ["title", "summary", "publish_date", "num_reviews"]
+}
+
+field：表示影响权重的字段
+modifier：表示影响的规则
+修饰语 modifier 的值可以为：none （默认状态）
+log 、 log1p 、 log2p 、 ln 、 ln1p 、 ln2p 、 square 、 sqrt 以及 reciprocal。
+facror：表示影响因子。
+
+new_score = old_score * log(1 + factor * number_of_votes)  
+factor 值大于 1 会提升效果， factor 值小于 1 会降低效果
+
+--------------------------------------------------------------------------------
+
+有时ES默认的评分规则并不能满足需求，时长会有在old_source的基础上根据某字段的值需要重新打分的需求场景，
+比如在相关度相差不大的情况下时间越进越靠前，或者评论数越多越靠前等等。此时需要重新打分。
+对此可以通过两种方式法来处理：
+1、在创建索引的时候提高文档的权重，根据因素字段值来给文档设置boost.这种方式在lucene之前有效，之后就无效了。
+不建议采用。
+2、通过function_query来设置分数。
+{  
+  "query": {  
+    "function_score": {  
+      "query": {  
+        "multi_match": {  
+          "query":    "popularity",  
+          "fields": [ "title", "content" ]  
+       }  
+      },  
+      "field_value_factor": {  
+        "field":    "votes",  
+        "modifier": "log1p",  
+        "factor":   0.1  
+      },  
+      "boost_mode": "sum" ,  
+      "max_boost":  1.5   
+    }  
+  }  
+}  
+
+boost_mode
+multiply评分 _score 与函数值的积（默认）
+sum评分 _score 与函数值的和
+min评分 _score 与函数值间的较小值
+max评分 _score 与函数值间的较大值
+replace函数值替代评分 _scoremax_boost设置最大的得分分值
+无论 field_value_factor 函数的结果如何，最终结果都不会大于 1.5
+
+24、函数权重：关联功能递减函数
+假设想要的不是让某个字段值按某种关联度递增，而是想让你关注的值按照同关联度递减。 这在基于lat / long，
+数字字段（如价格或日期）的boost中非常有用。 在下列示例中，我们要在“搜索引擎”上搜索于2014年6月发布的书籍
+
+{
+    "query": {
+        "function_score": {
+            "query": {
+                "multi_match" : {
+                    "query" : "search engine",
+                    "fields": ["title", "summary"]
+                }
+            },
+            "functions": [
+                {
+                    "exp": {
+                        "publish_date" : {
+                            "origin": "2014-06-15",
+                            "offset": "7d",
+                            "scale" : "30d"
+                        }
+                    }
+                }
+            ],
+            "boost_mode" : "replace"
+        }
+    },
+    "_source": ["title", "summary", "publish_date", "num_reviews"]
+}
+
+25、通过boost参数设置所有文档的_score分值为1.2。
+
+{"match_all": { "boost" : 1.2 }}
+
+26、全文查询
+“全文查询”可以再作以下分类：
+match 查询
+	实施全文查询的标准做法，包括fuzzy matching、phrase查询、proximity查询。
+multi_match 查询
+	普通match查询的多字段版本。
+common_terms 查询
+	一种针对罕见词，提供更多可定制化操作的较专业的查询方法。
+query_string 查询
+	支持Lucene query string syntax的查询，针对专家用户使用。
+simple_query_string 查询：
+	一种对query_string查询的改进，使得query_string的语法更健壮，更适合普通用户使用
 
 
 
