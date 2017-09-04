@@ -37,7 +37,7 @@ public class InitRunner implements CommandLineRunner {
         long start = System.currentTimeMillis();
         for (int i=0;i<urls.size();i++) {
             System.out.println("i="+i);
-            String url = urls.get(i)+"/blog";
+            String url = urls.get(i);
             Spider.create(new PersonBlogOschina(url,template)).setDownloader(new CustomerDownloader(errorUrls)).addUrl(url).thread(10).run();
         }
         long end = System.currentTimeMillis();
