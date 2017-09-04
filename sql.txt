@@ -1,0 +1,87 @@
+activiti流程视图：
+DELIMITER $$
+
+ALTER ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `ACT_ID_GROUP` AS
+SELECT
+  `ar`.`name`  AS `ID_`,
+  NULL         AS `REV_`,
+  `ar`.`name`  AS `NAME_`,
+  'assignment' AS `TYPE_`
+FROM `scf_role` `ar`$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+ALTER ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `ACT_ID_MEMBERSHIP` AS
+SELECT
+  `a`.`loginacct` AS `USER_ID_`,
+  `r`.`name`      AS `GROUP_ID_`
+FROM ((`scf_admin` `a`
+    LEFT JOIN `scf_admin_role` `ar`
+      ON ((`a`.`id` = `ar`.`adminid`)))
+   LEFT JOIN `scf_role` `r`
+     ON ((`ar`.`roleid` = `r`.`id`)))$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+ALTER ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `ACT_ID_USER` AS
+SELECT
+  `a`.`loginacct` AS `ID_`,
+  0               AS `REV_`,
+  `a`.`name`      AS `FIRST_`,
+  ''              AS `LAST_`,
+  `a`.`email`     AS `EMAIL_`,
+  `a`.`password`  AS `PWD_`,
+  ''              AS `PICTURE_ID_`
+FROM `scf_admin` `a`$$
+
+DELIMITER ;
+
+
+
+
+解析视图函数：
+DELIMITER $$
+
+USE `scf`$$
+
+DROP FUNCTION IF EXISTS `fn_parseJson`$$
+
+CREATE DEFINER=`root`@`%` FUNCTION `fn_parseJson`(
+  p_jsonstr VARCHAR (255) CHARACTER SET utf8,
+  p_key VARCHAR (255)
+) RETURNS VARCHAR(255) CHARSET utf8
+BEGIN
+  DECLARE rtnVal VARCHAR (255) DEFAULT '' ;
+  DECLARE v_key VARCHAR (255) ;
+  SET v_key = CONCAT('"', p_key, '":') ;
+  SET @v_flag = p_jsonstr REGEXP v_key ;
+  IF(@v_flag = 0)
+  THEN SET rtnVal = '' ;
+  ELSE
+  SELECT
+    val INTO rtnVal
+  FROM
+    (SELECT
+      @start_pos := LOCATE(v_key, p_jsonstr),
+      @end_pos := @start_pos + LENGTH(v_key),
+      @tail_pos := IF(
+        LOCATE(",", p_jsonstr, @end_pos) = 0,
+        LOCATE("}", p_jsonstr, @end_pos),
+        LOCATE(",", p_jsonstr, @end_pos)
+      ),
+      SUBSTRING(
+        p_jsonstr,
+        @end_pos,
+        @tail_pos - @end_pos
+      ) AS val) AS t ;
+  END IF ;
+  RETURN REPLACE(rtnVal, '"', '') ;
+END$$
+
+DELIMITER ;
+

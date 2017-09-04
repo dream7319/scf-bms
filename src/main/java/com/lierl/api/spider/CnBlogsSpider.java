@@ -41,13 +41,11 @@ public class CnBlogsSpider implements PageProcessor {
 				uris.addAll(urls);
 				page.addTargetRequests(urls);
 				page.addTargetRequest("https://www.cnblogs.com/sitehome/p/" + ++pageNum);
-				System.out.println("CurrPage:" + pageNum + "#######################################");
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
 		}else {
-			// 获取页面需要的内容,这里只取了标题，其他信息同理。
-			System.out.println("抓取的内容：" + page.getHtml().xpath("//a[@id='cb_post_title_url']/text()").get());
+
 		}
 	}
 
@@ -59,8 +57,5 @@ public class CnBlogsSpider implements PageProcessor {
 	public static void main(String[] args) {
 		Spider.create(new CnBlogsSpider()).addUrl("https://www.cnblogs.com").thread(3).run();
 
-		for (int i = 0; i < uris.size(); i++) {
-			System.out.println(uris.get(i));
-		}
 	}
 }
