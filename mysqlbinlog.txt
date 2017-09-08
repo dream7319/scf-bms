@@ -1,0 +1,44 @@
+开启binlog
+vim /etc/my.cnf
+
+log_bin=ON
+log_bin_basename=/var/lib/mysql/mysql-bin
+log_bin_index=/var/lib/mysql/mysql-bin.index
+三个参数来指定，
+第一个参数是打开binlog日志
+第二个参数是binlog日志的基本文件名，后面会追加标识来表示每一个文件
+第三个参数指定的是binlog文件的索引文件，这个文件管理了所有的binlog文件的目录
+
+当然也有一种简单的配置，一个参数就可以搞定
+log-bin=/var/lib/mysql/mysql-bin
+
+binlog-format=Row
+server-id=1234
+expire_logs_days=7
+max_binlog_size=100m
+
+skip_ssl 版本5.7之后会有ssl验证，跳过
+
+这些配置完毕之后对于5.7以下版本应该是可以了，但是我们这个时候用的如果是5.7及以上版本的话，
+重启mysql服务会报错。这个时候我们必须还要指定一个参数
+server-id=123454
+
+show variables like '%log_bin%'查看
+
+关于binlog：
+1.binlog文件会随服务的启动创建一个新文件
+2.通过flush logs 可以手动刷新日志，生成一个新的binlog文件
+3.通过show master status 可以查看binlog的状态
+4.通过reset master 可以清空binlog日志文件
+5.通过mysqlbinlog 工具可以查看binlog日志的内容
+6.通过执行dml，mysql会自动记录binlog
+7.show binlog events 查看binlog日志事件
+
+通过binlog恢复数据
+根据开始结束时间恢复
+mysqlbinlog --start-datetime="2017-09-08 8:00:00" --stop-datetime="2017-09-08 14:00:00" ./mysqld-bin.000007 |mysql -uroot -p
+根据位置恢复
+mysqlbinlog --stop-position=598 ./mysqld-bin.000001 | mysql -uroot -proot
+
+
+

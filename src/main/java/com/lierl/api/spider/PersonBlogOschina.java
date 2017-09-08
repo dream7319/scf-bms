@@ -68,6 +68,12 @@ public class PersonBlogOschina implements PageProcessor{
 				page.addTargetRequest(homeUrl+"?sort=time&p=2");
 			}
 
+<<<<<<< HEAD
+=======
+			page.addTargetRequests(uris);
+			pageNum++;
+			page.addTargetRequest(homeUrl+"?sort=time&p=2");
+>>>>>>> 481823a90f8e6d7188bda2352ab3294f38bb0251
 		}else if(page.getUrl().regex(blogPageUrl).match() && pageNum <= totalPageNum){
 			List<String> uris = page.getHtml().xpath("//*div[@id='list']").css("div.title").xpath("//a/@href").all();
 			page.addTargetRequests(uris);
