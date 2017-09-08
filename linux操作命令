@@ -12,6 +12,7 @@ head 仅仅显示前面几行
 tail 仅仅显示后面几行
 n 带行号显示档案内容
 od 以二进制方式显示档案内容
+vi +n file 编辑文档直接定位到第n行
 
 ntpdate cn.pool.ntp.org 同步网络时间
 
@@ -338,6 +339,178 @@ vm.max_map_count=655360
   
    注意：elasticsearch-head不能放到 elasticsearch-5.5.2/plugins下面
    
+
+13、安装中文分词器
+cd /usr/local/elasticsearch-5.5.2/plugins
+1、wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.5.2/elasticsearch-analysis-ik-5.5.2.zip
+2、unzip elasticsearch-analysis-ik-5.5.2.zip
+3、重启elasticsearch
+4、测试 curl -XGET 'http://localhost:9200/_analyze?pretty&analyzer=ik_max_word' -d '联想是全球最大的笔记本厂商'
+
+14、安装kibana
+1、wget https://artifacts.elastic.co/downloads/kibana/kibana-5.5.2-linux-x86_64.tar.gz
+2、tar -zxvf kibana-5.5.2-linux-x86_64.tar.gz
+3、cd kibana
+4、vi conf/kibana.yml
+5、elasticsearch.url=http://192.168.151.14:9200
+6、执行./bin/kibana
+
+15、安装x-pack
+wget https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.5.2.zip
+     
+
+bin/elasticsearch-plugin install file:///usr/local/elastic-plugins/x-pack-5.5.2.zip
+bin/kibana-plugin install file:///usr/local/elastic-plugins/x-pack-5.5.2.zip
+http://localhost:5601
+
+
+16、logstash
+1、wget https://artifacts.elastic.co/downloads/logstash/logstash-5.5.2.tar.gz
+2、tar -zxvf logstash-5.5.2.tar.gz
+3、./bin/logstash -e 'input { stdin { } } output { stdout {} }'测试，输入hello world
+
+
+17、logstash-input-jdbc
+可以不用下载wget https://github.com/logstash-plugins/logstash-input-jdbc/archive/v4.2.4.tar.gz
+
+1、yum -y install gem
+2、gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org/
+3、gem sources -l 查看是否成功
+4、进入logstash-5.5.2
+5、vi Gemfile
+source "https://ruby.taobao.org"
+6、cd bin 
+./logstash-plugin install logstash-input-jdbc
+
+7、mkdir config-mysql
+   cd config-mysql 
+   vim mysql.conf
+
+添加如下内容
+input {
+        stdin {
+        }
+        jdbc {
+		#数据库
+                jdbc_connection_string => "jdbc:mysql://192.168.151.14:3306/elastic"
+                # 用户名密码
+		jdbc_user => "root"
+                jdbc_password => "root"
+		# jar包的位置
+                jdbc_driver_library => "/usr/local/maven/mavenRepo/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar"
+                # mysql的Driver
+		jdbc_driver_class => "com.mysql.jdbc.Driver"
+                jdbc_paging_enabled => "true"
+                jdbc_page_size => "50000"
+                # 执行的sql 文件路径+名称
+		statement_filepath => "/usr/local/elastic-plugins/logstash/logstash-5.5.2/bin/config-mysql/user.sql"
+                # 设置监听间隔  各字段含义（由左至右）分、时、天、月、年，全部为*默认含义为每分钟都更新
+		# * 5 * 1-3 * 一月到三月期间每天早上五点起每分钟执行一次
+		schedule => "* * * * *"
+                #索引的类型
+		type => "jdbc"        
+	}
+}
+filter {
+    json {
+        source => "message"
+        remove_field => ["message"]
+    }
+}
+output {
+    elasticsearch {
+        hosts => ["192.168.151.14:9200"]
+	# index名
+        index => "user"
+	# 需要关联的数据库中有有一个id字段，对应索引的id号
+        document_id => "%{id}"
+	# kibana修改后的密码，如果没有修改可以不写，默认：用户名elastic 密码 changeme
+	user => elastic
+	password => elastic
+    }
+    stdout {
+        codec => json_lines
+    }
+}
+
+
+user.sql
+如：
+SELECT
+    id ,
+    title ,
+    market_price ,
+    shop_price ,
+    content ,
+    add_time ,
+    update_time
+FROM
+    scf_user
+WHERE
+    is_del = 0
+AND is_open = 1
+AND update_time >=date_add(:sql_last_value,interval 8 hour)
+
+date_add(:sql_last_value,interval 8 hour) Logstash使用的标准时间并没有使用的是本地时区时间，这里取个巧，
+在他的时间基础上增加8小时，不用修改 Logstash 的时区了
+sql_last_value是每次读取数据库表时更新此值，表示最后更新时间 
+如果input里面use_column_value 设置为true，可以是我们设定的字段的上一次的值。 
+默认 use_column_value 为 false，这样 :sql_last_value为上一次更新的最后时间， 
+这样对于新增的值，才会更新，这样就实现了增量更新的目的
+
+bin/logstash -f mysql.conf
+
+
+同步多个索引
+input {
+    jdbc {
+      jdbc_connection_string => "jdbc:mysql://localhost:3306/crm?zeroDateTimeBehavior=convertToNull"
+      jdbc_user => "root"
+      jdbc_password => ""
+      jdbc_driver_library => "D:/siyang/elasticsearch-5.2.2/logstash-5.2.2/mysql-connector-java-5.1.30.jar"
+      jdbc_driver_class => "com.mysql.jdbc.Driver"
+      jdbc_paging_enabled => "true"
+      jdbc_page_size => "50000"
+      statement_filepath => "filename.sql"
+      schedule => "* * * * *"
+      type => "jdbc_office"
+    }
+    jdbc {
+      jdbc_connection_string => "jdbc:mysql://localhost:3306/crm?zeroDateTimeBehavior=convertToNull"
+      jdbc_user => "root"
+      jdbc_password => "" 
+      jdbc_driver_library => "D:/siyang/elasticsearch-5.2.2/logstash-5.2.2/mysql-connector-java-5.1.30.jar"
+      jdbc_driver_class => "com.mysql.jdbc.Driver"
+      jdbc_paging_enabled => "true"
+      jdbc_page_size => "50000"
+      statement => "SELECT * from sys_user"
+      schedule => "* * * * *"
+      type => "jdbc_user"
+    }
+}
+output {
+ stdout {
+        codec => json_lines
+    }
+    if[type] == "jdbc_office"{
+        elasticsearch {
+        hosts  => "localhost:9200"
+        index => "contacts4"
+        document_type => "office1"
+        document_id => "%{id}"
+        }
+    }
+    if[type] == "jdbc_user"{
+        elasticsearch {
+        hosts  => "localhost:9200"
+        index => "contacts4"
+        document_type => "user1"
+        document_id => "%{id}"
+        }
+    }
+}
+
+
 ----------------------------------------------------------------------------------------------------------------
 
 vim /etc/sysconfig/network-scripts/ifcfg-eth0  

@@ -1,8 +1,10 @@
 package com.lierl.api.spider;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.lierl.api.spider.bean.CsdnBlog;
 import com.lierl.api.spider.bean.OsChinaBlog;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -72,30 +74,41 @@ public class PersonBlogCsdn implements PageProcessor{
 			this.pageNum++;
 			page.addTargetRequest(homeUrl+"/article/list/"+ ++pageNum);
 		}else{
+			CsdnBlog csdn = new CsdnBlog();
 			String title = page.getHtml().xpath("//*div[@id='article_details']/div[@class='article_title']/h1/span/a/text()").get();
-
+			csdn.setTitle(title);
 			String tags = Joiner.on(",").join(page.getHtml().xpath("//*div[@id='article_details']/div[@class='article_manage']/div[@class='article_l']/span/a/text()").all());
+			csdn.setTags(tags);
 			Selectable articleR = page.getHtml().xpath("//*div[@id='article_details']/div[@class='article_manage']/div[@class='article_r']");
 			String date = articleR.xpath("//span[1]/text()").get();
+			csdn.setDate(date);
 			String read = articleR.xpath("//span[2]/text()").get().replace("人阅读","");
+			csdn.setRead(read);
 			String comments = articleR.xpath("//span[3]/text()").get().replace("(","").replace(")","").trim();
-
+			csdn.setComments(comments);
 			String content = page.getHtml().xpath("//*div[@id='article_details']/div[@id='article_content']/html()").get();
-
+			csdn.setContent(content);
 			String ding = page.getHtml().xpath("//*div[@id='article_details']/div[@id='digg']/dl[1]/dd/text()").get();
+			csdn.setDing(ding);
 			String cai = page.getHtml().xpath("//*div[@id='article_details']/div[@id='digg']/dl[2]/dd/text()").get();
-
+			csdn.setCai(cai);
 			String author = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/div[@id='blog_userface']/span/a/text()").get();
-
+			csdn.setAuthor(author);
 			String visitor = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[1]/li[1]/span/text()").get();
+			csdn.setVisitor(visitor);
 			String point = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[1]/li[2]/span/text()").get();
+			csdn.setPoint(point);
 			String ranking = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[1]/li[4]/span/text()").get();
-
+			csdn.setRanking(ranking);
 			String original = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[2]/li[1]/span/text()").get();
+			csdn.setOriginal(original);
 			String reprint = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[2]/li[2]/span/text()").get();
+			csdn.setReprint(reprint);
 			String translation = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[2]/li[3]/span/text()").get();
+			csdn.setTranslation(translation);
 			String allComments = page.getHtml().xpath("//*div[@id='side']/div[@class='side']/div[@id='panel_Profile']/ul[2]/ul[2]/li[4]/span/text()").get();
-			String aa = "";
+			csdn.setAllComments(allComments);
+			template.send("csdn", JSON.toJSONString(csdn));
 		}
 	}
 
