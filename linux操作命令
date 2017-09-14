@@ -722,7 +722,7 @@ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 -
 
 
 查看topic：
-bin/kafka-topics.sh --list --zookeeper localhost:2181
+bin/kafka-topics.sh --list --zookeeper 192.168.1.8:2181
 通过kafka-topics.sh工具的alter命令，将topic_test的partitions从12增加到20； 
 bin/kafka-topics.sh –zookeeper 192.168.2.225:2181/config/mobile/mq –alter –partitions 20 –topic topic_test
 查看topic详情

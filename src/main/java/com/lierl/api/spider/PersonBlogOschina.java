@@ -42,7 +42,7 @@ public class PersonBlogOschina implements PageProcessor{
 		this.homeUrl = homeUrl;
 		this.blogPageUrl = homeUrl+"\\?sort=time&p=\\d{1,4}";
 		this.pageNum = 1;
-		this.totalPageNum = 0;
+		this.totalPageNum = 1;
 		this.template = template;
 	}
 
@@ -50,22 +50,30 @@ public class PersonBlogOschina implements PageProcessor{
 	public void process(Page page) {
 		if(page.getUrl().regex("^"+homeUrl+"$").match()){
 			List<String> uris = page.getHtml().xpath("//*div[@id='list']").css("div.title").xpath("//a/@href").all();
+			if(homeUrl.endsWith("/blog")){
+				List<String> pages = page.getHtml().xpath("//*div[@id='list']").css("ul.paging").xpath("//li/a/text()").all();
 
-			List<String> pages = page.getHtml().xpath("//*div[@id='list']").css("ul.paging").xpath("//li/a/text()").all();
+				if(pages != null && !pages.isEmpty()){
+					int size = pages.size() - 1;
 
-			if(pages != null && !pages.isEmpty()){
-				int size = pages.size() - 1;
+					String num = page.getHtml().xpath("//*div[@id='list']").css("ul.paging").xpath("//li["+size+"]/a/text()").toString();
 
-				String num = page.getHtml().xpath("//*div[@id='list']").css("ul.paging").xpath("//li["+size+"]/a/text()").toString();
+					totalPageNum = Integer.valueOf(num);
+				}else{
+					totalPageNum = 1;
+				}
 
-				totalPageNum = Integer.valueOf(num);
-			}else{
-				totalPageNum = 1;
+				page.addTargetRequests(uris);
+				pageNum++;
+				page.addTargetRequest(homeUrl+"?sort=time&p=2");
 			}
 
+<<<<<<< HEAD
+=======
 			page.addTargetRequests(uris);
 			pageNum++;
 			page.addTargetRequest(homeUrl+"?sort=time&p=2");
+>>>>>>> 481823a90f8e6d7188bda2352ab3294f38bb0251
 		}else if(page.getUrl().regex(blogPageUrl).match() && pageNum <= totalPageNum){
 			List<String> uris = page.getHtml().xpath("//*div[@id='list']").css("div.title").xpath("//a/@href").all();
 			page.addTargetRequests(uris);
