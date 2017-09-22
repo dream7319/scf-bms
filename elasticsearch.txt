@@ -4,9 +4,6 @@ curl 'http://192.168.151.14:9200/_nodes/process?pretty' 查看集群信息
 curl -XGET 'http://192.168.151.14:9200/_cat/shards'查看所有分片
 curl -XGET 'http://192.168.151.14:9200/_cat/shards'| grep UNASSIGNED  看unassignded shards：
 
-
-
-
 1、创建索引
 	curl -XPUT http://192.168.151.14:9200/bank
 	
@@ -518,7 +515,65 @@ curl -XPOST http://192.168.151.14:9200/analysis/fulltext/_search  -d'
     }
 }
 '
+<<<<<<< HEAD
 curl -XGET http://localhost:9200/_cat/shards|grep UNASSIGNED 查看unassigned相关信息
+=======
+
+GET bank/account/_search?_source=account_number查询source中只有account_number字段
+GET bank/account/44/_source只查询_source中的信息
+
+创建文档
+PUT /website/blog/123?op_type=create
+{ ... }
+PUT /website/blog/123/_create
+{ ... }
+
+局部修改文档
+POST /website/blog/1/_update
+
+
+计算balance总和
+GET bank/account/_search
+{
+  "aggs": {
+    "all_balance": {
+      "sum": {
+        "field": "balance"
+      }
+    }
+  },
+  "size": 0
+}
+
+验证API的合法性
+GET /gb/tweet/_validate/query
+{
+	"query": {
+		"tweet" : {
+			"match" : "really powerful"
+		}
+	}
+}
+"valid": true--验证通过
+
+GET /gb/tweet/_validate/query?explain
+{
+	"query": {
+		"tweet" : {
+			"match" : "really powerful"
+		}
+	}
+}
+explain 参数可以提供语句错误的更多详情。
+
+
+
+
+
+
+
+
+>>>>>>> 359e87f620652c503eb274c6860f7d03234b153c
 
 
 
