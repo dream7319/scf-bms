@@ -14,6 +14,9 @@ n 带行号显示档案内容
 od 以二进制方式显示档案内容
 vi +n file 编辑文档直接定位到第n行
 
+远程复制
+scp -r /usr/local/software/ root@192.168.156.6:/usr/local/
+
 ntpdate cn.pool.ntp.org 同步网络时间
 
 linux centos重启命令：
