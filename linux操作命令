@@ -28,6 +28,15 @@ Linux centos关机命令：
 　　3、shutdown -h now 立刻关机(root用户使用)
 　　4、shutdown -h 10 10分钟后自动关机
 
+vi /etc/sysconfig/iptables 开放端口
+如果找不到需要安装
+yum install iptables-services
+
+unzip xxx.zip -d bbb 把xxx.zip 解压为bbb文件夹
+开机启动：
+修改
+vi /etc/rc.local
+
 
 
 1、yum update && yum upgrade --yum更新升级
@@ -38,6 +47,11 @@ Linux centos关机命令：
 6、cat /etc/redhat-release 查看当前系统版本
 7、getconf LONG_BIT 查看当前系统位数
 8、yum -y install vim 安装vim命令
+
+-------------------------------------安装jdk---------------------------------------------------
+下载jdk rpm
+执行rpm -ivh jdk.rpm
+安装包为：/usr/java/jdk1.8.0_144/
 
 ------------------------yum安装mysql-------------------------
 1、wget http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm 下载mysql源安装包
@@ -269,6 +283,7 @@ service iptables restart 重启
 3、tar -zxvf elasticsearch-5.5.2.tar.gz
 4、mv elasticsearch-5.5.2 -C /usr/local/elasticsearch-5.5.2 移动目录
 5、useradd elastic	添加用户
+	passwd elastic
 6、chown -R elastic:elastic elasticsearch-5.5.2 赋权限
 7、su elastic 
 8、sh /usr/local/elasticsearch-5.5.2/bin/elasticsearch -d启动
@@ -339,13 +354,24 @@ vm.max_map_count=655360
   
    注意：elasticsearch-head不能放到 elasticsearch-5.5.2/plugins下面
    
-
+elasticsearch集群安装：
+按照以上操作步骤在三台机器分别安装elasticsearch
+修改config/elasticsearch.yml
+discovery.zen.minimum_master_nodes: 3
+discovery.zen.ping.unicast.hosts: ["192.168.1.8", "192.168.1.9","192.168.1.10"]
+   
+   
+   
 13、安装中文分词器
 cd /usr/local/elasticsearch-5.5.2/plugins
 1、wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.5.2/elasticsearch-analysis-ik-5.5.2.zip
 2、unzip elasticsearch-analysis-ik-5.5.2.zip
 3、重启elasticsearch
 4、测试 curl -XGET 'http://localhost:9200/_analyze?pretty&analyzer=ik_max_word' -d '联想是全球最大的笔记本厂商'
+
+拼音分词器
+wget https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v5.5.2/elasticsearch-analysis-pinyin-5.5.2.zip
+
 
 14、安装kibana
 1、wget https://artifacts.elastic.co/downloads/kibana/kibana-5.5.2-linux-x86_64.tar.gz

@@ -518,7 +518,7 @@ curl -XPOST http://192.168.151.14:9200/analysis/fulltext/_search  -d'
     }
 }
 '
-
+curl -XGET http://localhost:9200/_cat/shards|grep UNASSIGNED 查看unassigned相关信息
 
 
 
