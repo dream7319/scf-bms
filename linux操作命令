@@ -31,15 +31,6 @@ Linux centos关机命令：
 　　3、shutdown -h now 立刻关机(root用户使用)
 　　4、shutdown -h 10 10分钟后自动关机
 
-vi /etc/sysconfig/iptables 开放端口
-如果找不到需要安装
-yum install iptables-services
-
-unzip xxx.zip -d bbb 把xxx.zip 解压为bbb文件夹
-开机启动：
-修改
-vi /etc/rc.local
-
 
 
 1、yum update && yum upgrade --yum更新升级
@@ -50,11 +41,6 @@ vi /etc/rc.local
 6、cat /etc/redhat-release 查看当前系统版本
 7、getconf LONG_BIT 查看当前系统位数
 8、yum -y install vim 安装vim命令
-
--------------------------------------安装jdk---------------------------------------------------
-下载jdk rpm
-执行rpm -ivh jdk.rpm
-安装包为：/usr/java/jdk1.8.0_144/
 
 ------------------------yum安装mysql-------------------------
 1、wget http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm 下载mysql源安装包
@@ -200,6 +186,7 @@ mysql>mysql -uroot -proot -h192.168.1.8  -P3306 -Dmysql 连接远程数据库
 # ifconfig   # 查看所有网络接口的属性 
 # iptables -L   # 查看防火墙设置 
 # route -n   # 查看路由表 
+netstat 命令安装：yum -y install net-tools
 # netstat -lntp   # 查看所有监听端口 
 # netstat -antp   # 查看所有已经建立的连接 
 # netstat -s   # 查看网络统计信息 
@@ -286,7 +273,6 @@ service iptables restart 重启
 3、tar -zxvf elasticsearch-5.5.2.tar.gz
 4、mv elasticsearch-5.5.2 -C /usr/local/elasticsearch-5.5.2 移动目录
 5、useradd elastic	添加用户
-	passwd elastic
 6、chown -R elastic:elastic elasticsearch-5.5.2 赋权限
 7、su elastic 
 8、sh /usr/local/elasticsearch-5.5.2/bin/elasticsearch -d启动
@@ -357,24 +343,13 @@ vm.max_map_count=655360
   
    注意：elasticsearch-head不能放到 elasticsearch-5.5.2/plugins下面
    
-elasticsearch集群安装：
-按照以上操作步骤在三台机器分别安装elasticsearch
-修改config/elasticsearch.yml
-discovery.zen.minimum_master_nodes: 3
-discovery.zen.ping.unicast.hosts: ["192.168.1.8", "192.168.1.9","192.168.1.10"]
-   
-   
-   
+
 13、安装中文分词器
 cd /usr/local/elasticsearch-5.5.2/plugins
 1、wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.5.2/elasticsearch-analysis-ik-5.5.2.zip
 2、unzip elasticsearch-analysis-ik-5.5.2.zip
 3、重启elasticsearch
 4、测试 curl -XGET 'http://localhost:9200/_analyze?pretty&analyzer=ik_max_word' -d '联想是全球最大的笔记本厂商'
-
-拼音分词器
-wget https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v5.5.2/elasticsearch-analysis-pinyin-5.5.2.zip
-
 
 14、安装kibana
 1、wget https://artifacts.elastic.co/downloads/kibana/kibana-5.5.2-linux-x86_64.tar.gz
@@ -569,11 +544,13 @@ service network restart   #重启网络
 --------------------------------------------------------------------------------------------
 ------------------------------------安装nginx-----------------------------------------------
 下载nginx
+安装：yum -y install gcc gcc-c++
+yum install pcre pcre-devel
+yum install zlib zlib-devel
 1、wget http://124.205.69.171/files/5054000005BC0340/nginx.org/download/nginx-1.12.1.tar.gz
 2、进入nginx
-   ./configure
-3、make
-4、make install
+   ./configure --prefix=/usr/local/nginx
+3、make && make install
 5、进入/usr/local/nginx/sbin
     ./nginx 			启动nginx
 	./nginx -s stop		此方式相当于先查出nginx进程id再使用kill命令强制杀掉进程。
@@ -784,6 +761,157 @@ yum install sbt
 2、下载kafka manager
 wget https://github.com/yahoo/kafka-manager/archive/1.3.3.13.tar.gz
 https://github.com/yahoo/kafka-manager/archive/1.3.3.13.zip
+
+-------------------------------------------------------------------------------------------------------------
+centos7安装docker
+1、vim /etc/yum.repos.d/docker.repo
+2、
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+
+3、yum -y install docker-engine
+4、启动
+   systemctl start docker
+5、查看信息
+   docker info
+查询安装过的包
+yum list installed | grep docker
+
+删除安装的软件包
+yum -y remove docker-engine.x86_64
+删除镜像/容器等
+rm -rf /var/lib/docker
+
+查看是否安装成功
+docker images
+
+启动三个redis
+查看docker容器
+列出正在运行的容器： 　　　　　　　　　　 docker ps
+列出所有容器： 　　　　　　　　　　　　　 docker ps -a 
+列出最近使用的容器，包括没有运行的：  　　docker ps -l
+仅列出容器的ID，不包括没有运行的：     　 docker ps q
+
+创建容器：
+--name  指定容器的名字
+--rm      容器运行完毕会自动删除
+-i -t       创建一个提供交互式shell的容器。
+-d         在后台运行容器，并且打印出容器的ID
+docker run --name redis-6379 -p 6379:6379 -d hub.c.163.com/library/redis
+
+启动和停止容器
+docker start/stop/restart continer id/name
+docker -t 可以指定时间停止容器，默认是10s
+强制停止容器
+docker kill continer id/name
+
+查看容器的运行时后台输出信息
+docker logs continer id/name
+
+删除所有容器
+docker rm $(docker ps -a -q)
+删除单个容器
+docker rm <容器名orID>
+
+删除全部镜像
+docker rmi $(docker images | grep none | awk '{print $3}' | sort -r)
+docker rmi $(docker images -q)
+删除所有none镜像
+docker images|grep none|awk '{print $3 }'|xargs docker rmi
+
+查看容器信息
+docker inspect 容器ID 
+进入容器命令：
+docker exec -ti 容器ID /bin/bash
+
+在docker内部安装操作命令：
+apt-get update
+安装vim
+apt-get install vim
+
+--------------------------------------------------------------------------------------------
+安装redis
+docker pull hub.c.163.com/library/redis:latest
+
+启动redis
+docker run --name redis-6379 -p 6379:6379 -d hub.c.163.com/library/redis
+docker run --name redis-6380 -p 6380:6379 -d hub.c.163.com/library/redis
+docker run --name redis-6381 -p 6381:6379 -d hub.c.163.com/library/redis
+
+docker run --name redmine -p 9003:80 -p 9023:22 -d -v /var/redmine/files:/redmine/files -v /var/redmine/mysql:/var/lib/mysql sameersbn/redmine
+
+
+假设我们应用是www,目录位置在/app/deploy/www
+docker run --privileged=true -v /app/deploy/www:/usr/local/tomcat/webapps/www  -p 8081:8080 tomcat:7 
+
+-v /app/deploy/www:/usr/local/tomcat/webapps/www 是把/app/deploy/www的目录挂载至容器的/usr/local/tomcat/webapps/www。 
+–privileged=true是授予docker挂载的权限
+至此，已成功把web应用部署在Docker容器运行
+
+# 查看所有镜像
+docker images
+# 正在运行容器
+docker ps
+# 查看docker容器
+docker ps -a
+# 启动tomcat:7镜像
+docker run -p 8080:8080 tomcat:7
+# 以后台守护进程的方式启动
+docker run -d tomcat:7
+# 停止一个容器
+docker stop b840db1d182b
+# 进入一个容器
+docker attach d48b21a7e439
+# 进入正在运行容器并以命令行交互
+docker exec -it e9410ee182bd /bin/sh
+# 以交互的方式运行
+docker run -i -t -p 8081:8080 tomcat:7 /bin/bash
+
+docker search tomcat  搜索Docker Hub里的tomcat镜像
+
+docker run -i -t --name sonar -d -link mmysql:db   tpires/sonar-server sonar
+容器连接到mmysql容器，并将mmysql容器重命名为db。这样，sonar容器就可以使用db的相关的环境变量了。
+
+从容器里面拷文件到宿主机
+在宿主机里面执行以下命令
+docker cp 容器名：要拷贝的文件在容器里面的路径       要拷贝到宿主机的相应路径
+示例： 假设容器名为testtomcat,要从容器里面拷贝的文件路为：/usr/local/tomcat/webapps/test/js/test.js,                     现在要将test.js从容器里面拷到宿主机的/opt路径下面，那么命令应该怎么写呢？
+答案：在宿主机上面执行命令
+      docker cp testtomcat：/usr/local/tomcat/webapps/test/js/test.js /opt
+
+从宿主机拷文件到容器里面
+答：在宿主机里面执行如下命令
+docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的路径
+示例：假设容器名为testtomcat,现在要将宿主机/opt/test.js文件拷贝到容器里面                                                               的/usr/local/tomcat/webapps/test/js路径下面，那么命令该怎么写呢？
+答案：在宿主机上面执行如下命令
+      docker cp /opt/test.js testtomcat：/usr/local/tomcat/webapps/test/js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
