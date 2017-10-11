@@ -6,6 +6,7 @@ import com.lierl.api.entity.Menu;
 import com.lierl.api.mapper.MenuMapper;
 import com.lierl.api.service.IMenuService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;

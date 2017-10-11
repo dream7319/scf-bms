@@ -14,6 +14,9 @@ n 带行号显示档案内容
 od 以二进制方式显示档案内容
 vi +n file 编辑文档直接定位到第n行
 
+ulimit -a 查看系统默认数据，如：默认可以打开多少文件
+
+
 远程复制
 scp -r /usr/local/software/ root@192.168.156.6:/usr/local/
 
@@ -31,6 +34,11 @@ Linux centos关机命令：
 　　3、shutdown -h now 立刻关机(root用户使用)
 　　4、shutdown -h 10 10分钟后自动关机
 
+查看文件内容操作命令：
+
+cat /usr/local/nginx/logs/access.log | wc -l	获取文件access.log行数
+awk '{print}'  /usr/local/nginx/logs/access.log 输出access.log文件内容
+awk '{print ""}' /usr/local/nginx/logs/access.log 输出和access.log行数一样的空行
 
 
 1、yum update && yum upgrade --yum更新升级
