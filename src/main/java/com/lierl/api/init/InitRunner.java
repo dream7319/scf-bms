@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 初始化
  */
-@Component
+//@Component
 public class InitRunner implements CommandLineRunner {
 
     @Autowired

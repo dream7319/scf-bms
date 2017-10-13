@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="bootstrap.min.js"></script>
+<script type="text/javascript" src="lodash.min.js"></script>
+<script type="text/javascript" src="../angular.min.js"></script>
+<script type="text/javascript" src="../angular-ui-router.min.js"></script>
+<script type="text/javascript" src="angular-animate.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="category.js"></script>
+<script type="text/javascript" src="bookmark.js"></script>
+<script type="text/javascript" src="bookmark-create.js"></script>
+<script type="text/javascript" src="bookmark-edit.js"></script>
+<script type="text/javascript" src="bookmarks-model.js"></script>
+<script type="text/javascript" src="categories-model.js"></script>
+<body ng-app="Darren">
+    <!--左侧菜单-->
+    <div ui-view="categories"></div>
+
+    <!--右侧列表-->
+    <div ui-view="bookmarks"></div>
+</body>
+</html>

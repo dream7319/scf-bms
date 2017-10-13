@@ -1,0 +1,14 @@
+<!--不使用$scope的写法，给controller别名的写法-->
+<h1>{{bookmarksListCtrl.getCurrentCategoryName()}}</h1>
+
+<!--对bookmarks进行了过滤，过滤的标准是bookmark的字段category-->
+<div ng-repeat="bookmark in bookmarksListCtrl.bookmarks | filter:{category:bookmarksListCtrl.getCurrentCategoryName()}">
+    <button type="button" class="close" ng-click="bookmarksListCtrl.deleteBookmark(bookmark)">&times;</button>
+    <button type="button" class="btn btn-link" ui-sref="darren.categories.bookmarks.edit({bookmarkId: bookmark.id})">更新</button>
+    <a href="{{bookmark.url}}" target="_blank">{{bookmark.title}}</a>
+</div>
+<hr/>
+<!-- CREATING -->
+<ui-view ng-if="bookmarksListCtrl.getCurrentCategory()">
+    <button type="button"  ui-sref="darren.categories.bookmarks.create">添加</button>
+</ui-view>

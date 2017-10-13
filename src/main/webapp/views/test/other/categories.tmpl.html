@@ -1,0 +1,8 @@
+<ul>
+    <!--判断是否为选中的category,逻辑是点击当前的category,把这个category保存在$scope.currentCategory中，再判断当前的category是否和$scope.currentCategory相等，相等就为选中状态。就像非常勿扰女嘉宾按灯，系统就记录下当前按灯的桌号，系统再遍历所有的桌号，如果桌号和系统记录的桌号相等，就让该桌号的灯亮起来，道理是一样一样滴。-->
+    <li ng-repeat="category in categoriesListCtrl.categories">
+        <a ui-sref="darren.categories.bookmarks({category:category.name})">
+            {{category.name}}
+        </a>
+    </li>
+</ul>
