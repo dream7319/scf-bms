@@ -69,7 +69,7 @@ awk '{print ""}' /usr/local/nginx/logs/access.log 输出和access.log行数一�
 8、systemctl enable mysqld
 
 9、修改密码
-	Ⅰ修改密码策略：vim /etc/my.cnf	
+	Ⅰ修改密码策略：vim /etc/my.cnf
 		添加：validate_password = off 关闭密码策略
 	II  systemctl restart mysqld 重新启动mysql服务使配置生效
 	III grep 'temporary password' /var/log/mysqld.log 查看生成的临时密码
@@ -126,13 +126,13 @@ yum install firewalld安装防火墙
 systemctl stop firewalld.service #停止firewall
 systemctl disable firewalld.service #禁止firewall开机启动
 firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）
-firewalld 开放单个端口命令如下 
-firewall-cmd --permanent --zone=public --add-port=100/tcp 
-firewall-cmd --permanent --zone=public --add-port=100/udp 
-firewall-cmd --reload 
+firewalld 开放单个端口命令如下
+firewall-cmd --permanent --zone=public --add-port=100/tcp
+firewall-cmd --permanent --zone=public --add-port=100/udp
+firewall-cmd --reload
 开放多个端口
-firewall-cmd --permanent --zone=public --add-port=100-500/tcp 
-firewall-cmd --permanent --zone=public --add-port=100-500/udp 
+firewall-cmd --permanent --zone=public --add-port=100-500/tcp
+firewall-cmd --permanent --zone=public --add-port=100-500/udp
 firewall-cmd --reload
 
 
@@ -166,59 +166,111 @@ mysql>mysql -uroot -proot -h192.168.1.8  -P3306 -Dmysql 连接远程数据库
 
 -----------------完成mysql安装--------------------------------
 
-系统： 
-# uname -a   # 查看内核/操作系统/CPU信息 
-# cat /etc/issue 
-# cat /etc/redhat-release # 查看操作系统版本 
-# cat /proc/cpuinfo  # 查看CPU信息 
-# hostname   # 查看计算机名 
-# lspci -tv   # 列出所有PCI设备 
-# lsusb -tv   # 列出所有USB设备 
-# lsmod    # 列出加载的内核模块 
-# env    # 查看环境变量 
-资源： 
-# free -m   # 查看内存使用量和交换区使用量 
-# df -h    # 查看各分区使用情况 
-# du -sh <目录名>  # 查看指定目录的大小 
-# grep MemTotal /proc/meminfo # 查看内存总量 
-# grep MemFree /proc/meminfo # 查看空闲内存量 
-# uptime   # 查看系统运行时间、用户数、负载 
-# cat /proc/loadavg  # 查看系统负载 
-磁盘和分区： 
-# mount | column -t  # 查看挂接的分区状态 
-# fdisk -l   # 查看所有分区 
-# swapon -s   # 查看所有交换分区 
-# hdparm -i /dev/hda  # 查看磁盘参数(仅适用于IDE设备) 
-# dmesg | grep IDE  # 查看启动时IDE设备检测状况 
-网络： 
-# ifconfig   # 查看所有网络接口的属性 
-# iptables -L   # 查看防火墙设置 
-# route -n   # 查看路由表 
+-----------------mysql 压缩包安装--------------------------------
+1、下载压缩包
+wget https://cdn.mysql.com//Downloads/MySQL-5.7/mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz
+2、解压缩
+tar -zxvf mysql-5.7.20-linux-glibc2.12-x86_64.tar.gz
+3、移动文件
+mv mysql-5.7.20-linux-glibc2.12-x86_64 /usr/local/
+4、重命名文件
+mv mysql-5.7.20-linux-glibc2.12-x86_64/ mysql
+----创建mysql 与用户组，-s /bin/false 表示该用户不能登录 ------
+5、添加用户组
+groupadd mysql
+6、添加用户
+useradd -r -g mysql -s /bin/false mysql
+
+7、赋权限
+chown -R mysql:mysql ./mysql/
+8、创建mysql数据目录
+mkdir -p /data/mysql
+chown -R mysql:mysql /data/mysql
+9、修改/etc/my.cnf
+[mysqld]
+basedir=/usr/local/mysql
+datadir=/data/mysql
+socket=/tmp/mysql.sock
+
+[mysqld_safe]
+log-error=/var/log/mariadb-error.log
+pid-file=/var/run/mariadb.pid
+10、mysqld初始化
+bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/data/mysql
+最后一行为密码
+A temporary password is generated for root@localhost: z3if(Y)*T/26
+
+11、初始化ssl
+bin/mysql_ssl_rsa_setup --datadir=/data/mysql
+12、初始化install_db
+bin/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/data/mysql
+13、启动
+bin/mysqld_safe --user=mysql &
+14、添加mysql环境变量
+vim /etc/profile
+source /etc/profile
+15、拷贝mysql.server
+cp ./support-files/mysql.server /etc/init.d/mysql
+16、启动
+service mysql start
+17、登录，用上面的密码
+修改密码：set password=password('root');
+完成
+-----------------完成mysql压缩包安装--------------------------------
+
+系统：
+# uname -a   # 查看内核/操作系统/CPU信息
+# cat /etc/issue
+# cat /etc/redhat-release # 查看操作系统版本
+# cat /proc/cpuinfo  # 查看CPU信息
+# hostname   # 查看计算机名
+# lspci -tv   # 列出所有PCI设备
+# lsusb -tv   # 列出所有USB设备
+# lsmod    # 列出加载的内核模块
+# env    # 查看环境变量
+资源：
+# free -m   # 查看内存使用量和交换区使用量
+# df -h    # 查看各分区使用情况
+# du -sh <目录名>  # 查看指定目录的大小
+# grep MemTotal /proc/meminfo # 查看内存总量
+# grep MemFree /proc/meminfo # 查看空闲内存量
+# uptime   # 查看系统运行时间、用户数、负载
+# cat /proc/loadavg  # 查看系统负载
+磁盘和分区：
+# mount | column -t  # 查看挂接的分区状态
+# fdisk -l   # 查看所有分区
+# swapon -s   # 查看所有交换分区
+# hdparm -i /dev/hda  # 查看磁盘参数(仅适用于IDE设备)
+# dmesg | grep IDE  # 查看启动时IDE设备检测状况
+网络：
+# ifconfig   # 查看所有网络接口的属性
+# iptables -L   # 查看防火墙设置
+# route -n   # 查看路由表
 netstat 命令安装：yum -y install net-tools
-# netstat -lntp   # 查看所有监听端口 
-# netstat -antp   # 查看所有已经建立的连接 
-# netstat -s   # 查看网络统计信息 
-进程： 
-# ps -ef   # 查看所有进程 
-# top    # 实时显示进程状态（另一篇文章里面有详细的介绍） 
-用户： 
-# w    # 查看活动用户 
-# id <用户名>   # 查看指定用户信息 
-# last    # 查看用户登录日志 
-# cut -d: -f1 /etc/passwd # 查看系统所有用户 
-# cut -d: -f1 /etc/group # 查看系统所有组 
-# crontab -l   # 查看当前用户的计划任务 
-服务： 
-# chkconfig –list  # 列出所有系统服务 
-# chkconfig –list | grep on # 列出所有启动的系统服务 
-程序： 
+# netstat -lntp   # 查看所有监听端口
+# netstat -antp   # 查看所有已经建立的连接
+# netstat -s   # 查看网络统计信息
+进程：
+# ps -ef   # 查看所有进程
+# top    # 实时显示进程状态（另一篇文章里面有详细的介绍）
+用户：
+# w    # 查看活动用户
+# id <用户名>   # 查看指定用户信息
+# last    # 查看用户登录日志
+# cut -d: -f1 /etc/passwd # 查看系统所有用户
+# cut -d: -f1 /etc/group # 查看系统所有组
+# crontab -l   # 查看当前用户的计划任务
+服务：
+# chkconfig –list  # 列出所有系统服务
+# chkconfig –list | grep on # 列出所有启动的系统服务
+程序：
 # rpm -qa   # 查看所有安装的软件包
 
 
 ----------------------安装maven-------------------------------
 1、rz 上传文件
 2、tar zxvf apache-maven-3.3.9-bin.tar.gz 解压文件
-3、vim /etc/profile 
+3、vim /etc/profile
 添加：  export JAVA_HOME=/usr/java/jdk1.8.0_144
 	export M2_HOME=/usr/local/maven/apache-maven-3.5.0
 	export PATH=$PATH:$M2_HOME/bin
@@ -233,7 +285,7 @@ netstat 命令安装：yum -y install net-tools
 
 第二种
 1、下载编译工具
-yum -y groupinstall "Development Tools" 
+yum -y groupinstall "Development Tools"
 2、下载依赖包(可以先不安装)
 yum  -y install zlib-devel perl-ExtUtils-MakeMaker asciidoc xmlto openssl-devel
 3、下载 Git 最新版本的源代码
@@ -282,7 +334,7 @@ service iptables restart 重启
 4、mv elasticsearch-5.5.2 -C /usr/local/elasticsearch-5.5.2 移动目录
 5、useradd elastic	添加用户
 6、chown -R elastic:elastic elasticsearch-5.5.2 赋权限
-7、su elastic 
+7、su elastic
 8、sh /usr/local/elasticsearch-5.5.2/bin/elasticsearch -d启动
 9、curl http://localhost:9200
 elasticsearch默认restful-api的端口是9200 不支持Ip地址，只能在本机用http://localhost:9200来访问。
@@ -291,7 +343,7 @@ elasticsearch默认restful-api的端口是9200 不支持Ip地址，只能在本�
 1、vim /usr/local/elasticsearch-5.5.2/conf/elasticsearch.yml
 2、network.host: 192.168.151.14
    http.port: 9200
-3、su root 
+3、su root
 4、vim /etc/security/limits.conf
 添加
 * soft nofile 65536
@@ -312,7 +364,7 @@ vm.max_map_count=655360
 3、./configure
 4、make	时间比较长
 5、sudo make install
-6、node --version 
+6、node --version
    npm --version
 7、npm install -g grunt-cli
    grunt --version
@@ -337,20 +389,20 @@ vm.max_map_count=655360
 				}
 			}
 		}
-		
-		
+
+
 		grunt server & 后台运行
 		./elasticsearch -d 后台运行elasticsearch
 12、elasticsearch-5.5.2/config/elasticsearch.yml
     添加：
 	http.cors.enabled: true
 	http.cors.allow-origin: "*"
-	
+
 	解开注释：
 	cluster.name: lierl
-  
+
    注意：elasticsearch-head不能放到 elasticsearch-5.5.2/plugins下面
-   
+
 
 13、安装中文分词器
 cd /usr/local/elasticsearch-5.5.2/plugins
@@ -369,7 +421,7 @@ cd /usr/local/elasticsearch-5.5.2/plugins
 
 15、安装x-pack
 wget https://artifacts.elastic.co/downloads/packs/x-pack/x-pack-5.5.2.zip
-     
+
 
 bin/elasticsearch-plugin install file:///usr/local/elastic-plugins/x-pack-5.5.2.zip
 bin/kibana-plugin install file:///usr/local/elastic-plugins/x-pack-5.5.2.zip
@@ -391,11 +443,11 @@ http://localhost:5601
 4、进入logstash-5.5.2
 5、vi Gemfile
 source "https://ruby.taobao.org"
-6、cd bin 
+6、cd bin
 ./logstash-plugin install logstash-input-jdbc
 
 7、mkdir config-mysql
-   cd config-mysql 
+   cd config-mysql
    vim mysql.conf
 
 添加如下内容
@@ -420,7 +472,7 @@ input {
 		# * 5 * 1-3 * 一月到三月期间每天早上五点起每分钟执行一次
 		schedule => "* * * * *"
                 #索引的类型
-		type => "jdbc"        
+		type => "jdbc"
 	}
 }
 filter {
@@ -465,9 +517,9 @@ AND update_time >=date_add(:sql_last_value,interval 8 hour)
 
 date_add(:sql_last_value,interval 8 hour) Logstash使用的标准时间并没有使用的是本地时区时间，这里取个巧，
 在他的时间基础上增加8小时，不用修改 Logstash 的时区了
-sql_last_value是每次读取数据库表时更新此值，表示最后更新时间 
-如果input里面use_column_value 设置为true，可以是我们设定的字段的上一次的值。 
-默认 use_column_value 为 false，这样 :sql_last_value为上一次更新的最后时间， 
+sql_last_value是每次读取数据库表时更新此值，表示最后更新时间
+如果input里面use_column_value 设置为true，可以是我们设定的字段的上一次的值。
+默认 use_column_value 为 false，这样 :sql_last_value为上一次更新的最后时间，
 这样对于新增的值，才会更新，这样就实现了增量更新的目的
 
 bin/logstash -f mysql.conf
@@ -490,7 +542,7 @@ input {
     jdbc {
       jdbc_connection_string => "jdbc:mysql://localhost:3306/crm?zeroDateTimeBehavior=convertToNull"
       jdbc_user => "root"
-      jdbc_password => "" 
+      jdbc_password => ""
       jdbc_driver_library => "D:/siyang/elasticsearch-5.2.2/logstash-5.2.2/mysql-connector-java-5.1.30.jar"
       jdbc_driver_class => "com.mysql.jdbc.Driver"
       jdbc_paging_enabled => "true"
@@ -525,7 +577,7 @@ output {
 
 ----------------------------------------------------------------------------------------------------------------
 
-vim /etc/sysconfig/network-scripts/ifcfg-eth0  
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
 
 配置ip
 TYPE=Ethernet
@@ -566,26 +618,26 @@ yum install zlib zlib-devel
 	./nginx -s reload
 
 启用nginx命令
-	#方法1 
-	# /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf 
-	#方法2 
-	# cd /usr/local/nginx/sbin 
-	# ./nginx 
+	#方法1
+	# /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+	#方法2
+	# cd /usr/local/nginx/sbin
+	# ./nginx
 停止nginx命令
-	#查询nginx主进程号  
-	ps -ef | grep nginx 
-	#停止进程  
-	kill -QUIT 主进程号  
-	#快速停止  
-	kill -TERM 主进程号  
-	#强制停止  
-	pkill -9 nginx 
+	#查询nginx主进程号
+	ps -ef | grep nginx
+	#停止进程
+	kill -QUIT 主进程号
+	#快速停止
+	kill -TERM 主进程号
+	#强制停止
+	pkill -9 nginx
 重启nginx命令
-./nginx -s reload 
-	
-	
-	
-./configure --prefix=/opt/nginx 
+./nginx -s reload
+
+
+
+./configure --prefix=/opt/nginx
 configure --prefix 配置，后面的目录，不能是安装包当前的解压目录，因为后面再install过程中，
 会从解压包中拷贝配置文件到指定的prefix中去，如果这两个目录相同，cp失效出现 the same file 的错误，
 导致install 终止，安装会失败
@@ -593,8 +645,8 @@ configure --prefix 配置，后面的目录，不能是安装包当前的解压�
 
 redis安装
 1、wget http://download.redis.io/releases/redis-4.0.1.tar.gz
-2、make 
-3、make install 
+2、make
+3、make install
 4、make test 测试是否安装ok
 	如果没有错误说明安装ok,如果报错tcl
 	yum install tcl
@@ -608,12 +660,12 @@ redis安装
 	如果没有，则执行以下命令
 	cp redis-server /usr/local/bin/
 	cp redis-cli /usr/local/bin/
-	
+
 	默认端口是6379
 9、查看redis
-	ps -ef | grep redis 
-	通过启动命令检查Redis服务器状态  
-	netstat -nlt|grep 6379 
+	ps -ef | grep redis
+	通过启动命令检查Redis服务器状态
+	netstat -nlt|grep 6379
 
 停止Redis实例
 pkill redis-server
@@ -622,19 +674,19 @@ pkill redis-server
 进入redis目录
 ./utils/install_server.sh
 一路回车
-[root@lierl utils]# ./install_server.sh 
+[root@lierl utils]# ./install_server.sh
 Welcome to the redis service installer
 This script will help you easily set up a running redis server
 
-Please select the redis port for this instance: [6379] 
+Please select the redis port for this instance: [6379]
 Selecting default: 6379
-Please select the redis config file name [/etc/redis/6379.conf] 
+Please select the redis config file name [/etc/redis/6379.conf]
 Selected default - /etc/redis/6379.conf
-Please select the redis log file name [/var/log/redis_6379.log] 
+Please select the redis log file name [/var/log/redis_6379.log]
 Selected default - /var/log/redis_6379.log
-Please select the data directory for this instance [/var/lib/redis/6379] 
+Please select the data directory for this instance [/var/lib/redis/6379]
 Selected default - /var/lib/redis/6379
-Please select the redis executable path [/usr/local/bin/redis-server] 
+Please select the redis executable path [/usr/local/bin/redis-server]
 Selected config:
 Port           : 6379
 Config file    : /etc/redis/6379.conf
@@ -656,7 +708,7 @@ b.开启Redis服务操作通过/etc/init.d/redis_6379 start命令，也可通过
 c.关闭Redis服务操作通过/etc/init.d/redis_6379 stop命令，也可通过（service redis_6379 stop）
 
 Redis的后台启动并运行需要通过配置文件中的参数设置。如果需要在后台运行，把daemonize配置项改为yes
-修改redis.conf 把daemonize配置项改为yes 
+修改redis.conf 把daemonize配置项改为yes
 bind 127.0.0.1 192.168.1.8
 
 也可以 redis-server /etc/redis/6379.conf 带上配置文件启动
@@ -701,7 +753,7 @@ vi zoo.cfg #开始编辑
 
 dataDir=/opt/zookeeper-3.4.9/data　　　　#数据目录
 dataLogDir=/opt/zookeeper-3.4.9/logs　　#日志目录
-server.0=hslave0:2888:3888         
+server.0=hslave0:2888:3888
 server.1=hslave1:2888:3888
 server.2=hslave2:2888:3888
 
@@ -721,7 +773,7 @@ tar -zxvf kafka_2.12-0.11.0.0.tgz -C /usr/local/kafka
 1.启动Zookeeper
 bin/zookeeper-server-start.sh -daemon config/zookeeper.properties
 
-修改kafka下conf/server.properties 
+修改kafka下conf/server.properties
 zookeeper.connect=192.168.1.8:2181
 listeners=PLAINTEXT://192.168.1.8:9092
 2.启动Kafka 服务
@@ -729,26 +781,26 @@ bin/kafka-server-start.sh -daemon config/server.properties
 3.创建topic
 使用kafka-topics.sh 创建单分区单副本的topic test：
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-–topic指定topic name 
+–topic指定topic name
 –partitions指定分区数，这个参数需要根据broker数和数据量决定，正常情况下，
-每个broker上两个partition最好； 
+每个broker上两个partition最好；
 –replication-factor指定partition的replicas数，建议设置为2；
 
 
 查看topic：
 bin/kafka-topics.sh --list --zookeeper 192.168.1.8:2181
-通过kafka-topics.sh工具的alter命令，将topic_test的partitions从12增加到20； 
+通过kafka-topics.sh工具的alter命令，将topic_test的partitions从12增加到20；
 bin/kafka-topics.sh –zookeeper 192.168.2.225:2181/config/mobile/mq –alter –partitions 20 –topic topic_test
 查看topic详情
-bin/kafka-topics.sh –zookeeper 192.168.2.225:2183/config/mobile/mq –describe –topic test.example 
- 
+bin/kafka-topics.sh –zookeeper 192.168.2.225:2183/config/mobile/mq –describe –topic test.example
+
 Kafka 删除topic
 bin/kafka-topics.sh --delete --zookeeper 192.168.1.8:2181 --topic oschina
 
 
 4.产生消息
 使用kafka-console-producer.sh 发送消息：
-bin/kafka-console-producer.sh --broker-list 192.168.1.8:9092 --topic test 
+bin/kafka-console-producer.sh --broker-list 192.168.1.8:9092 --topic test
 Hello world！
 Hello Kafka
 
@@ -800,7 +852,7 @@ docker images
 启动三个redis
 查看docker容器
 列出正在运行的容器： 　　　　　　　　　　 docker ps
-列出所有容器： 　　　　　　　　　　　　　 docker ps -a 
+列出所有容器： 　　　　　　　　　　　　　 docker ps -a
 列出最近使用的容器，包括没有运行的：  　　docker ps -l
 仅列出容器的ID，不包括没有运行的：     　 docker ps q
 
@@ -832,7 +884,7 @@ docker rmi $(docker images -q)
 docker images|grep none|awk '{print $3 }'|xargs docker rmi
 
 查看容器信息
-docker inspect 容器ID 
+docker inspect 容器ID
 进入容器命令：
 docker exec -ti 容器ID /bin/bash
 
@@ -854,9 +906,9 @@ docker run --name redmine -p 9003:80 -p 9023:22 -d -v /var/redmine/files:/redmin
 
 
 假设我们应用是www,目录位置在/app/deploy/www
-docker run --privileged=true -v /app/deploy/www:/usr/local/tomcat/webapps/www  -p 8081:8080 tomcat:7 
+docker run --privileged=true -v /app/deploy/www:/usr/local/tomcat/webapps/www  -p 8081:8080 tomcat:7
 
--v /app/deploy/www:/usr/local/tomcat/webapps/www 是把/app/deploy/www的目录挂载至容器的/usr/local/tomcat/webapps/www。 
+-v /app/deploy/www:/usr/local/tomcat/webapps/www 是把/app/deploy/www的目录挂载至容器的/usr/local/tomcat/webapps/www。
 –privileged=true是授予docker挂载的权限
 至此，已成功把web应用部署在Docker容器运行
 
@@ -898,6 +950,7 @@ docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的
 答案：在宿主机上面执行如下命令
       docker cp /opt/test.js testtomcat：/usr/local/tomcat/webapps/test/js
 
+-----------------------------------------jekins---------------------------------------------------------------------
 
 
 
@@ -914,8 +967,7 @@ docker cp 要拷贝的文件路径 容器名：要拷贝到容器里面对应的
 
 
 
-
-
+-----------------------------------------jekins---------------------------------------------------------------------
 
 
 

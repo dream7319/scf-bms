@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.lierl</groupId>
   <artifactId>mybatis</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <version>1.0</version>
   <name>mybatis</name>
   <url>http://maven.apache.org</url>
